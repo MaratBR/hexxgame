@@ -1,0 +1,19 @@
+{
+  "compilerOptions": {
+    "experimentalDecorators": true,
+    "emitDecoratorMetadata": true,
+    "module": "commonjs",
+    "target": "es5",
+    "sourceMap": true,
+    "esModuleInterop": true,
+    "lib": ["es7"],
+    "typeRoots": [
+      "../node_modules/@types",
+      "./socketio"
+    ],
+    "outDir": "../dist/server"
+  },
+  "exclude": [
+    "node_modules"
+  ]
+}
