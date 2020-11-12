@@ -7,54 +7,20 @@ import {
     MAX_MINUTES,
     MAX_ROUNDS,
     Participant
-} from "../models/match";
-import {GameMapModel} from "../models/map";
+} from "../models/Match";
+import {GameMapModel} from "../models/GameMap";
 import {HttpError} from "routing-controllers";
-import {UserModel} from "../models/user";
+import {UserModel} from "../models/User";
 import {matchesQueue} from "../init/jobs";
 import moment from "moment";
 import {MatchExecutor} from "../socketio/MatchExecutor";
-import Bull from "bull";
-
-namespace GameServiceStatic {
-    import Dict = NodeJS.Dict;
-    export let initialized = false
-    export const ongoingMatches: Dict<MatchExecutor> = {}
-
-    export function init() {
-        initialized = true
-        matchesQueue.process(async (job, done: Bull.DoneCallback) => {
-            if (ongoingMatches[job.data.matchId]) {
-                done(new Error("match already in progress"))
-                return
-            }
-            if (await MatchModel.count({_id: job.data.matchId, jobId: {$exists: false}}) == 0) {
-                done(new Error("match not found or was already assigned to other job"))
-                return
-            }
-
-            const room = sioApp.to('match ' + job.data.matchId)
-            const executor = new MatchExecutor(room)
-            ongoingMatches[job.data.matchId] = executor
-
-            try {
-                done(null, await executor.callback(job))
-            } catch (e) {
-                done(e)
-            }
-        })
-    }
-
-    if (!GameServiceStatic.initialized) {
-        GameServiceStatic.init()
-    }
-}
+import executorHub from "../socketio/executor";
 
 @Service()
 export default class GameService {
     constructor() {}
 
-    async createMatch(mapId: string, teams: string[][]): Promise<Match> {
+    async createMatch(roomId: string, mapId: string, teams: string[][]): Promise<Match> {
         if (teams.length < 2)
             throw new HttpError(422, 'need at least 2 teams')
 
@@ -89,6 +55,7 @@ export default class GameService {
         return await MatchModel.create({
             mapId,
             participants,
+            roomId,
             state: {
                 cells: map.cells.map(mapCell => ({
                     v: mapCell.initValue || 0,
@@ -118,6 +85,8 @@ export default class GameService {
     }
 
     getLocalExecutorOrNull(matchId: string): MatchExecutor | null {
-        return GameServiceStatic.ongoingMatches[matchId] || null
+        return executorHub.getLocalExecutorOrNull(matchId)
     }
+
+
 }

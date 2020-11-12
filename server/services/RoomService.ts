@@ -1,6 +1,6 @@
 import {Service} from "typedi";
-import {User} from "../models/user";
-import {generateRoomId, Room, RoomModel} from "../models/room";
+import {User} from "../models/User";
+import {generateRoomId, Room, RoomModel} from "../models/Room";
 import UsersService from "./UsersService";
 
 interface NewRoomOptions {
@@ -19,8 +19,13 @@ export default class RoomService {
         return RoomModel.findById(id).exec()
     }
 
+    exists(id: string): Promise<boolean> {
+        return RoomModel.count({_id: id}).then(r => r != 0)
+    }
+
     async createRoom(opts: NewRoomOptions): Promise<Room> {
         return await RoomModel.create({
+            players: [],
             name: opts.name,
             isPublic: opts.isPublic,
             ownerId: opts.ownerId,

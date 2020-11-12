@@ -7,7 +7,7 @@ import {Container} from "typedi";
 import UsersService from "../services/UsersService";
 import config from "../config";
 import Hasher from "../misc/hash";
-import {User, UserModel} from "../models/user";
+import {User, UserModel} from "../models/User";
 
 async function prodAuthMiddleware(ctx: BaseContext, next: Next) {
     try {
@@ -58,6 +58,8 @@ export function initPassport() {
         })
     }
 }
+
+;(() => initPassport())()
 
 export function initAuth(app: Koa) {
     if (!config.debug) {

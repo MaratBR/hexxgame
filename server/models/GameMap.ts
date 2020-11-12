@@ -1,5 +1,6 @@
 import {getModelForClass, prop} from "@typegoose/typegoose";
-import {IDBase} from "./base";
+import {IDBase} from "./Base";
+import {GameMapInfoDto} from "lib_shared/dto";
 
 export interface GameMapCell {
     x: number
@@ -29,15 +30,7 @@ export class GameMap extends IDBase {
     maxTeams: number
 }
 
-export const GameMapModel = getModelForClass(GameMap)
-
-export type GameMapInfoDto = {
-    name: string
-    createdAt: Date
-    cellsCount: number
-    maxTeams: number
-    authorId?: string
-}
+export const GameMapModel = getModelForClass<GameMap>(GameMap)
 
 export function gameMapInfo(map: GameMap): GameMapInfoDto {
     return {

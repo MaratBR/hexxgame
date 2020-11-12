@@ -1,19 +1,22 @@
 import {
     BASE_LEN,
     EXPAND_LEN,
-    MapCellState,
     Match,
     MatchModel,
     MAX_MINUTES,
     MAX_ROUNDS,
-    MAX_VALUE
-} from "../models/match";
+    MAX_VALUE,
+    Participant
+} from "../models/Match";
 import {DoneCallback, Job} from "bull";
 import moment from "moment";
-import {sleep, timeoutPromise} from "../utils/promise";
 import {EventEmitter} from "events";
-import Dict = NodeJS.Dict;
 import {Server} from "socket.io";
+import {sleep, timeoutPromise} from "lib_shared/promise";
+import {UpdateQuery} from "mongoose";
+import {DocumentType} from "@typegoose/typegoose";
+import Dict = NodeJS.Dict;
+import {User} from "../models/User";
 
 
 interface IMatchExecutor {
@@ -28,10 +31,12 @@ export class MatchExecutor implements IMatchExecutor {
     private readonly ns: Namespace
     private match: Match
     private readonly localEventEmitter: EventEmitter
-    constructor(namespace: Namespace) {
+
+    constructor(server: Server, matchId: string) {
         this.localEventEmitter = new EventEmitter()
-        this.ns = namespace
+        this.ns = server.of('match ' + matchId)
     }
+    private localPlayersCache: Dict<Participant>
 
     get isPowerStage() { return this.match.state.roundStage == 2 }
     get isMoveStage() { return this.match.state.roundStage == 1 }
@@ -40,37 +45,109 @@ export class MatchExecutor implements IMatchExecutor {
         this.localEventEmitter.emit('skip')
     }
 
+    /**
+     * Матч, сохраненный в памяти
+     */
     get storedMatch() { return this.match }
 
-    get roomName() { return 'match ' + this.storedMatch._id }
+    /**
+     * Имя комнаты, в которой оперирует MatchExecutor
+     */
+    get roomName() { return 'R ' + this.storedMatch.roomId }
 
+    /**
+     * Текущая команда, если матч еще не начался возвращает 0
+     */
     get currentTeam() { return this.match.state.team }
 
+    /**
+     * Текущая стадия раунда, если матч уже начался
+     */
     get roundStage() { return this.match.state.roundStage }
 
+    /**
+     * Загрузить матч
+     */
     async loadMatch(): Promise<Match> {
         // TODO: fix possible null returned by findById
         this.match = await MatchModel.findById(this.match._id)
+        this.localPlayersCache = {}
+        for (let p of this.match.participants)
+            this.localPlayersCache[p.id] = p
         return this.match
     }
 
-    /**
-     * Check is round is complete
-     * @param match
-     */
-    private isMatchComplete(match: Match): boolean {
-        const maxRounds = match.settings?.maxRounds || MAX_ROUNDS
-        const maxMinutes = match.settings?.maxMinuted || MAX_MINUTES
-        if (match.state.round >= maxRounds)
+    canPower(user: User, index?: number) {
+        const userTeam = this.match.getTeam(user._id)
+        let can = this.isPowerStage && userTeam !==  && userTeam == this.currentTeam
+        if (!can || typeof index === 'undefined')
+            return can
+
+        return can && this.canBePowered(index, userTeam)
+    }
+
+    canBePowered(cellIndex: number, team: number) {
+        return cellIndex > 0 &&
+            this.match.state.cells.length > cellIndex &&
+            this.match.state.cells[cellIndex].t === team &&
+            this.match.state.cells[cellIndex].v < (this.match.state.cells[cellIndex].mxv || MAX_VALUE)
+    }
+
+
+    canMove(user: User, index?: number) {
+        const userTeam = this.match.getTeam(user._id)
+        let can = this.isMoveStage && userTeam !== 0 && userTeam  == this.currentTeam
+        if (!can || typeof index === 'undefined')
+            return can
+        can = can && this.match.getCellTeam(index) == userTeam
+        return can
+    }
+
+    onUserLeave(userID: string) {
+        const participant = this.localPlayersCache[userID]
+        if (participant && participant.online) {
+            this.localPlayersCache[userID].online = false
+            setTimeout(() => {
+                if (!this.localPlayersCache[userID].online) {
+                    this.notifyUserLeft(userID)
+                }
+            }, 2000)
+        }
+    }
+
+    onUserJoin(userID: string) {
+        const participant = this.localPlayersCache[userID]
+        if (participant && !participant.online) {
+            this.localPlayersCache[userID].online = true
+            setTimeout(() => {
+                if (this.localPlayersCache[userID].online) {
+                    this.notifyUserJoined(userID)
+                }
+            }, 2000)
+        }
+    }
+
+    private notifyUserLeft(userID: string) {
+        this.ns.emit('user_left', {id: userID})
+    }
+
+    private notifyUserJoined(userID: string) {
+        this.ns.emit('user_join', {id: userID})
+    }
+
+    private isMatchComplete(): boolean {
+        const maxRounds = this.match.settings?.maxRounds || MAX_ROUNDS
+        const maxMinutes = this.match.settings?.maxMinuted || MAX_MINUTES
+        if (this.match.state.round >= maxRounds)
             return true
 
         if (maxMinutes > 0) {
-            const endTime = moment(match.startsAt).add(maxMinutes, 'minutes')
+            const endTime = moment(this.match.startsAt).add(maxMinutes, 'minutes')
             if (endTime.isBefore(moment()))
                 return true
         }
 
-        const matchCells = match.state.cells
+        const matchCells = this.match.state.cells
 
         let winner: number | undefined
         let i = 0
@@ -86,13 +163,13 @@ export class MatchExecutor implements IMatchExecutor {
         return true
     }
 
-    private calculateRoundLength(match: Match): number {
-        const cellsCount = match.state.cells.filter(c => c.t == match.state.team).length
-        return match.settings.baseLen || BASE_LEN + (match.settings.expandLen || EXPAND_LEN) * cellsCount
+    private calculateRoundLength(): number {
+        const cellsCount = this.match.state.cells.filter(c => c.t == this.match.state.team).length
+        return this.match.settings.baseLen || BASE_LEN + (this.match.settings.expandLen || EXPAND_LEN) * cellsCount
     }
 
-    private calculatePoints(match: Match): number {
-        return match.state.cells.filter(c => c.t == match.state.team).length
+    private calculatePoints(): number {
+        return this.match.state.cells.filter(c => c.t == this.match.state.team).length
     }
 
     private async expectEvent<T>(name: string, timeout: number) {
@@ -110,14 +187,13 @@ export class MatchExecutor implements IMatchExecutor {
     async callback(job: Job<{ matchId: string }>): Promise<any> {
         const matchId = job.data.matchId
         this.match = await MatchModel.findById(matchId)
-        MatchModel.update({_id: matchId}, {jobId: job.id})
-
+        await this.updateMatch({jobId: job.id}, m => m.jobId = job.id)
         this.ns.emit('room_ready')
         await sleep(+this.match.startsAt - +new Date())
 
         // == add event handlers ==
 
-        while (!this.isMatchComplete(this.match)) {
+        while (!this.isMatchComplete()) {
             if (this.match.state.team) {
                 let index = this.match.teamsRotation.indexOf(this.match.state.team) + 1
                 index = index == 0 || index >= this.match.teamsRotation.length ? 0 : index + 1
@@ -132,14 +208,14 @@ export class MatchExecutor implements IMatchExecutor {
             this.match.state.roundStage = 1
             this.match.state.round++
 
-            let length = this.calculateRoundLength(this.match)
+            let length = this.calculateRoundLength()
             this.ns.emit('round', {
                 round: this.match.state.round,
                 roundStage: 1,
                 team: this.match.state.team,
                 endsIn: moment().add(length, 'milliseconds').unix()
             })
-            MatchModel.update({_id: matchId}, {
+            await this.updateMatch({
                 $set: {
                     'state.roundStage': 1,
                     'state.round': this.match.state.round,
@@ -152,8 +228,8 @@ export class MatchExecutor implements IMatchExecutor {
             // == start second stage of the round ==
 
             this.match.state.roundStage = 2
-            length = this.calculateRoundLength(this.match)
-            this.match.state.powerPoints = this.calculatePoints(this.match)
+            length = this.calculateRoundLength()
+            this.match.state.powerPoints = this.calculatePoints()
 
             this.ns.emit('round', {
                 round: this.match.state.round,
@@ -173,13 +249,6 @@ export class MatchExecutor implements IMatchExecutor {
 
             this.ns.emit('round_stop')
         }
-    }
-
-    canBePoweredByTeam(cellIndex: number, team: number) {
-        return cellIndex > 0 &&
-            this.match.state.cells.length > cellIndex &&
-            this.match.state.cells[cellIndex].t === team &&
-            this.match.state.cells[cellIndex].v < (this.match.state.cells[cellIndex].mxv || MAX_VALUE)
     }
 
     async powerCell(index: number, maxOut: boolean) {
@@ -252,5 +321,11 @@ export class MatchExecutor implements IMatchExecutor {
         await MatchModel.update({_id: this.match._id}, {
             $set: update
         })
+    }
+
+    private async updateMatch(values: UpdateQuery<DocumentType<Match>>, setter?: (match: Match) => void) {
+        if (setter)
+            setter(this.match)
+        await MatchModel.update({_id: this.match._id}, values).exec()
     }
 }

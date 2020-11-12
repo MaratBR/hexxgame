@@ -11,7 +11,13 @@
       "../node_modules/@types",
       "./socketio"
     ],
-    "outDir": "../dist/server"
+    "outDir": "../dist/server",
+    "baseUrl": ".",
+    "paths": {
+      "lib_shared/*": [
+        "../lib_shared/*"
+      ]
+    }
   },
   "exclude": [
     "node_modules"

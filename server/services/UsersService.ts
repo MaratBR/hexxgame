@@ -1,5 +1,5 @@
 import {Service} from "typedi";
-import {GameSession, generateUserIdAsync, User, UserModel} from "../models/user";
+import {GameSession, generateUserIdAsync, User, UserModel} from "../models/User";
 import {BaseRequest} from "koa";
 
 @Service()

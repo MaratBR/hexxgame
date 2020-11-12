@@ -3,5 +3,14 @@
   "version": "1.0.0",
   "main": "index.js",
   "license": "MIT",
-  "private": true
+  "private": true,
+  "workspaces": [
+    "client",
+    "server",
+    "lib_shared"
+  ],
+  "scripts": {
+    "server-dev": "yarn workspace server watch-server",
+    "client-dev": "yarn workspace client start"
+  }
 }

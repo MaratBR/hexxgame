@@ -1,6 +1,7 @@
 import {Service} from "typedi";
-import {GameMap, GameMapCell, gameMapInfo, GameMapInfoDto, GameMapModel} from "../models/map";
+import {GameMap, GameMapCell, gameMapInfo, GameMapModel} from "../models/GameMap";
 import {HttpError} from "routing-controllers";
+import {GameMapInfoDto} from "lib_shared/dto";
 
 @Service()
 export default class MapsService {

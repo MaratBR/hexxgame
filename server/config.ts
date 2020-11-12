@@ -4,6 +4,16 @@ const DEBUG = !!(process.env.DEBUG || ENV != 'production')
 const config = {
     debug: DEBUG,
     env: ENV,
+    keys: {
+        main: 'secretsecret',
+        jwtSecret: 'sfdgfhedhrghfgefghasdgfjrijfkljkfeijkrhfjknwshfjrlnjhfkldmfesrdfthgjksrdftghjdrfg'
+    },
+
+    jwt: {
+        issuer: 'hexx',
+        audience: 'hexx-ui',
+
+    },
 
     redis: {
         host: process.env.NODE_REDIS_IP || '127.0.0.1',
@@ -20,6 +30,10 @@ const config = {
 
     db: {
         uri: 'mongodb://localhost:27017/hexx-koa'
+    },
+
+    cors: {
+        origin: 'http://localhost:3000'
     }
 }
 

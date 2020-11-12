@@ -1,8 +1,15 @@
 import React from 'react';
 import logo from './logo.svg';
 import './App.css';
+import io from "socket.io-client"
 
 function App() {
+  const client = io(':8000')
+
+  client.on("connected", () => {
+    console.log('connected')
+  })
+
   return (
     <div className="App">
       <header className="App-header">
