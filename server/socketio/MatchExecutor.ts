@@ -17,6 +17,7 @@ import {UpdateQuery} from "mongoose";
 import {DocumentType} from "@typegoose/typegoose";
 import Dict = NodeJS.Dict;
 import {User} from "../models/User";
+import {MoveDirection} from "lib_shared/dto";
 
 
 interface IMatchExecutor {
@@ -77,32 +78,6 @@ export class MatchExecutor implements IMatchExecutor {
         return this.match
     }
 
-    canPower(user: User, index?: number) {
-        const userTeam = this.match.getTeam(user._id)
-        let can = this.isPowerStage && userTeam !==  && userTeam == this.currentTeam
-        if (!can || typeof index === 'undefined')
-            return can
-
-        return can && this.canBePowered(index, userTeam)
-    }
-
-    canBePowered(cellIndex: number, team: number) {
-        return cellIndex > 0 &&
-            this.match.state.cells.length > cellIndex &&
-            this.match.state.cells[cellIndex].t === team &&
-            this.match.state.cells[cellIndex].v < (this.match.state.cells[cellIndex].mxv || MAX_VALUE)
-    }
-
-
-    canMove(user: User, index?: number) {
-        const userTeam = this.match.getTeam(user._id)
-        let can = this.isMoveStage && userTeam !== 0 && userTeam  == this.currentTeam
-        if (!can || typeof index === 'undefined')
-            return can
-        can = can && this.match.getCellTeam(index) == userTeam
-        return can
-    }
-
     onUserLeave(userID: string) {
         const participant = this.localPlayersCache[userID]
         if (participant && participant.online) {
@@ -135,41 +110,17 @@ export class MatchExecutor implements IMatchExecutor {
         this.ns.emit('user_join', {id: userID})
     }
 
-    private isMatchComplete(): boolean {
-        const maxRounds = this.match.settings?.maxRounds || MAX_ROUNDS
-        const maxMinutes = this.match.settings?.maxMinuted || MAX_MINUTES
-        if (this.match.state.round >= maxRounds)
-            return true
-
-        if (maxMinutes > 0) {
-            const endTime = moment(this.match.startsAt).add(maxMinutes, 'minutes')
-            if (endTime.isBefore(moment()))
-                return true
-        }
-
-        const matchCells = this.match.state.cells
-
-        let winner: number | undefined
-        let i = 0
-        for (; i < matchCells.length && !winner; i++) {
-            winner = matchCells[i].t
-        }
-
-        for (; i < matchCells.length; i++) {
-            const t = matchCells[i].t
-            if (t && t != winner)
-                return false
-        }
-        return true
-    }
-
     private calculateRoundLength(): number {
-        const cellsCount = this.match.state.cells.filter(c => c.t == this.match.state.team).length
-        return this.match.settings.baseLen || BASE_LEN + (this.match.settings.expandLen || EXPAND_LEN) * cellsCount
+        if (this.match.state.team < 1)
+            return 0
+        const cellsCount = this.match.getStats().teamPoints[this.match.state.team - 1]
+        return (this.match.settings.baseLen || BASE_LEN) + (this.match.settings.expandLen || EXPAND_LEN) * cellsCount
     }
 
     private calculatePoints(): number {
-        return this.match.state.cells.filter(c => c.t == this.match.state.team).length
+        return Array.from(this.match.allCells())
+            .filter(c => c.t == this.match.state.team)
+            .length
     }
 
     private async expectEvent<T>(name: string, timeout: number) {
@@ -193,7 +144,9 @@ export class MatchExecutor implements IMatchExecutor {
 
         // == add event handlers ==
 
-        while (!this.isMatchComplete()) {
+        let winner: number = null
+
+        while (winner == null) {
             if (this.match.state.team) {
                 let index = this.match.teamsRotation.indexOf(this.match.state.team) + 1
                 index = index == 0 || index >= this.match.teamsRotation.length ? 0 : index + 1
@@ -248,7 +201,10 @@ export class MatchExecutor implements IMatchExecutor {
             await this.expectEvent('skip', length)
 
             this.ns.emit('round_stop')
+            winner = this.match.getWinner()
         }
+
+        this.ns.emit('')
     }
 
     async powerCell(index: number, maxOut: boolean) {
@@ -270,14 +226,9 @@ export class MatchExecutor implements IMatchExecutor {
 
     }
 
-    async attemptAttack(fromIndex: number, toIndex: number) {
-        const cells = this.match.state.cells
-        if (fromIndex < 0 || toIndex < 0 ||
-            fromIndex >= cells.length ||
-            toIndex >= cells.length ||
-            fromIndex == toIndex) {
-            return
-        }
+    async attemptAttack(fromX: number, fromY: number, direction: MoveDirection) {
+        this.match.attemptAttack(fromX, from)
+
 
         const from = cells[fromIndex], to = cells[toIndex];
         if (!from.t || from.t == to.t || from.v < 2 ||

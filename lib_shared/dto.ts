@@ -33,3 +33,19 @@ export type PlayerInfoDto = {
     isAnon?: boolean
     id: string
 }
+
+export enum MoveDirection {
+    Top,
+    Bottom,
+    TopRight,
+    TopLeft,
+    BottomRight,
+    BottomLeft
+}
+
+export type MatchStats = {
+    totalPoints: number
+    totalCells: number
+    maxPoints: number
+    teamPoints: number[]
+}
