@@ -1,0 +1,355 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="BranchesTreeState">
+    <expand>
+      <path>
+        <item name="ROOT" type="e8cecc67:BranchNodeDescriptor" />
+        <item name="LOCAL_ROOT" type="e8cecc67:BranchNodeDescriptor" />
+      </path>
+    </expand>
+    <select />
+  </component>
+  <component name="ChangeListManager">
+    <list default="true" id="4ab1c6cd-2206-4d65-81b2-41909449377e" name="Default Changelist" comment="">
+      <change afterPath="$PROJECT_DIR$/client/src/App.module.sass" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/client/src/App.scss" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/client/src/components/Brand.module.scss" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/client/src/components/Brand.tsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/client/src/components/Loading.module.scss" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/client/src/components/Loading.tsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/client/src/components/Modal.module.scss" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/client/src/components/Modal.tsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/client/src/game/AppAPI.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/client/src/game/context.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/client/src/imports/colors.sass" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/client/src/pages/GamePage.module.scss" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/client/src/pages/GamePage.tsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/client/src/pages/WelcomePage.module.scss" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/client/src/pages/WelcomePage.tsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/client/src/pages/game/PlayPage.tsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/client/src/pages/game/RoomPage.tsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/client/src/pages/game/SettingsPage.tsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/lib_shared/colyseus.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/lib_shared/tsconfig.json" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/server/colyseus/AuthorizedRoom.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/server/colyseus/LobbyRoom.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/server/colyseus/MatchExecutor.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/server/colyseus/server.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/client/package.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/src/App.css" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/src/App.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/App.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/src/game/Client.ts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/src/game/Manager.ts" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/game/Manager.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/src/logo.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/tsconfig.json" beforeDir="false" afterPath="$PROJECT_DIR$/client/tsconfig.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib_shared/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/lib_shared/package.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/server/auth/tokens.ts" beforeDir="false" afterPath="$PROJECT_DIR$/server/auth/tokens.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/server/controllers/AuthController.ts" beforeDir="false" afterPath="$PROJECT_DIR$/server/controllers/AuthController.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/server/init/app.ts" beforeDir="false" afterPath="$PROJECT_DIR$/server/init/app.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/server/init/build-app.ts" beforeDir="false" afterPath="$PROJECT_DIR$/server/init/build-app.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/server/models/GameMap.ts" beforeDir="false" afterPath="$PROJECT_DIR$/server/models/GameMap.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/server/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/server/package.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/server/services/GameService.ts" beforeDir="false" afterPath="$PROJECT_DIR$/server/services/GameService.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/server/tsconfig.json" beforeDir="false" afterPath="$PROJECT_DIR$/server/tsconfig.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/yarn.lock" beforeDir="false" afterPath="$PROJECT_DIR$/yarn.lock" afterDir="false" />
+    </list>
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="JavaScript File" />
+        <option value="package.json" />
+        <option value="SCSS File" />
+        <option value="Sass File" />
+        <option value="TypeScript JSX File" />
+        <option value="TypeScript File" />
+        <option value="tsconfig.json" />
+      </list>
+    </option>
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="ProjectId" id="1jv0jmCYfql7yUCXmgsj4Vxqod5" />
+  <component name="ProjectLevelVcsManager" settingsEditedManually="true">
+    <ConfirmationsSetting value="2" id="Add" />
+  </component>
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent">
+    <property name="ASKED_ADD_EXTERNAL_FILES" value="true" />
+    <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
+    <property name="WebServerToolWindowFactoryState" value="false" />
+    <property name="javascript.nodejs.core.library.configured.version" value="14.15.0" />
+    <property name="javascript.nodejs.core.library.typings.version" value="14.14.6" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/server/colyseus" />
+    <property name="list.type.of.created.stylesheet" value="Sass" />
+    <property name="node.js.detected.package.eslint" value="true" />
+    <property name="node.js.detected.package.tslint" value="true" />
+    <property name="node.js.path.for.package.eslint" value="project" />
+    <property name="node.js.path.for.package.tslint" value="project" />
+    <property name="node.js.selected.package.eslint" value="(autodetect)" />
+    <property name="node.js.selected.package.tslint" value="(autodetect)" />
+    <property name="nodejs.jest.jest_package" value="$PROJECT_DIR$/server/node_modules/jest" />
+    <property name="nodejs_interpreter_path" value="$USER_HOME$/.nvm/versions/node/v14.15.0/bin/node" />
+    <property name="nodejs_package_manager_path" value="yarn" />
+    <property name="settings.editor.selected.configurable" value="preferences.pluginManager" />
+    <property name="ts.external.directory.path" value="$PROJECT_DIR$/node_modules/typescript/lib" />
+    <property name="vue.rearranger.settings.migration" value="true" />
+  </component>
+  <component name="RecentsManager">
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/server/colyseus" />
+      <recent name="$PROJECT_DIR$/server" />
+      <recent name="$PROJECT_DIR$/shared" />
+      <recent name="$PROJECT_DIR$/client" />
+      <recent name="$PROJECT_DIR$" />
+    </key>
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/server/socketio" />
+      <recent name="$PROJECT_DIR$/server/init" />
+      <recent name="$PROJECT_DIR$/webpack" />
+      <recent name="$PROJECT_DIR$" />
+    </key>
+  </component>
+  <component name="RunManager" selected="npm.server-dev">
+    <configuration name="Client tests" type="JavaScriptTestRunnerJest">
+      <node-interpreter value="project" />
+      <node-options value="" />
+      <jest-package value="$PROJECT_DIR$/node_modules/react-scripts" />
+      <working-dir value="$PROJECT_DIR$/client" />
+      <envs />
+      <scope-kind value="ALL" />
+      <method v="2" />
+    </configuration>
+    <configuration name="client-dev" type="js.build_tools.npm" temporary="true" nameIsGenerated="true">
+      <package-json value="$PROJECT_DIR$/package.json" />
+      <command value="run" />
+      <scripts>
+        <script value="client-dev" />
+      </scripts>
+      <node-interpreter value="project" />
+      <envs />
+      <method v="2" />
+    </configuration>
+    <configuration name="server-dev" type="js.build_tools.npm" temporary="true" nameIsGenerated="true">
+      <package-json value="$PROJECT_DIR$/package.json" />
+      <command value="run" />
+      <scripts>
+        <script value="server-dev" />
+      </scripts>
+      <node-interpreter value="project" />
+      <envs />
+      <method v="2" />
+    </configuration>
+    <list>
+      <item itemvalue="Jest.Client tests" />
+      <item itemvalue="npm.client-dev" />
+      <item itemvalue="npm.server-dev" />
+    </list>
+    <recent_temporary>
+      <list>
+        <item itemvalue="npm.client-dev" />
+        <item itemvalue="npm.server-dev" />
+      </list>
+    </recent_temporary>
+  </component>
+  <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="4ab1c6cd-2206-4d65-81b2-41909449377e" name="Default Changelist" comment="" />
+      <created>1604669395823</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1604669395823</updated>
+      <workItem from="1604669396918" duration="6910000" />
+      <workItem from="1604717529762" duration="2805000" />
+      <workItem from="1604720348363" duration="2629000" />
+      <workItem from="1604729290912" duration="6646000" />
+      <workItem from="1604744854144" duration="4199000" />
+      <workItem from="1604758615258" duration="4448000" />
+      <workItem from="1604765662054" duration="16372000" />
+      <workItem from="1604825849660" duration="15090000" />
+      <workItem from="1604856537333" duration="1667000" />
+      <workItem from="1604900276204" duration="31638000" />
+      <workItem from="1605065684921" duration="24112000" />
+      <workItem from="1605100021984" duration="396000" />
+      <workItem from="1605100434142" duration="138000" />
+      <workItem from="1605100590209" duration="258000" />
+      <workItem from="1605100874626" duration="329000" />
+      <workItem from="1605101219353" duration="38457000" />
+      <workItem from="1605335297942" duration="879000" />
+      <workItem from="1605336204419" duration="10717000" />
+      <workItem from="1605397578846" duration="5893000" />
+      <workItem from="1605438719094" duration="27775000" />
+    </task>
+    <task id="LOCAL-00001" summary="finishing basics">
+      <created>1605153963739</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1605153963739</updated>
+    </task>
+    <task id="LOCAL-00002" summary="Match">
+      <created>1605233574373</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1605233574373</updated>
+    </task>
+    <option name="localTasksCounter" value="3" />
+    <servers />
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="3" />
+  </component>
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State />
+          </value>
+        </entry>
+      </map>
+    </option>
+    <option name="oldMeFiltersMigrated" value="true" />
+  </component>
+  <component name="VcsManagerConfiguration">
+    <option name="ADD_EXTERNAL_FILES_SILENTLY" value="true" />
+    <MESSAGE value="finishing basics" />
+    <MESSAGE value="Match" />
+    <option name="LAST_COMMIT_MESSAGE" value="Match" />
+  </component>
+  <component name="WindowStateProjectService">
+    <state x="420" y="203" width="1079" height="862" key="#com.intellij.execution.impl.EditConfigurationsDialog" timestamp="1604983551375">
+      <screen x="0" y="32" width="1920" height="1048" />
+    </state>
+    <state x="420" y="203" width="1079" height="862" key="#com.intellij.execution.impl.EditConfigurationsDialog/0.32.1920.1048@0.32.1920.1048" timestamp="1604983551375" />
+    <state x="726" y="204" key="#com.intellij.ide.util.MemberChooser" timestamp="1605158404874">
+      <screen x="0" y="32" width="1920" height="1048" />
+    </state>
+    <state x="726" y="204" key="#com.intellij.ide.util.MemberChooser/0.32.1920.1048@0.32.1920.1048" timestamp="1605158404874" />
+    <state x="632" y="223" key="#com.intellij.refactoring.safeDelete.UnsafeUsagesDialog" timestamp="1605411172854">
+      <screen x="0" y="32" width="1920" height="960" />
+    </state>
+    <state x="632" y="241" key="#com.intellij.refactoring.safeDelete.UnsafeUsagesDialog/0.32.1920.1048@0.32.1920.1048" timestamp="1604823662315" />
+    <state x="632" y="223" key="#com.intellij.refactoring.safeDelete.UnsafeUsagesDialog/0.32.1920.960@0.32.1920.960" timestamp="1605411172854" />
+    <state x="0" y="32" key="FileDocumentManager.FileCacheConflict" timestamp="1604823999607">
+      <screen x="0" y="32" width="1920" height="1048" />
+    </state>
+    <state x="0" y="32" key="FileDocumentManager.FileCacheConflict/0.32.1920.1048@0.32.1920.1048" timestamp="1604823999607" />
+    <state width="1896" height="199" key="GridCell.Tab.0.bottom" timestamp="1605501439867">
+      <screen x="0" y="32" width="1920" height="960" />
+    </state>
+    <state width="1896" height="224" key="GridCell.Tab.0.bottom/0.32.1920.1048@0.32.1920.1048" timestamp="1605345454862" />
+    <state width="1896" height="199" key="GridCell.Tab.0.bottom/0.32.1920.960@0.32.1920.960" timestamp="1605501439867" />
+    <state width="1896" height="199" key="GridCell.Tab.0.center" timestamp="1605501439866">
+      <screen x="0" y="32" width="1920" height="960" />
+    </state>
+    <state width="1896" height="224" key="GridCell.Tab.0.center/0.32.1920.1048@0.32.1920.1048" timestamp="1605345454861" />
+    <state width="1896" height="199" key="GridCell.Tab.0.center/0.32.1920.960@0.32.1920.960" timestamp="1605501439866" />
+    <state width="1896" height="199" key="GridCell.Tab.0.left" timestamp="1605501439865">
+      <screen x="0" y="32" width="1920" height="960" />
+    </state>
+    <state width="1896" height="224" key="GridCell.Tab.0.left/0.32.1920.1048@0.32.1920.1048" timestamp="1605345454861" />
+    <state width="1896" height="199" key="GridCell.Tab.0.left/0.32.1920.960@0.32.1920.960" timestamp="1605501439865" />
+    <state width="1896" height="199" key="GridCell.Tab.0.right" timestamp="1605501439866">
+      <screen x="0" y="32" width="1920" height="960" />
+    </state>
+    <state width="1896" height="224" key="GridCell.Tab.0.right/0.32.1920.1048@0.32.1920.1048" timestamp="1605345454862" />
+    <state width="1896" height="199" key="GridCell.Tab.0.right/0.32.1920.960@0.32.1920.960" timestamp="1605501439866" />
+    <state width="1896" height="223" key="GridCell.Tab.1.bottom" timestamp="1605501419239">
+      <screen x="0" y="32" width="1920" height="960" />
+    </state>
+    <state width="1897" height="339" key="GridCell.Tab.1.bottom/0.32.1920.1048@0.32.1920.1048" timestamp="1605095347198" />
+    <state width="1896" height="223" key="GridCell.Tab.1.bottom/0.32.1920.960@0.32.1920.960" timestamp="1605501419239" />
+    <state width="1896" height="223" key="GridCell.Tab.1.center" timestamp="1605501419239">
+      <screen x="0" y="32" width="1920" height="960" />
+    </state>
+    <state width="1897" height="339" key="GridCell.Tab.1.center/0.32.1920.1048@0.32.1920.1048" timestamp="1605095347198" />
+    <state width="1896" height="223" key="GridCell.Tab.1.center/0.32.1920.960@0.32.1920.960" timestamp="1605501419239" />
+    <state width="1896" height="223" key="GridCell.Tab.1.left" timestamp="1605501419239">
+      <screen x="0" y="32" width="1920" height="960" />
+    </state>
+    <state width="1897" height="339" key="GridCell.Tab.1.left/0.32.1920.1048@0.32.1920.1048" timestamp="1605095347198" />
+    <state width="1896" height="223" key="GridCell.Tab.1.left/0.32.1920.960@0.32.1920.960" timestamp="1605501419239" />
+    <state width="1896" height="223" key="GridCell.Tab.1.right" timestamp="1605501419239">
+      <screen x="0" y="32" width="1920" height="960" />
+    </state>
+    <state width="1897" height="339" key="GridCell.Tab.1.right/0.32.1920.1048@0.32.1920.1048" timestamp="1605095347198" />
+    <state width="1896" height="223" key="GridCell.Tab.1.right/0.32.1920.960@0.32.1920.960" timestamp="1605501419239" />
+    <state width="1896" height="223" key="GridCell.Tab.2.bottom" timestamp="1605501419240">
+      <screen x="0" y="32" width="1920" height="960" />
+    </state>
+    <state width="1897" height="339" key="GridCell.Tab.2.bottom/0.32.1920.1048@0.32.1920.1048" timestamp="1605095347199" />
+    <state width="1896" height="223" key="GridCell.Tab.2.bottom/0.32.1920.960@0.32.1920.960" timestamp="1605501419240" />
+    <state width="1896" height="223" key="GridCell.Tab.2.center" timestamp="1605501419240">
+      <screen x="0" y="32" width="1920" height="960" />
+    </state>
+    <state width="1897" height="339" key="GridCell.Tab.2.center/0.32.1920.1048@0.32.1920.1048" timestamp="1605095347199" />
+    <state width="1896" height="223" key="GridCell.Tab.2.center/0.32.1920.960@0.32.1920.960" timestamp="1605501419240" />
+    <state width="1896" height="223" key="GridCell.Tab.2.left" timestamp="1605501419240">
+      <screen x="0" y="32" width="1920" height="960" />
+    </state>
+    <state width="1897" height="339" key="GridCell.Tab.2.left/0.32.1920.1048@0.32.1920.1048" timestamp="1605095347199" />
+    <state width="1896" height="223" key="GridCell.Tab.2.left/0.32.1920.960@0.32.1920.960" timestamp="1605501419240" />
+    <state width="1896" height="223" key="GridCell.Tab.2.right" timestamp="1605501419240">
+      <screen x="0" y="32" width="1920" height="960" />
+    </state>
+    <state width="1897" height="339" key="GridCell.Tab.2.right/0.32.1920.1048@0.32.1920.1048" timestamp="1605095347199" />
+    <state width="1896" height="223" key="GridCell.Tab.2.right/0.32.1920.960@0.32.1920.960" timestamp="1605501419240" />
+    <state width="1896" height="223" key="GridCell.Tab.3.bottom" timestamp="1605501419241">
+      <screen x="0" y="32" width="1920" height="960" />
+    </state>
+    <state width="1897" height="339" key="GridCell.Tab.3.bottom/0.32.1920.1048@0.32.1920.1048" timestamp="1605095347200" />
+    <state width="1896" height="223" key="GridCell.Tab.3.bottom/0.32.1920.960@0.32.1920.960" timestamp="1605501419241" />
+    <state width="1896" height="223" key="GridCell.Tab.3.center" timestamp="1605501419240">
+      <screen x="0" y="32" width="1920" height="960" />
+    </state>
+    <state width="1897" height="339" key="GridCell.Tab.3.center/0.32.1920.1048@0.32.1920.1048" timestamp="1605095347200" />
+    <state width="1896" height="223" key="GridCell.Tab.3.center/0.32.1920.960@0.32.1920.960" timestamp="1605501419240" />
+    <state width="1896" height="223" key="GridCell.Tab.3.left" timestamp="1605501419240">
+      <screen x="0" y="32" width="1920" height="960" />
+    </state>
+    <state width="1897" height="339" key="GridCell.Tab.3.left/0.32.1920.1048@0.32.1920.1048" timestamp="1605095347199" />
+    <state width="1896" height="223" key="GridCell.Tab.3.left/0.32.1920.960@0.32.1920.960" timestamp="1605501419240" />
+    <state width="1896" height="223" key="GridCell.Tab.3.right" timestamp="1605501419241">
+      <screen x="0" y="32" width="1920" height="960" />
+    </state>
+    <state width="1897" height="339" key="GridCell.Tab.3.right/0.32.1920.1048@0.32.1920.1048" timestamp="1605095347200" />
+    <state width="1896" height="223" key="GridCell.Tab.3.right/0.32.1920.960@0.32.1920.960" timestamp="1605501419241" />
+    <state x="456" y="191" key="SettingsEditor" timestamp="1605336174746">
+      <screen x="0" y="32" width="1920" height="1048" />
+    </state>
+    <state x="456" y="191" key="SettingsEditor/0.32.1920.1048@0.32.1920.1048" timestamp="1605336174746" />
+    <state x="100" y="132" width="1720" height="848" key="dock-window-1" timestamp="1604748662033">
+      <screen x="0" y="32" width="1920" height="1048" />
+    </state>
+    <state x="100" y="132" width="1720" height="848" key="dock-window-1/0.32.1920.1048@0.32.1920.1048" timestamp="1604748662033" />
+    <state x="100" y="132" width="1720" height="848" key="dock-window-2" timestamp="1604748662033">
+      <screen x="0" y="32" width="1920" height="1048" />
+    </state>
+    <state x="100" y="132" width="1720" height="848" key="dock-window-2/0.32.1920.1048@0.32.1920.1048" timestamp="1604748662033" />
+    <state x="590" y="196" width="739" height="633" key="find.popup" timestamp="1605412032960">
+      <screen x="0" y="32" width="1920" height="960" />
+    </state>
+    <state x="590" y="211" width="739" height="690" key="find.popup/0.32.1920.1048@0.32.1920.1048" timestamp="1605074471831" />
+    <state x="590" y="196" width="739" height="633" key="find.popup/0.32.1920.960@0.32.1920.960" timestamp="1605412032960" />
+    <state x="540" y="249" key="run.anything.popup" timestamp="1604930743654">
+      <screen x="0" y="32" width="1920" height="1048" />
+    </state>
+    <state x="540" y="249" key="run.anything.popup/0.32.1920.1048@0.32.1920.1048" timestamp="1604930743654" />
+    <state x="539" y="42" width="840" height="948" key="search.everywhere.popup" timestamp="1605492154408">
+      <screen x="0" y="32" width="1920" height="960" />
+    </state>
+    <state x="539" y="44" width="840" height="1034" key="search.everywhere.popup/0.32.1920.1048@0.32.1920.1048" timestamp="1605349161973" />
+    <state x="539" y="42" width="840" height="948" key="search.everywhere.popup/0.32.1920.960@0.32.1920.960" timestamp="1605492154408" />
+  </component>
+</project>
