@@ -5,6 +5,7 @@ import {mongoose} from "@typegoose/typegoose";
 import config from "../config";
 import {initAuth} from "../auth";
 import getColyseus from "../colyseus/server";
+import initDB from "./initDB";
 
 interface BuiltApp {
     server: http.Server
@@ -48,6 +49,7 @@ export default class AppBuilder {
 
         mongoose.connect(config.db.uri, { useNewUrlParser: true, useUnifiedTopology: true })
             .catch(console.error)
+            .then(() => initDB())
 
         return {
             server,

@@ -1,5 +1,5 @@
 import {AxiosInstance, default as axios} from "axios"
-import {RoomInfoDto} from "lib_shared/dto";
+import {GameMapInfoDto, RoomInfoDto} from "lib_shared/dto";
 import * as Colyseus from "colyseus.js"
 import {EventEmitter} from "events";
 import {ILobbyState} from "lib_shared/colyseus";
@@ -32,6 +32,10 @@ export default class AppAPI extends EventEmitter {
 
     getGameToken(): Promise<string> {
         return this.client.get('api/auth/getGameToken').then(r => r.data.token)
+    }
+
+    getMaps(): Promise<GameMapInfoDto[]> {
+        return this.client.get('api/maps').then(r => r.data)
     }
 
     async isAuthorized(): Promise<boolean> {

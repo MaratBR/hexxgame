@@ -15,8 +15,8 @@ export default class MapsService {
 
     createMap(name: string, cells: GameMapCell[], description?: string): Promise<GameMap> {
         const teams = new Set(cells.filter(c => c.initTeam && c.initTeam > 0).map(c => c.initTeam))
-        if (teams.size <= 2)
-            return Promise.reject(new HttpError(422, 'map definition contains 2 or less teams'))
+        if (teams.size < 2)
+            return Promise.reject(new HttpError(422, 'map definition contains less than 2 teams'))
         cells = cells.sort((a, b) => a.x * 100000 + a.y)
 
         return GameMapModel.create({

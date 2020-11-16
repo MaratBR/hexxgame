@@ -7,6 +7,6 @@ export class Base<T = string> {
 }
 
 export class IDBase {
-    @prop({default: nanoid()})
+    @prop({default: nanoid})
     _id?: string
 }

@@ -4,15 +4,26 @@ import AppAPI from "../../game/AppAPI";
 import {ILobbyState} from "lib_shared/colyseus";
 import {Room} from "colyseus.js";
 import styles from "./RoomPage.module.scss"
+import {GameMapInfoDto} from "lib_shared/dto";
+import {getTeamColor, getTeamName} from "lib_shared/consts";
+console.log(getTeamColor(0))
 
-const DEFAULT_STATE: ILobbyState = {
+type RoomState = ILobbyState & {
+    maps: {
+        loading?: boolean,
+        list?:  GameMapInfoDto[]
+    }
+}
+
+const DEFAULT_STATE: RoomState = {
     teamsNum: 0,
     spectators: [],
     teams: [],
-    clients: {}
+    clients: {},
+    maps: {}
 }
 
-export default class RoomPage extends React.Component<any, ILobbyState> {
+export default class RoomPage extends React.Component<any, RoomState> {
     static contextType = ApiContext;
     context!: AppAPI
     private lobby?: Room<ILobbyState>
@@ -40,14 +51,32 @@ export default class RoomPage extends React.Component<any, ILobbyState> {
                 console.log(e)
             }
         }
+
+        await this.updateMaps()
     }
 
-    private updateStateFromLobby() {
-        if (this.context.lobby) {
-            this.setState(this.context.lobby.state)
-            return true
+    private async updateMaps() {
+        if (this.state.maps.loading)
+            return
+
+        this.setState({
+            maps: {loading: true}
+        })
+
+        try {
+            this.setState({
+                maps: {
+                    list: await this.context.getMaps(),
+                    loading: false
+                }
+            })
+        } catch (e) {
+            this.setState({
+                maps: {
+                    loading: false
+                }
+            })
         }
-        return false
     }
 
     componentWillUnmount() {
@@ -64,10 +93,25 @@ export default class RoomPage extends React.Component<any, ILobbyState> {
     render() {
         return <div>
             <div className={styles.playersList}>
-                <div className={styles.spectators}>
-                    <h2>Spectators</h2>
-                    {this.renderPlayers(this.state.spectators)}
-                </div>
+                {this.renderTeam(0, this.state.spectators)}
+            </div>
+
+            <div className={styles.maps}>
+                {this.state.maps?.list?.map(m => {
+                    return <div className={styles.map}>
+                        <span>{m.name}</span>
+                    </div>
+                })}
+            </div>
+        </div>
+    }
+
+    renderTeam(id: number, players: string[]) {
+        return <div className={styles.team}>
+            <div className={styles.poly}  />
+            <h2>sd</h2>
+            <div className={styles.players}>
+                {this.renderPlayers(players)}
             </div>
         </div>
     }
