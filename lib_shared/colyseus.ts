@@ -1,43 +1,20 @@
-import {Schema, type} from "@colyseus/schema";
-
-export class ClientInfo extends Schema {
-    @type('string')
+export interface IClientInfo {
     dbID: string
-
-    @type('number')
-    team: number = 0
-
-    @type('string')
+    team: number
     username: string
-
-    @type('boolean')
-    ready: boolean = false;
+    ready: boolean
 }
 
-export class TeamInfo extends Schema {
-    @type('boolean')
-    ready: boolean = false;
-
-    @type(['string'])
-    members: string[] = []
+export interface ITeamInfo {
+    ready: boolean
+    members: string[]
 }
 
-export class LobbyState extends Schema {
-    @type('string')
+export interface ILobbyState {
     id?: string;
-
-    @type('string')
     selectedMapID?: string
-
-    @type('number')
-    teamsNum?: number = 0
-
-    @type({map: ClientInfo})
-    clients: {[key: string]: ClientInfo} = {}
-
-    @type(['string'])
-    spectators: string[] = []
-
-    @type([TeamInfo])
-    teams: TeamInfo[] = []
+    teamsNum: number
+    clients: {[key: string]: IClientInfo}
+    spectators: string[]
+    teams: ITeamInfo[]
 }

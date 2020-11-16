@@ -1,8 +1,8 @@
 import {AxiosInstance, default as axios} from "axios"
-import {RoomInfoDto} from "../../../lib_shared/dto";
+import {RoomInfoDto} from "lib_shared/dto";
 import * as Colyseus from "colyseus.js"
 import {EventEmitter} from "events";
-import {LobbyState} from "lib_shared/colyseus";
+import {ILobbyState} from "lib_shared/colyseus";
 
 interface IAPIOptions {
     address: string
@@ -11,7 +11,7 @@ interface IAPIOptions {
 export default class AppAPI extends EventEmitter {
     private readonly client: AxiosInstance
     private readonly wsClient: Colyseus.Client
-    private _lobby?: Colyseus.Room<LobbyState>
+    private _lobby?: Colyseus.Room<ILobbyState>
 
     constructor(opts: IAPIOptions) {
         super()

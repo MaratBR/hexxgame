@@ -3,8 +3,50 @@ import http from "http"
 import {Client, ServerError} from "colyseus";
 import {User} from "../models/User";
 import {Room, RoomModel} from "../models/Room";
-import {ClientInfo, LobbyState} from "lib_shared/colyseus";
 import {getData} from "../socketio/sharedSession";
+import {Schema, type} from "@colyseus/schema";
+
+export class ClientInfo extends Schema {
+    @type('string')
+    dbID: string
+
+    @type('number')
+    team: number = 0
+
+    @type('string')
+    username: string
+
+    @type('boolean')
+    ready: boolean = false;
+}
+
+export class TeamInfo extends Schema {
+    @type('boolean')
+    ready: boolean = false;
+
+    @type(['string'])
+    members: string[] = []
+}
+
+export class LobbyState extends Schema {
+    @type('string')
+    id?: string;
+
+    @type('string')
+    selectedMapID?: string
+
+    @type('number')
+    teamsNum?: number = 0
+
+    @type({map: ClientInfo})
+    clients: {[key: string]: ClientInfo} = {}
+
+    @type(['string'])
+    spectators: string[] = []
+
+    @type([TeamInfo])
+    teams: TeamInfo[] = []
+}
 
 export default class LobbyRoom extends AuthorizedRoom<LobbyState> {
     private async getRoom(): Promise<Room> {
