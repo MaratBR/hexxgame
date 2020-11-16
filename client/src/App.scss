@@ -1,0 +1,22 @@
+@import url('https://fonts.googleapis.com/css2?family=Dancing+Script&family=Righteous&display=swap');
+
+body {
+  margin: 0;
+  padding: 0;
+  background: #333;
+  color: white;
+}
+
+h1, h2, h3 {
+  font-family: 'Righteous', cursive;
+}
+
+.button {
+  font-family: 'Righteous', cursive;
+  padding: 10px 20px;
+  border-radius: 20px;
+  border: 2px solid white;
+  background: transparent;
+  color: inherit;
+  font-size: 20px;
+}
