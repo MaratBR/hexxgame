@@ -25,7 +25,9 @@ export default function createApp(cfg?: Partial<IAppParams>): Application {
 
     app.use(koaCors({
         credentials: true,
-        origin: config.cors.origin
+        origin: config.cors.origin,
+        methods: ['GET', 'POST'],
+        headers: ['X-Requested-With', 'X-HTTP-Method-Override', 'Content-Type', 'Accept']
     }))
     app.use(koaCookie())
     app.use(koaSession(SESSION_CONFIG, app))

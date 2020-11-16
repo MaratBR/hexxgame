@@ -1,0 +1,26 @@
+.loading {
+  font-size: 0;
+  height: 60px;
+  width: 60px;
+  border: 1px solid white;
+  border-radius: 30px;
+  clip-path: polygon(0 0 , 50% 0, 50% 50%, 100% 50%, 100% 100%, 0 100%);
+  animation: spinner 1s linear infinite;
+}
+
+.loadingContainer {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+}
+
+@keyframes spinner {
+  0% {
+    transform: rotate(0);
+  }
+
+  0% {
+    transform: rotate(360deg);
+  }
+}

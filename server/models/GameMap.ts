@@ -30,7 +30,7 @@ export class GameMap extends IDBase {
     maxTeams: number
 }
 
-export const GameMapModel = getModelForClass<GameMap>(GameMap)
+export const GameMapModel = getModelForClass(GameMap)
 
 export function gameMapInfo(map: GameMap): GameMapInfoDto {
     return {

@@ -1,18 +1,13 @@
 import http from "http"
-import socketio from "socket.io"
 import Application from "koa"
 import createApp, {IAppParams} from "./app";
-import createSocketIOFromHTTPServer from "../socketio";
-import {SESSION_CONFIG} from "./session";
 import {mongoose} from "@typegoose/typegoose";
 import config from "../config";
 import {initAuth} from "../auth";
-import c from "koa-session/lib/context";
-import sharedSession from "../socketio/sharedSession";
+import getColyseus from "../colyseus/server";
 
 interface BuiltApp {
     server: http.Server
-    socketIO?: socketio.Server
     koa?: Application
     port?: number
     host?: string
@@ -27,17 +22,11 @@ interface IAppBuilderConfig {
 }
 
 export default class AppBuilder {
-    private _enableSocketIO: boolean = true
     private _cfg: IAppBuilderConfig = {
         port: 8000,
         host: '0.0.0.0'
     }
     private _appCfg?: IAppParams
-
-    disableSocketIO(): this {
-        this._enableSocketIO = false
-        return this
-    }
 
     port(v: number): this {
         this._cfg.port = v
@@ -51,17 +40,11 @@ export default class AppBuilder {
 
     build(): BuiltApp {
         const app = createApp()
-        let sio: socketio.Server | undefined
-        const server = app ? http.createServer(app.callback()) : http.createServer()
-
+        const server = http.createServer(app.callback())
+        const colyseus = getColyseus(server)
         if (app) {
             initAuth(app)
         }
-
-        if (this._enableSocketIO)
-            sio = createSocketIOFromHTTPServer(server, s => {
-                s.use(sharedSession(app));
-            })
 
         mongoose.connect(config.db.uri, { useNewUrlParser: true, useUnifiedTopology: true })
             .catch(console.error)
@@ -69,7 +52,6 @@ export default class AppBuilder {
         return {
             server,
             koa: app,
-            socketIO: sio,
             port: this._cfg.port,
             host: this._cfg.host,
             run() {

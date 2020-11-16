@@ -33,7 +33,7 @@ export class MatchExecutor implements IMatchExecutor {
     private match: Match
     private readonly localEventEmitter: EventEmitter
 
-    constructor(server: Server, matchId: string) {
+    constructor(matchId: string) {
         this.localEventEmitter = new EventEmitter()
         this.ns = server.of('match ' + matchId)
     }

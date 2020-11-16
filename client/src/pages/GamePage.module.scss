@@ -1,0 +1,54 @@
+@import "../imports/colors";
+
+.root {
+  height: 100vh;
+
+  nav {
+    border-bottom: 1px solid rgba(white, 0.05);
+    padding-left: 11px;
+    display: flex;
+
+    & > ul {
+      display: flex;
+      list-style: none;
+      margin: 10px 0 0 0;
+      align-items: flex-end;
+      font-size: 20px;
+      font-family: 'Righteous', cursive;
+
+      li {
+        text-align: center;
+        margin: 0 10px;
+        position: relative;
+        top: 2px;
+
+        a {
+          display: block;
+          border-bottom: 3px solid transparent;
+          padding: 5px 15px;
+          color: white;
+          text-decoration: white;
+          transition: .2s;
+
+          &:hover, &.active {
+            border-bottom: 3px solid white;
+          }
+        }
+
+        @for $i from 1 through length($brand-colors) {
+          $c: nth($brand-colors, $i);
+
+          &:nth-child(#{$i}):hover > a {
+            color: $c;
+          }
+        }
+      }
+
+    }
+  }
+}
+
+.body {
+  margin-top: 50px;
+  margin-left: 120px;
+}

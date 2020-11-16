@@ -11,6 +11,11 @@ h1, h2, h3 {
   font-family: 'Righteous', cursive;
 }
 
+.display {
+  font-family: 'Righteous', cursive;
+  font-size: 1.5em;
+}
+
 .button {
   font-family: 'Righteous', cursive;
   padding: 10px 20px;
@@ -19,4 +24,50 @@ h1, h2, h3 {
   background: transparent;
   color: inherit;
   font-size: 20px;
+  cursor: pointer;
+  transition: .2s;
+
+  &:hover {
+    background: rgba(white, 0.05);
+  }
+
+  &:active {
+    background: white;
+    color: black;
+    outline: none;
+    transform: scale(0.97);
+  }
+
+  &:focus {
+    outline: none;
+    box-shadow: 0 0 0 6px rgba(white, 0.1);
+  }
+}
+
+.input {
+  padding: 10px 20px;
+  border-radius: 20px;
+  background: transparent;
+  border: 2px solid white;
+  color: white;
+  transition: .2s;
+
+  &:focus {
+    outline: none;
+    box-shadow: 0 0 0 6px rgba(white, 0.1);
+    background: white;
+    color: black;
+  }
+}
+
+.spacing {
+  margin-bottom: 20px;
+}
+
+.buttons {
+  display: flex;
+
+  .button {
+    margin: 4px;
+  }
 }

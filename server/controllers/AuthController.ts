@@ -11,23 +11,31 @@ import {
 import UsersService from "../services/UsersService";
 import {User} from "../models/User";
 import {message} from "./api";
+import Tokens from "../auth/tokens";
 
 @JsonController('/api/auth')
 export class AuthController {
     constructor(private userService: UsersService) {}
 
-    @Get('/counter')
-    async counter(@Ctx() context: Context) {
-        context.session.count = context.session.count ? context.session.count + 1 : 1
-        return {
-            count: context.session.count
-        }
-    }
-
     @Authorized()
     @Get('/checkLogin')
     async login(@CurrentUser() user: User) {
         return message(`hi, ${user.username}!`)
+    }
+
+    @Authorized()
+    @Get('/getGameToken')
+    async generateGameToken(@Ctx() ctx: Context) {
+        if (!ctx.session.gameToken || (+new Date() >= ctx.session.gameTokenExp)) {
+            const token = await Tokens.generateSocketToken(ctx.state.user)
+            ctx.session.gameToken = token.str
+            ctx.session.gameTokenExp = token.exp
+            ctx.session.save()
+        }
+        return {
+            token: ctx.session.gameToken,
+            exp: ctx.session.gameTokenExp
+        }
     }
 
     @Post('/login/anon')

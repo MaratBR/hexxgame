@@ -80,13 +80,8 @@ export default class GameService {
         await matchesQueue.add({matchId: match._id})
     }
 
-    async getMatchMapState(id: string): Promise<MapCellState[]> {
-        return MatchModel.findById(id).then(m => m.state.cells)
-    }
-
     getLocalExecutorOrNull(matchId: string): MatchExecutor | null {
         return executorHub.getLocalExecutorOrNull(matchId)
     }
-
 
 }
