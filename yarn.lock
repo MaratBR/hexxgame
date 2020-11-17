@@ -1574,6 +1574,104 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@hexx/client@workspace:workspaces/client":
+  version: 0.0.0-use.local
+  resolution: "@hexx/client@workspace:workspaces/client"
+  dependencies:
+    "@hexx/common": 1.0.0
+    "@testing-library/jest-dom": ^5.11.4
+    "@testing-library/react": ^11.1.0
+    "@testing-library/user-event": ^12.1.10
+    "@types/axios": ^0.14.0
+    "@types/events": ^3
+    "@types/jest": ^26.0.15
+    "@types/node": ^12.0.0
+    "@types/react": ^16.9.53
+    "@types/react-dom": ^16.9.8
+    "@types/react-router-dom": ^5
+    "@types/sass": ^1
+    axios: ^0.21.0
+    colyseus.js: ^0.14.0
+    events: ^3.2.0
+    jest: 26.6.0
+    react: ^17.0.1
+    react-dom: ^17.0.1
+    react-router-dom: ^5.2.0
+    react-scripts: 4.0.0
+    sass: ^1.29.0
+    typescript: ^4.0.3
+    web-vitals: ^0.2.4
+  languageName: unknown
+  linkType: soft
+
+"@hexx/common@1.0.0, @hexx/common@workspace:workspaces/common":
+  version: 0.0.0-use.local
+  resolution: "@hexx/common@workspace:workspaces/common"
+  dependencies:
+    "@types/node": ^14.14.7
+    colyseus: ^0.14.0
+    moment: ^2.29.1
+    typescript: ^4.0.5
+  languageName: unknown
+  linkType: soft
+
+"@hexx/hexxgame@workspace:.":
+  version: 0.0.0-use.local
+  resolution: "@hexx/hexxgame@workspace:."
+  languageName: unknown
+  linkType: soft
+
+"@hexx/server@workspace:workspaces/server":
+  version: 0.0.0-use.local
+  resolution: "@hexx/server@workspace:workspaces/server"
+  dependencies:
+    "@hexx/common": 1.0.0
+    "@typegoose/typegoose": ^7.4.1
+    "@types/bull": ^3
+    "@types/jsonwebtoken": ^8
+    "@types/koa": ^2
+    "@types/koa-cors": ^0
+    "@types/koa-logger": ^3
+    "@types/koa-passport": ^4
+    "@types/koa-redis": ^4
+    "@types/koa-session": ^5.10.3
+    "@types/mongoose": ^5
+    "@types/node": ^14.14.6
+    "@types/passport-local": ^1
+    bcrypt: ^5.0.0
+    bull: ^3.18.1
+    cachegoose: ^8.0.0
+    class-transformer: ^0.3.1
+    class-validator: ^0.12.2
+    colyseus: ^0.14.2
+    dotenv: ^8.2.0
+    jest: ^26.6.3
+    jsonwebtoken: ^8.5.1
+    koa: ^2.13.0
+    koa-cookie: ^1.0.0
+    koa-cors: ^0.0.16
+    koa-logger: ^3.2.1
+    koa-passport: ^4.1.3
+    koa-redis: ^4.0.1
+    koa-session: ^6.1.0
+    koa-socketio-session: ^1.0.0
+    moment: ^2.29.1
+    mongoose: ^5.10.13
+    nanoid: ^3.1.16
+    nodemon: ^2.0.6
+    passport-local: ^1.0.0
+    reflect-metadata: ^0.1.13
+    routing-controllers: ^0.9.0-alpha.6
+    socket.io: ^3.0.0
+    socket.io-client: ^3.0.1
+    socket.io-redis: ^5.4.0
+    ts-jest: ^26.4.4
+    ts-node: ^9.0.0
+    typedi: ^0.8.0
+    typescript: ^4.0.5
+  languageName: unknown
+  linkType: soft
+
 "@istanbuljs/load-nyc-config@npm:^1.0.0":
   version: 1.1.0
   resolution: "@istanbuljs/load-nyc-config@npm:1.1.0"
@@ -4940,35 +5038,6 @@ __metadata:
   checksum: 6e5bc71774e202bfd3782d0be56eacee9462bfc7dc4a601dad10636163ab9c8abe625e760b0f28e590f9044bc23df3927ee3406f8c961fd2e4a51ef3f67fab2f
   languageName: node
   linkType: hard
-
-"client@workspace:client":
-  version: 0.0.0-use.local
-  resolution: "client@workspace:client"
-  dependencies:
-    "@testing-library/jest-dom": ^5.11.4
-    "@testing-library/react": ^11.1.0
-    "@testing-library/user-event": ^12.1.10
-    "@types/axios": ^0.14.0
-    "@types/events": ^3
-    "@types/jest": ^26.0.15
-    "@types/node": ^12.0.0
-    "@types/react": ^16.9.53
-    "@types/react-dom": ^16.9.8
-    "@types/react-router-dom": ^5
-    "@types/sass": ^1
-    axios: ^0.21.0
-    colyseus.js: ^0.14.0
-    events: ^3.2.0
-    jest: 26.6.0
-    react: ^17.0.1
-    react-dom: ^17.0.1
-    react-router-dom: ^5.2.0
-    react-scripts: 4.0.0
-    sass: ^1.29.0
-    typescript: ^4.0.3
-    web-vitals: ^0.2.4
-  languageName: unknown
-  linkType: soft
 
 "cliui@npm:^5.0.0":
   version: 5.0.0
@@ -8354,12 +8423,6 @@ fsevents@~2.1.2:
   languageName: node
   linkType: hard
 
-"hexxgame@workspace:.":
-  version: 0.0.0-use.local
-  resolution: "hexxgame@workspace:."
-  languageName: unknown
-  linkType: soft
-
 "history@npm:^4.9.0":
   version: 4.10.1
   resolution: "history@npm:4.10.1"
@@ -10639,17 +10702,6 @@ fsevents@~2.1.2:
   checksum: 775861da38dcb7e5f1de5bea2a1c7ffaede6e9e8632cfbac76be145ecb295370f46bb41307613c283d66f1fee5d8cc448ca3323c4a02d0fb1e913b2f78de2abb
   languageName: node
   linkType: hard
-
-"lib_shared@1.0.0, lib_shared@workspace:lib_shared":
-  version: 0.0.0-use.local
-  resolution: "lib_shared@workspace:lib_shared"
-  dependencies:
-    "@types/node": ^14.14.7
-    colyseus: ^0.14.0
-    moment: ^2.29.1
-    typescript: ^4.0.5
-  languageName: unknown
-  linkType: soft
 
 "line-column@npm:^1.0.2":
   version: 1.0.2
@@ -15306,57 +15358,6 @@ fsevents@~2.1.2:
   checksum: 97e8c94ec02950d019000ca12a8e0b4fdeaaabb7ae965c1c05557b55b48114716ae92688972a8d9f06a5e2d5957c305253a859ec223bb39a1e0732366d0e2768
   languageName: node
   linkType: hard
-
-"server@workspace:server":
-  version: 0.0.0-use.local
-  resolution: "server@workspace:server"
-  dependencies:
-    "@typegoose/typegoose": ^7.4.1
-    "@types/bull": ^3
-    "@types/jsonwebtoken": ^8
-    "@types/koa": ^2
-    "@types/koa-cors": ^0
-    "@types/koa-logger": ^3
-    "@types/koa-passport": ^4
-    "@types/koa-redis": ^4
-    "@types/koa-session": ^5.10.3
-    "@types/mongoose": ^5
-    "@types/node": ^14.14.6
-    "@types/passport-local": ^1
-    bcrypt: ^5.0.0
-    bull: ^3.18.1
-    cachegoose: ^8.0.0
-    class-transformer: ^0.3.1
-    class-validator: ^0.12.2
-    colyseus: ^0.14.2
-    dotenv: ^8.2.0
-    jest: ^26.6.3
-    jsonwebtoken: ^8.5.1
-    koa: ^2.13.0
-    koa-cookie: ^1.0.0
-    koa-cors: ^0.0.16
-    koa-logger: ^3.2.1
-    koa-passport: ^4.1.3
-    koa-redis: ^4.0.1
-    koa-session: ^6.1.0
-    koa-socketio-session: ^1.0.0
-    lib_shared: 1.0.0
-    moment: ^2.29.1
-    mongoose: ^5.10.13
-    nanoid: ^3.1.16
-    nodemon: ^2.0.6
-    passport-local: ^1.0.0
-    reflect-metadata: ^0.1.13
-    routing-controllers: ^0.9.0-alpha.6
-    socket.io: ^3.0.0
-    socket.io-client: ^3.0.1
-    socket.io-redis: ^5.4.0
-    ts-jest: ^26.4.4
-    ts-node: ^9.0.0
-    typedi: ^0.8.0
-    typescript: ^4.0.5
-  languageName: unknown
-  linkType: soft
 
 "set-blocking@npm:^2.0.0, set-blocking@npm:~2.0.0":
   version: 2.0.0

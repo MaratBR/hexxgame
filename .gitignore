@@ -1,4 +1,5 @@
 .yarn/
 .pnp.s
 node_modules/
-dist/
+**/dist/
+**/build/

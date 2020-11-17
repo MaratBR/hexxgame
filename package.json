@@ -1,16 +1,20 @@
 {
-  "name": "hexxgame",
+  "name": "@hexx/hexxgame",
   "version": "1.0.0",
   "main": "index.js",
   "license": "MIT",
   "private": true,
-  "workspaces": [
-    "client",
-    "server",
-    "lib_shared"
-  ],
+  "workspaces": {
+    "packages": [
+      "workspaces/*"
+    ],
+    "nohoist": [
+      "**/react-scripts",
+      "**/react-scripts/**"
+    ]
+  },
   "scripts": {
-    "server-dev": "yarn workspace server watch-server",
-    "client-dev": "yarn workspace client start"
+    "server-dev": "yarn workspace @hexx/server watch-server",
+    "client-dev": "yarn workspace @hexx/client start"
   }
 }

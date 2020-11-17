@@ -1,0 +1,12 @@
+
+@mixin overlay {
+  position: fixed;
+}
+
+.overlay {
+  position: fixed;
+}
+
+.bottom {
+  @include overlay;
+}

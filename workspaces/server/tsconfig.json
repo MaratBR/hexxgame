@@ -1,0 +1,19 @@
+{
+  "compilerOptions": {
+    "experimentalDecorators": true,
+    "emitDecoratorMetadata": true,
+    "module": "commonjs",
+    "target": "es6",
+    "esModuleInterop": true,
+    "lib": ["es7"],
+    "outDir": "dist",
+    "skipLibCheck": true,
+    "allowSyntheticDefaultImports": true,
+    "moduleResolution": "Node"
+  },
+  "exclude": [
+    "node_modules",
+    "./src/socketio/*",
+    "./src/__tests__"
+  ]
+}

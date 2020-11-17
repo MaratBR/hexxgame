@@ -11,17 +11,103 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="4ab1c6cd-2206-4d65-81b2-41909449377e" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/lib_shared/consts.ts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/server/init/initDB.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/tsconfig.json" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/workspaces/client/public/favicon.ico" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/workspaces/client/public/logo192.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/workspaces/client/public/logo512.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/workspaces/client/public/manifest.json" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/workspaces/client/public/robots.txt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/workspaces/client/src/Overlay.module.scss" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/workspaces/client/src/Overlay.tsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/workspaces/common/src/index.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/workspaces/common/tsconfig.tsbuildinfo" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/client/src/game/AppAPI.ts" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/game/AppAPI.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/client/src/pages/GamePage.module.scss" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/pages/GamePage.module.scss" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/client/src/pages/game/RoomPage.module.scss" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/pages/game/RoomPage.module.scss" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/client/src/pages/game/RoomPage.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/pages/game/RoomPage.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib_shared/tsconfig.json" beforeDir="false" afterPath="$PROJECT_DIR$/lib_shared/tsconfig.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/server/init/build-app.ts" beforeDir="false" afterPath="$PROJECT_DIR$/server/init/build-app.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/server/models/Base.ts" beforeDir="false" afterPath="$PROJECT_DIR$/server/models/Base.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/server/services/MapsService.ts" beforeDir="false" afterPath="$PROJECT_DIR$/server/services/MapsService.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/workspaces/client/package.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/public/favicon.ico" beforeDir="false" afterPath="$PROJECT_DIR$/workspaces/client/build/favicon.ico" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/public/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/workspaces/client/public/index.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/public/logo192.png" beforeDir="false" afterPath="$PROJECT_DIR$/workspaces/client/build/logo192.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/public/logo512.png" beforeDir="false" afterPath="$PROJECT_DIR$/workspaces/client/build/logo512.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/public/manifest.json" beforeDir="false" afterPath="$PROJECT_DIR$/workspaces/client/build/manifest.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/public/robots.txt" beforeDir="false" afterPath="$PROJECT_DIR$/workspaces/client/build/robots.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/src/App.module.sass" beforeDir="false" afterPath="$PROJECT_DIR$/workspaces/client/src/App.module.sass" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/src/App.scss" beforeDir="false" afterPath="$PROJECT_DIR$/workspaces/client/src/App.scss" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/src/App.test.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/workspaces/client/src/App.test.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/src/App.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/workspaces/client/src/App.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/src/components/Brand.module.scss" beforeDir="false" afterPath="$PROJECT_DIR$/workspaces/client/src/components/Brand.module.scss" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/src/components/Brand.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/workspaces/client/src/components/Brand.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/src/components/Loading.module.scss" beforeDir="false" afterPath="$PROJECT_DIR$/workspaces/client/src/components/Loading.module.scss" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/src/components/Loading.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/workspaces/client/src/components/Loading.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/src/components/Modal.module.scss" beforeDir="false" afterPath="$PROJECT_DIR$/workspaces/client/src/components/Modal.module.scss" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/src/components/Modal.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/workspaces/client/src/components/Modal.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/src/game/AppAPI.ts" beforeDir="false" afterPath="$PROJECT_DIR$/workspaces/client/src/game/AppAPI.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/src/game/Manager.ts" beforeDir="false" afterPath="$PROJECT_DIR$/workspaces/client/src/game/Manager.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/src/game/context.ts" beforeDir="false" afterPath="$PROJECT_DIR$/workspaces/client/src/game/context.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/src/imports/colors.sass" beforeDir="false" afterPath="$PROJECT_DIR$/workspaces/client/src/imports/colors.sass" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/src/index.css" beforeDir="false" afterPath="$PROJECT_DIR$/workspaces/client/src/index.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/src/index.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/workspaces/client/src/index.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/src/pages/GamePage.module.scss" beforeDir="false" afterPath="$PROJECT_DIR$/workspaces/client/src/pages/GamePage.module.scss" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/src/pages/GamePage.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/workspaces/client/src/pages/GamePage.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/src/pages/WelcomePage.module.scss" beforeDir="false" afterPath="$PROJECT_DIR$/workspaces/client/src/pages/WelcomePage.module.scss" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/src/pages/WelcomePage.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/workspaces/client/src/pages/WelcomePage.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/src/pages/game/PlayPage.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/workspaces/client/src/pages/game/PlayPage.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/src/pages/game/RoomPage.module.scss" beforeDir="false" afterPath="$PROJECT_DIR$/workspaces/client/src/pages/game/RoomPage.module.scss" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/src/pages/game/RoomPage.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/workspaces/client/src/pages/game/RoomPage.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/src/pages/game/SettingsPage.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/workspaces/client/src/pages/game/SettingsPage.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/src/react-app-env.d.ts" beforeDir="false" afterPath="$PROJECT_DIR$/workspaces/client/src/react-app-env.d.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/src/reportWebVitals.ts" beforeDir="false" afterPath="$PROJECT_DIR$/workspaces/client/src/reportWebVitals.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/src/setupTests.ts" beforeDir="false" afterPath="$PROJECT_DIR$/workspaces/client/src/setupTests.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/tsconfig.json" beforeDir="false" afterPath="$PROJECT_DIR$/workspaces/client/tsconfig.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib_shared/colyseus.ts" beforeDir="false" afterPath="$PROJECT_DIR$/workspaces/common/src/colyseus.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib_shared/consts.ts" beforeDir="false" afterPath="$PROJECT_DIR$/workspaces/common/src/consts.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib_shared/dto.ts" beforeDir="false" afterPath="$PROJECT_DIR$/workspaces/common/src/dto.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib_shared/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/workspaces/common/package.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib_shared/promise.ts" beforeDir="false" afterPath="$PROJECT_DIR$/workspaces/common/src/promise.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib_shared/tsconfig2.json" beforeDir="false" afterPath="$PROJECT_DIR$/workspaces/common/tsconfig.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/package.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/server/__tests__/app.ts" beforeDir="false" afterPath="$PROJECT_DIR$/workspaces/server/src/__tests__/app.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/server/__tests__/socketio.spec.ts" beforeDir="false" afterPath="$PROJECT_DIR$/workspaces/server/src/__tests__/socketio.spec.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/server/auth/index.ts" beforeDir="false" afterPath="$PROJECT_DIR$/workspaces/server/src/auth/index.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/server/auth/tokens.ts" beforeDir="false" afterPath="$PROJECT_DIR$/workspaces/server/src/auth/tokens.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/server/colyseus/AuthorizedRoom.ts" beforeDir="false" afterPath="$PROJECT_DIR$/workspaces/server/src/colyseus/AuthorizedRoom.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/server/colyseus/LobbyRoom.ts" beforeDir="false" afterPath="$PROJECT_DIR$/workspaces/server/src/colyseus/LobbyRoom.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/server/colyseus/MatchExecutor.ts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/server/colyseus/server.ts" beforeDir="false" afterPath="$PROJECT_DIR$/workspaces/server/src/colyseus/server.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/server/config.ts" beforeDir="false" afterPath="$PROJECT_DIR$/workspaces/server/config.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/server/controllers/ApiController.ts" beforeDir="false" afterPath="$PROJECT_DIR$/workspaces/server/src/controllers/ApiController.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/server/controllers/AuthController.ts" beforeDir="false" afterPath="$PROJECT_DIR$/workspaces/server/src/controllers/AuthController.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/server/controllers/GameController.ts" beforeDir="false" afterPath="$PROJECT_DIR$/workspaces/server/src/controllers/GameController.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/server/controllers/MapsController.ts" beforeDir="false" afterPath="$PROJECT_DIR$/workspaces/server/src/controllers/MapsController.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/server/controllers/RoomsController.ts" beforeDir="false" afterPath="$PROJECT_DIR$/workspaces/server/src/controllers/RoomsController.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/server/controllers/api.ts" beforeDir="false" afterPath="$PROJECT_DIR$/workspaces/server/src/controllers/api.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/server/init/app.ts" beforeDir="false" afterPath="$PROJECT_DIR$/workspaces/server/src/init/app.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/server/init/build-app.ts" beforeDir="false" afterPath="$PROJECT_DIR$/workspaces/server/src/init/build-app.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/server/init/initDB.ts" beforeDir="false" afterPath="$PROJECT_DIR$/workspaces/server/src/init/initDB.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/server/init/jobs.ts" beforeDir="false" afterPath="$PROJECT_DIR$/workspaces/server/src/init/jobs.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/server/init/redis.ts" beforeDir="false" afterPath="$PROJECT_DIR$/workspaces/server/src/init/redis.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/server/init/session.ts" beforeDir="false" afterPath="$PROJECT_DIR$/workspaces/server/src/init/session.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/server/misc/hash.ts" beforeDir="false" afterPath="$PROJECT_DIR$/workspaces/server/src/misc/hash.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/server/models/Base.ts" beforeDir="false" afterPath="$PROJECT_DIR$/workspaces/server/src/models/Base.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/server/models/GameMap.ts" beforeDir="false" afterPath="$PROJECT_DIR$/workspaces/server/src/models/GameMap.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/server/models/Match.ts" beforeDir="false" afterPath="$PROJECT_DIR$/workspaces/server/src/models/Match.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/server/models/Room.ts" beforeDir="false" afterPath="$PROJECT_DIR$/workspaces/server/src/models/Room.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/server/models/User.ts" beforeDir="false" afterPath="$PROJECT_DIR$/workspaces/server/src/models/User.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/server/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/workspaces/server/package.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/server/server.ts" beforeDir="false" afterPath="$PROJECT_DIR$/workspaces/server/server.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/server/services/GameService.ts" beforeDir="false" afterPath="$PROJECT_DIR$/workspaces/server/src/services/GameService.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/server/services/MapsService.ts" beforeDir="false" afterPath="$PROJECT_DIR$/workspaces/server/src/services/MapsService.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/server/services/RoomService.ts" beforeDir="false" afterPath="$PROJECT_DIR$/workspaces/server/src/services/RoomService.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/server/services/UsersService.ts" beforeDir="false" afterPath="$PROJECT_DIR$/workspaces/server/src/services/UsersService.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/server/socketio/MatchExecutor.ts" beforeDir="false" afterPath="$PROJECT_DIR$/workspaces/server/src/socketio/MatchExecutor.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/server/socketio/RoomHub.ts" beforeDir="false" afterPath="$PROJECT_DIR$/workspaces/server/src/socketio/RoomHub.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/server/socketio/executor.ts" beforeDir="false" afterPath="$PROJECT_DIR$/workspaces/server/src/socketio/executor.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/server/socketio/index.ts" beforeDir="false" afterPath="$PROJECT_DIR$/workspaces/server/src/socketio/index.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/server/socketio/initServer.ts" beforeDir="false" afterPath="$PROJECT_DIR$/workspaces/server/src/socketio/initServer.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/server/socketio/initSocket.ts" beforeDir="false" afterPath="$PROJECT_DIR$/workspaces/server/src/socketio/initSocket.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/server/socketio/sharedSession.ts" beforeDir="false" afterPath="$PROJECT_DIR$/workspaces/server/src/socketio/sharedSession.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/server/tsconfig.json" beforeDir="false" afterPath="$PROJECT_DIR$/workspaces/server/tsconfig.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/server/utils/promise.ts" beforeDir="false" afterPath="$PROJECT_DIR$/workspaces/server/src/utils/promise.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/yarn.lock" beforeDir="false" afterPath="$PROJECT_DIR$/yarn.lock" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -33,11 +119,11 @@
       <list>
         <option value="JavaScript File" />
         <option value="package.json" />
-        <option value="Sass File" />
         <option value="TypeScript JSX File" />
-        <option value="tsconfig.json" />
         <option value="SCSS File" />
+        <option value="tsconfig.json" />
         <option value="TypeScript File" />
+        <option value="Sass File" />
       </list>
     </option>
   </component>
@@ -59,7 +145,7 @@
     <property name="javascript.nodejs.core.library.configured.version" value="14.15.0" />
     <property name="javascript.nodejs.core.library.typings.version" value="14.14.6" />
     <property name="last_opened_file_path" value="$PROJECT_DIR$/server/colyseus" />
-    <property name="list.type.of.created.stylesheet" value="SCSS" />
+    <property name="list.type.of.created.stylesheet" value="Sass" />
     <property name="node.js.detected.package.eslint" value="true" />
     <property name="node.js.detected.package.tslint" value="true" />
     <property name="node.js.path.for.package.eslint" value="project" />
@@ -74,17 +160,18 @@
     <property name="vue.rearranger.settings.migration" value="true" />
   </component>
   <component name="RecentsManager">
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/workspaces/server/src" />
+      <recent name="$PROJECT_DIR$/workspaces/common/src" />
+      <recent name="$PROJECT_DIR$/server/socketio" />
+      <recent name="$PROJECT_DIR$/server/init" />
+      <recent name="$PROJECT_DIR$/webpack" />
+    </key>
     <key name="CopyFile.RECENT_KEYS">
       <recent name="$PROJECT_DIR$/server/colyseus" />
       <recent name="$PROJECT_DIR$/server" />
       <recent name="$PROJECT_DIR$/shared" />
       <recent name="$PROJECT_DIR$/client" />
-      <recent name="$PROJECT_DIR$" />
-    </key>
-    <key name="MoveFile.RECENT_KEYS">
-      <recent name="$PROJECT_DIR$/server/socketio" />
-      <recent name="$PROJECT_DIR$/server/init" />
-      <recent name="$PROJECT_DIR$/webpack" />
       <recent name="$PROJECT_DIR$" />
     </key>
   </component>
@@ -125,8 +212,8 @@
     </list>
     <recent_temporary>
       <list>
-        <item itemvalue="npm.server-dev" />
         <item itemvalue="npm.client-dev" />
+        <item itemvalue="npm.server-dev" />
       </list>
     </recent_temporary>
   </component>
@@ -185,6 +272,130 @@
   </component>
   <component name="TypeScriptGeneratedFilesManager">
     <option name="version" value="3" />
+    <option name="exactExcludedFiles">
+      <list>
+        <option value="$PROJECT_DIR$/workspaces/server/server.js.map" />
+        <option value="$PROJECT_DIR$/workspaces/server/config.js.map" />
+        <option value="$PROJECT_DIR$/workspaces/server/config.js" />
+        <option value="$PROJECT_DIR$/workspaces/server/server.js" />
+        <option value="$PROJECT_DIR$/workspaces/client/src/index.js" />
+        <option value="$PROJECT_DIR$/workspaces/client/src/setupTests.js" />
+        <option value="$PROJECT_DIR$/workspaces/client/src/App.test.js.map" />
+        <option value="$PROJECT_DIR$/workspaces/client/src/reportWebVitals.js.map" />
+        <option value="$PROJECT_DIR$/workspaces/client/src/App.js" />
+        <option value="$PROJECT_DIR$/workspaces/client/src/setupTests.js.map" />
+        <option value="$PROJECT_DIR$/workspaces/client/src/reportWebVitals.js" />
+        <option value="$PROJECT_DIR$/workspaces/client/src/index.js.map" />
+        <option value="$PROJECT_DIR$/workspaces/client/src/App.js.map" />
+        <option value="$PROJECT_DIR$/workspaces/client/src/App.test.js" />
+        <option value="$PROJECT_DIR$/workspaces/common/src/colyseus.js" />
+        <option value="$PROJECT_DIR$/workspaces/common/src/promise.js" />
+        <option value="$PROJECT_DIR$/workspaces/common/src/colyseus.js.map" />
+        <option value="$PROJECT_DIR$/workspaces/common/src/promise.js.map" />
+        <option value="$PROJECT_DIR$/workspaces/common/src/index.js" />
+        <option value="$PROJECT_DIR$/workspaces/common/src/consts.js.map" />
+        <option value="$PROJECT_DIR$/workspaces/common/src/dto.js.map" />
+        <option value="$PROJECT_DIR$/workspaces/common/src/dto.js" />
+        <option value="$PROJECT_DIR$/workspaces/common/src/index.js.map" />
+        <option value="$PROJECT_DIR$/workspaces/common/src/consts.js" />
+        <option value="$PROJECT_DIR$/workspaces/client/src/game/AppAPI.js.map" />
+        <option value="$PROJECT_DIR$/workspaces/client/src/game/AppAPI.js" />
+        <option value="$PROJECT_DIR$/workspaces/client/src/game/Manager.js.map" />
+        <option value="$PROJECT_DIR$/workspaces/client/src/game/context.js" />
+        <option value="$PROJECT_DIR$/workspaces/client/src/game/context.js.map" />
+        <option value="$PROJECT_DIR$/workspaces/client/src/game/Manager.js" />
+        <option value="$PROJECT_DIR$/workspaces/client/src/pages/WelcomePage.js.map" />
+        <option value="$PROJECT_DIR$/workspaces/client/src/pages/WelcomePage.js" />
+        <option value="$PROJECT_DIR$/workspaces/client/src/pages/GamePage.js.map" />
+        <option value="$PROJECT_DIR$/workspaces/client/src/pages/GamePage.js" />
+        <option value="$PROJECT_DIR$/workspaces/client/src/components/Modal.js" />
+        <option value="$PROJECT_DIR$/workspaces/client/src/components/Loading.js" />
+        <option value="$PROJECT_DIR$/workspaces/client/src/components/Loading.js.map" />
+        <option value="$PROJECT_DIR$/workspaces/client/src/components/Brand.js" />
+        <option value="$PROJECT_DIR$/workspaces/client/src/components/Brand.js.map" />
+        <option value="$PROJECT_DIR$/workspaces/client/src/components/Modal.js.map" />
+        <option value="$PROJECT_DIR$/workspaces/server/src/auth/index.js" />
+        <option value="$PROJECT_DIR$/workspaces/server/src/auth/tokens.js" />
+        <option value="$PROJECT_DIR$/workspaces/server/src/auth/index.js.map" />
+        <option value="$PROJECT_DIR$/workspaces/server/src/auth/tokens.js.map" />
+        <option value="$PROJECT_DIR$/workspaces/server/src/init/initDB.js" />
+        <option value="$PROJECT_DIR$/workspaces/server/src/init/jobs.js.map" />
+        <option value="$PROJECT_DIR$/workspaces/server/src/init/jobs.js" />
+        <option value="$PROJECT_DIR$/workspaces/server/src/init/session.js.map" />
+        <option value="$PROJECT_DIR$/workspaces/server/src/init/build-app.js" />
+        <option value="$PROJECT_DIR$/workspaces/server/src/init/build-app.js.map" />
+        <option value="$PROJECT_DIR$/workspaces/server/src/init/redis.js" />
+        <option value="$PROJECT_DIR$/workspaces/server/src/init/session.js" />
+        <option value="$PROJECT_DIR$/workspaces/server/src/init/app.js.map" />
+        <option value="$PROJECT_DIR$/workspaces/server/src/init/redis.js.map" />
+        <option value="$PROJECT_DIR$/workspaces/server/src/init/app.js" />
+        <option value="$PROJECT_DIR$/workspaces/server/src/init/initDB.js.map" />
+        <option value="$PROJECT_DIR$/workspaces/server/src/misc/hash.js.map" />
+        <option value="$PROJECT_DIR$/workspaces/server/src/misc/hash.js" />
+        <option value="$PROJECT_DIR$/workspaces/server/src/utils/promise.js.map" />
+        <option value="$PROJECT_DIR$/workspaces/server/src/utils/promise.js" />
+        <option value="$PROJECT_DIR$/workspaces/server/src/models/Room.js.map" />
+        <option value="$PROJECT_DIR$/workspaces/server/src/models/Match.js.map" />
+        <option value="$PROJECT_DIR$/workspaces/server/src/models/Base.js" />
+        <option value="$PROJECT_DIR$/workspaces/server/src/models/GameMap.js" />
+        <option value="$PROJECT_DIR$/workspaces/server/src/models/Room.js" />
+        <option value="$PROJECT_DIR$/workspaces/server/src/models/GameMap.js.map" />
+        <option value="$PROJECT_DIR$/workspaces/server/src/models/User.js.map" />
+        <option value="$PROJECT_DIR$/workspaces/server/src/models/Base.js.map" />
+        <option value="$PROJECT_DIR$/workspaces/server/src/models/Match.js" />
+        <option value="$PROJECT_DIR$/workspaces/server/src/models/User.js" />
+        <option value="$PROJECT_DIR$/workspaces/server/src/colyseus/server.js.map" />
+        <option value="$PROJECT_DIR$/workspaces/server/src/colyseus/LobbyRoom.js.map" />
+        <option value="$PROJECT_DIR$/workspaces/server/src/colyseus/LobbyRoom.js" />
+        <option value="$PROJECT_DIR$/workspaces/server/src/colyseus/AuthorizedRoom.js" />
+        <option value="$PROJECT_DIR$/workspaces/server/src/colyseus/server.js" />
+        <option value="$PROJECT_DIR$/workspaces/server/src/colyseus/AuthorizedRoom.js.map" />
+        <option value="$PROJECT_DIR$/workspaces/server/src/services/UsersService.js" />
+        <option value="$PROJECT_DIR$/workspaces/server/src/services/UsersService.js.map" />
+        <option value="$PROJECT_DIR$/workspaces/server/src/services/RoomService.js" />
+        <option value="$PROJECT_DIR$/workspaces/server/src/services/MapsService.js.map" />
+        <option value="$PROJECT_DIR$/workspaces/server/src/services/MapsService.js" />
+        <option value="$PROJECT_DIR$/workspaces/server/src/services/GameService.js" />
+        <option value="$PROJECT_DIR$/workspaces/server/src/services/RoomService.js.map" />
+        <option value="$PROJECT_DIR$/workspaces/server/src/services/GameService.js.map" />
+        <option value="$PROJECT_DIR$/workspaces/server/src/socketio/index.js" />
+        <option value="$PROJECT_DIR$/workspaces/server/src/socketio/initServer.js" />
+        <option value="$PROJECT_DIR$/workspaces/server/src/socketio/executor.js" />
+        <option value="$PROJECT_DIR$/workspaces/server/src/socketio/index.js.map" />
+        <option value="$PROJECT_DIR$/workspaces/server/src/socketio/MatchExecutor.js.map" />
+        <option value="$PROJECT_DIR$/workspaces/server/src/socketio/MatchExecutor.js" />
+        <option value="$PROJECT_DIR$/workspaces/server/src/socketio/executor.js.map" />
+        <option value="$PROJECT_DIR$/workspaces/server/src/socketio/sharedSession.js.map" />
+        <option value="$PROJECT_DIR$/workspaces/server/src/socketio/RoomHub.js.map" />
+        <option value="$PROJECT_DIR$/workspaces/server/src/socketio/RoomHub.js" />
+        <option value="$PROJECT_DIR$/workspaces/server/src/socketio/initSocket.js" />
+        <option value="$PROJECT_DIR$/workspaces/server/src/socketio/initSocket.js.map" />
+        <option value="$PROJECT_DIR$/workspaces/server/src/socketio/sharedSession.js" />
+        <option value="$PROJECT_DIR$/workspaces/server/src/socketio/initServer.js.map" />
+        <option value="$PROJECT_DIR$/workspaces/server/src/__tests__/socketio.spec.js" />
+        <option value="$PROJECT_DIR$/workspaces/server/src/__tests__/socketio.spec.js.map" />
+        <option value="$PROJECT_DIR$/workspaces/server/src/__tests__/app.js.map" />
+        <option value="$PROJECT_DIR$/workspaces/server/src/__tests__/app.js" />
+        <option value="$PROJECT_DIR$/workspaces/server/src/controllers/GameController.js.map" />
+        <option value="$PROJECT_DIR$/workspaces/server/src/controllers/AuthController.js" />
+        <option value="$PROJECT_DIR$/workspaces/server/src/controllers/AuthController.js.map" />
+        <option value="$PROJECT_DIR$/workspaces/server/src/controllers/GameController.js" />
+        <option value="$PROJECT_DIR$/workspaces/server/src/controllers/MapsController.js.map" />
+        <option value="$PROJECT_DIR$/workspaces/server/src/controllers/ApiController.js" />
+        <option value="$PROJECT_DIR$/workspaces/server/src/controllers/RoomsController.js.map" />
+        <option value="$PROJECT_DIR$/workspaces/server/src/controllers/api.js" />
+        <option value="$PROJECT_DIR$/workspaces/server/src/controllers/MapsController.js" />
+        <option value="$PROJECT_DIR$/workspaces/server/src/controllers/RoomsController.js" />
+        <option value="$PROJECT_DIR$/workspaces/server/src/controllers/api.js.map" />
+        <option value="$PROJECT_DIR$/workspaces/server/src/controllers/ApiController.js.map" />
+        <option value="$PROJECT_DIR$/workspaces/client/src/pages/game/PlayPage.js.map" />
+        <option value="$PROJECT_DIR$/workspaces/client/src/pages/game/RoomPage.js" />
+        <option value="$PROJECT_DIR$/workspaces/client/src/pages/game/RoomPage.js.map" />
+        <option value="$PROJECT_DIR$/workspaces/client/src/pages/game/SettingsPage.js" />
+        <option value="$PROJECT_DIR$/workspaces/client/src/pages/game/PlayPage.js" />
+        <option value="$PROJECT_DIR$/workspaces/client/src/pages/game/SettingsPage.js.map" />
+      </list>
+    </option>
   </component>
   <component name="Vcs.Log.Tabs.Properties">
     <option name="TAB_STATES">
@@ -206,10 +417,11 @@
     <option name="LAST_COMMIT_MESSAGE" value="display list of user in a room" />
   </component>
   <component name="WindowStateProjectService">
-    <state x="420" y="203" width="1079" height="862" key="#com.intellij.execution.impl.EditConfigurationsDialog" timestamp="1604983551375">
-      <screen x="0" y="32" width="1920" height="1048" />
+    <state x="420" y="189" width="1079" height="862" key="#com.intellij.execution.impl.EditConfigurationsDialog" timestamp="1605589030619">
+      <screen x="0" y="32" width="1920" height="960" />
     </state>
     <state x="420" y="203" width="1079" height="862" key="#com.intellij.execution.impl.EditConfigurationsDialog/0.32.1920.1048@0.32.1920.1048" timestamp="1604983551375" />
+    <state x="420" y="189" key="#com.intellij.execution.impl.EditConfigurationsDialog/0.32.1920.960@0.32.1920.960" timestamp="1605589030619" />
     <state x="726" y="204" key="#com.intellij.ide.util.MemberChooser" timestamp="1605158404874">
       <screen x="0" y="32" width="1920" height="1048" />
     </state>
@@ -219,30 +431,34 @@
     </state>
     <state x="632" y="241" key="#com.intellij.refactoring.safeDelete.UnsafeUsagesDialog/0.32.1920.1048@0.32.1920.1048" timestamp="1604823662315" />
     <state x="632" y="223" key="#com.intellij.refactoring.safeDelete.UnsafeUsagesDialog/0.32.1920.960@0.32.1920.960" timestamp="1605411172854" />
+    <state x="-18" y="389" width="1720" height="760" key="DiffContextDialog" timestamp="1605589132641">
+      <screen x="0" y="32" width="1920" height="960" />
+    </state>
+    <state x="-18" y="389" width="1720" height="760" key="DiffContextDialog/0.32.1920.960@0.32.1920.960" timestamp="1605589132641" />
     <state x="0" y="32" key="FileDocumentManager.FileCacheConflict" timestamp="1604823999607">
       <screen x="0" y="32" width="1920" height="1048" />
     </state>
     <state x="0" y="32" key="FileDocumentManager.FileCacheConflict/0.32.1920.1048@0.32.1920.1048" timestamp="1604823999607" />
-    <state width="1896" height="199" key="GridCell.Tab.0.bottom" timestamp="1605525119846">
+    <state width="1896" height="392" key="GridCell.Tab.0.bottom" timestamp="1605590731109">
       <screen x="0" y="32" width="1920" height="960" />
     </state>
     <state width="1896" height="224" key="GridCell.Tab.0.bottom/0.32.1920.1048@0.32.1920.1048" timestamp="1605345454862" />
-    <state width="1896" height="199" key="GridCell.Tab.0.bottom/0.32.1920.960@0.32.1920.960" timestamp="1605525119846" />
-    <state width="1896" height="199" key="GridCell.Tab.0.center" timestamp="1605525119846">
+    <state width="1896" height="392" key="GridCell.Tab.0.bottom/0.32.1920.960@0.32.1920.960" timestamp="1605590731109" />
+    <state width="1896" height="392" key="GridCell.Tab.0.center" timestamp="1605590731108">
       <screen x="0" y="32" width="1920" height="960" />
     </state>
     <state width="1896" height="224" key="GridCell.Tab.0.center/0.32.1920.1048@0.32.1920.1048" timestamp="1605345454861" />
-    <state width="1896" height="199" key="GridCell.Tab.0.center/0.32.1920.960@0.32.1920.960" timestamp="1605525119846" />
-    <state width="1896" height="199" key="GridCell.Tab.0.left" timestamp="1605525119845">
+    <state width="1896" height="392" key="GridCell.Tab.0.center/0.32.1920.960@0.32.1920.960" timestamp="1605590731108" />
+    <state width="1896" height="392" key="GridCell.Tab.0.left" timestamp="1605590731108">
       <screen x="0" y="32" width="1920" height="960" />
     </state>
     <state width="1896" height="224" key="GridCell.Tab.0.left/0.32.1920.1048@0.32.1920.1048" timestamp="1605345454861" />
-    <state width="1896" height="199" key="GridCell.Tab.0.left/0.32.1920.960@0.32.1920.960" timestamp="1605525119845" />
-    <state width="1896" height="199" key="GridCell.Tab.0.right" timestamp="1605525119846">
+    <state width="1896" height="392" key="GridCell.Tab.0.left/0.32.1920.960@0.32.1920.960" timestamp="1605590731108" />
+    <state width="1896" height="392" key="GridCell.Tab.0.right" timestamp="1605590731108">
       <screen x="0" y="32" width="1920" height="960" />
     </state>
     <state width="1896" height="224" key="GridCell.Tab.0.right/0.32.1920.1048@0.32.1920.1048" timestamp="1605345454862" />
-    <state width="1896" height="199" key="GridCell.Tab.0.right/0.32.1920.960@0.32.1920.960" timestamp="1605525119846" />
+    <state width="1896" height="392" key="GridCell.Tab.0.right/0.32.1920.960@0.32.1920.960" timestamp="1605590731108" />
     <state width="1896" height="223" key="GridCell.Tab.1.bottom" timestamp="1605523136257">
       <screen x="0" y="32" width="1920" height="960" />
     </state>
@@ -315,19 +531,24 @@
       <screen x="0" y="32" width="1920" height="1048" />
     </state>
     <state x="100" y="132" width="1720" height="848" key="dock-window-2/0.32.1920.1048@0.32.1920.1048" timestamp="1604748662033" />
-    <state x="590" y="196" width="739" height="633" key="find.popup" timestamp="1605412032960">
+    <state x="830" y="212" width="739" height="633" key="find.popup" timestamp="1605594997441">
       <screen x="0" y="32" width="1920" height="960" />
     </state>
     <state x="590" y="211" width="739" height="690" key="find.popup/0.32.1920.1048@0.32.1920.1048" timestamp="1605074471831" />
-    <state x="590" y="196" width="739" height="633" key="find.popup/0.32.1920.960@0.32.1920.960" timestamp="1605412032960" />
-    <state x="540" y="249" key="run.anything.popup" timestamp="1604930743654">
-      <screen x="0" y="32" width="1920" height="1048" />
+    <state x="830" y="212" width="739" height="633" key="find.popup/0.32.1920.960@0.32.1920.960" timestamp="1605594997441" />
+    <state x="540" y="231" key="run.anything.popup" timestamp="1605596771907">
+      <screen x="0" y="32" width="1920" height="960" />
     </state>
     <state x="540" y="249" key="run.anything.popup/0.32.1920.1048@0.32.1920.1048" timestamp="1604930743654" />
+    <state x="540" y="231" key="run.anything.popup/0.32.1920.960@0.32.1920.960" timestamp="1605596771907" />
     <state x="539" y="42" width="840" height="948" key="search.everywhere.popup" timestamp="1605492154408">
       <screen x="0" y="32" width="1920" height="960" />
     </state>
     <state x="539" y="44" width="840" height="1034" key="search.everywhere.popup/0.32.1920.1048@0.32.1920.1048" timestamp="1605349161973" />
     <state x="539" y="42" width="840" height="948" key="search.everywhere.popup/0.32.1920.960@0.32.1920.960" timestamp="1605492154408" />
+    <state x="690" y="388" key="vcs.readOnlyHandler.ReadOnlyStatusDialog" timestamp="1605538109102">
+      <screen x="0" y="32" width="1920" height="960" />
+    </state>
+    <state x="690" y="388" key="vcs.readOnlyHandler.ReadOnlyStatusDialog/0.32.1920.960@0.32.1920.960" timestamp="1605538109102" />
   </component>
 </project>
