@@ -1,7 +1,7 @@
 import {getModelForClass, prop} from "@typegoose/typegoose";
 import {IDBase} from "./Base";
 import {GameMatchInfoDto, MatchStats, MoveDirection, Participant} from "@hexx/common";
-import {GameMapModel} from "./GameMap";
+import {GameMapCell, GameMapModel} from "./GameMap";
 import {HttpError} from "routing-controllers";
 import {UserModel} from "./User";
 import moment from "moment";
@@ -32,6 +32,9 @@ export class Match extends IDBase {
     @prop()
     participants: Participant[]
 
+    @prop()
+    winner?: number
+
     @prop({default: () => new Date()})
     createdAt?: Date
 
@@ -40,6 +43,9 @@ export class Match extends IDBase {
 
     @prop()
     teamsRotation: number[]
+
+    @prop()
+    cells: GameMapCell[]
 
     @prop()
     jobId?: string | number
@@ -87,7 +93,7 @@ export class Match extends IDBase {
         if (teams.length < 2)
             throw new HttpError(422, 'need at least 2 teams')
 
-        const map = await GameMapModel.findById(mapId)
+        const map = await GameMapModel.findById(mapId).exec()
         if (!map)
             throw new HttpError(404, "map not found")
 
@@ -120,7 +126,15 @@ export class Match extends IDBase {
             participants,
             roomId,
             startsAt: moment().add(10, 'seconds').toDate(),
-            teamsRotation
+            teamsRotation,
+            cells: map.cells.map(c => {
+                const cell = {...c}
+                if (cell.initTeam && !teamsRotation.includes(cell.initTeam)) {
+                    cell.initTeam = 0
+                    cell.initValue = 0
+                }
+                return cell
+            })
         })
     }
 }

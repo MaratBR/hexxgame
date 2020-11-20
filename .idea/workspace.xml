@@ -14,35 +14,8 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="4ab1c6cd-2206-4d65-81b2-41909449377e" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/workspaces/server/src/colyseus/ClientInfo.ts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/workspaces/server/src/colyseus/DominationState.ts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/workspaces/server/src/colyseus/MapCell.ts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/workspaces/server/src/colyseus/TeamInfo.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/workspaces/client/src/pages/game/RoomPage.module.scss" beforeDir="false" afterPath="$PROJECT_DIR$/workspaces/client/src/pages/game/RoomPage.module.scss" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/workspaces/client/src/pages/game/RoomPage.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/workspaces/client/src/pages/game/RoomPage.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/workspaces/common/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/workspaces/common/package.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/workspaces/common/src/colyseus.ts" beforeDir="false" afterPath="$PROJECT_DIR$/workspaces/common/src/colyseus.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/workspaces/common/src/consts.ts" beforeDir="false" afterPath="$PROJECT_DIR$/workspaces/common/src/consts.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/workspaces/common/src/dto.ts" beforeDir="false" afterPath="$PROJECT_DIR$/workspaces/common/src/dto.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/workspaces/common/tsconfig.json" beforeDir="false" afterPath="$PROJECT_DIR$/workspaces/common/tsconfig.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/workspaces/common/tsconfig.tsbuildinfo" beforeDir="false" afterPath="$PROJECT_DIR$/workspaces/common/tsconfig.tsbuildinfo" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/workspaces/server/config.ts" beforeDir="false" afterPath="$PROJECT_DIR$/workspaces/server/src/config.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/workspaces/server/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/workspaces/server/package.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/workspaces/server/src/auth/index.ts" beforeDir="false" afterPath="$PROJECT_DIR$/workspaces/server/src/auth/index.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/workspaces/server/src/auth/tokens.ts" beforeDir="false" afterPath="$PROJECT_DIR$/workspaces/server/src/auth/tokens.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/workspaces/server/src/colyseus/LobbyRoom.ts" beforeDir="false" afterPath="$PROJECT_DIR$/workspaces/server/src/colyseus/GameRoom.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/workspaces/server/src/colyseus/server.ts" beforeDir="false" afterPath="$PROJECT_DIR$/workspaces/server/src/colyseus/server.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/workspaces/server/src/controllers/MapsController.ts" beforeDir="false" afterPath="$PROJECT_DIR$/workspaces/server/src/controllers/MapsController.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/workspaces/server/src/init/app.ts" beforeDir="false" afterPath="$PROJECT_DIR$/workspaces/server/src/init/app.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/workspaces/server/src/init/build-app.ts" beforeDir="false" afterPath="$PROJECT_DIR$/workspaces/server/src/init/build-app.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/workspaces/server/src/init/jobs.ts" beforeDir="false" afterPath="$PROJECT_DIR$/workspaces/server/src/init/jobs.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/workspaces/server/src/init/redis.ts" beforeDir="false" afterPath="$PROJECT_DIR$/workspaces/server/src/init/redis.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/workspaces/server/src/init/session.ts" beforeDir="false" afterPath="$PROJECT_DIR$/workspaces/server/src/init/session.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/workspaces/server/src/models/GameMap.ts" beforeDir="false" afterPath="$PROJECT_DIR$/workspaces/server/src/models/GameMap.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/workspaces/server/src/colyseus/GameRoom.ts" beforeDir="false" afterPath="$PROJECT_DIR$/workspaces/server/src/colyseus/GameRoom.ts" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/workspaces/server/src/models/Match.ts" beforeDir="false" afterPath="$PROJECT_DIR$/workspaces/server/src/models/Match.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/workspaces/server/src/socketio/index.ts" beforeDir="false" afterPath="$PROJECT_DIR$/workspaces/server/src/socketio/index.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/workspaces/server/tsconfig.json" beforeDir="false" afterPath="$PROJECT_DIR$/workspaces/server/tsconfig.json" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -186,7 +159,7 @@
       <workItem from="1605336204419" duration="10717000" />
       <workItem from="1605397578846" duration="5893000" />
       <workItem from="1605438719094" duration="27775000" />
-      <workItem from="1605838088694" duration="18405000" />
+      <workItem from="1605838088694" duration="19115000" />
     </task>
     <task id="LOCAL-00001" summary="finishing basics">
       <created>1605153963739</created>
@@ -216,7 +189,14 @@
       <option name="project" value="LOCAL" />
       <updated>1605597554839</updated>
     </task>
-    <option name="localTasksCounter" value="5" />
+    <task id="LOCAL-00005" summary="Game logic">
+      <created>1605857938780</created>
+      <option name="number" value="00005" />
+      <option name="presentableId" value="LOCAL-00005" />
+      <option name="project" value="LOCAL" />
+      <updated>1605857938780</updated>
+    </task>
+    <option name="localTasksCounter" value="6" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -240,7 +220,8 @@
     <MESSAGE value="Match" />
     <MESSAGE value="display list of user in a room" />
     <MESSAGE value="fixed issues with compilation, maps list" />
-    <option name="LAST_COMMIT_MESSAGE" value="fixed issues with compilation, maps list" />
+    <MESSAGE value="Game logic" />
+    <option name="LAST_COMMIT_MESSAGE" value="Game logic" />
   </component>
   <component name="WindowStateProjectService">
     <state x="420" y="189" width="1079" height="862" key="#com.intellij.execution.impl.EditConfigurationsDialog" timestamp="1605589030619">

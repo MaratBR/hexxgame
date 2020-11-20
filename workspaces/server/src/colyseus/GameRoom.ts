@@ -6,7 +6,7 @@ import {Room, RoomModel} from "../models/Room";
 import {Schema, type} from "@colyseus/schema";
 import {GameMap, GameMapModel} from "../models/GameMap";
 import {IGameLobbyState, IMatchState, MapUtils, MoveDirection} from "@hexx/common";
-import {Match, MAX_VALUE} from "../models/Match";
+import {Match, MatchModel, MAX_VALUE} from "../models/Match";
 import {ClientInfo} from "./ClientInfo";
 import {TeamInfo} from "./TeamInfo";
 import {DominationState} from "./DominationState";
@@ -381,10 +381,12 @@ export default class GameRoom extends AuthorizedRoom<GameRoomState> {
         }, Math.max(0, this.state.match.roundStageEndsAt - +new Date()))
     }
 
-    private onMatchEnd(winner: number) {
+    private async onMatchEnd(winner: number) {
         this.matchTimeout.clear()
-        this.state.match = undefined
         this.state.gameStartsAt = 0
+        await MatchModel.update({_id: this.state.match.id}, {winner})
+
+        this.state.match = undefined
         this.broadcast("gameOver", {winner})
     }
 }
