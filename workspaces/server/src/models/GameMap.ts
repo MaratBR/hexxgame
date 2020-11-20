@@ -1,14 +1,8 @@
 import {getModelForClass, prop} from "@typegoose/typegoose";
 import {IDBase} from "./Base";
-import {GameMapInfoDto} from "@hexx/common/src/dto";
+import {GameMapCell, GameMapInfoDto} from "@hexx/common/src/dto";
 
-export interface GameMapCell {
-    x: number
-    y: number
-    max?: number
-    initValue?: number
-    initTeam?: number
-}
+export {GameMapCell}
 
 export class GameMap extends IDBase {
     @prop()

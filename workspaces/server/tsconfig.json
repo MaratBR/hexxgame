@@ -6,7 +6,7 @@
     "target": "es6",
     "esModuleInterop": true,
     "lib": ["es7"],
-    "outDir": "dist",
+    "outDir": "./dist",
     "skipLibCheck": true,
     "allowSyntheticDefaultImports": true,
     "moduleResolution": "Node"

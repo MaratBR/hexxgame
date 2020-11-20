@@ -1,6 +1,10 @@
 import {getModelForClass, prop} from "@typegoose/typegoose";
 import {IDBase} from "./Base";
 import {GameMatchInfoDto, MatchStats, MoveDirection, Participant} from "@hexx/common";
+import {GameMapModel} from "./GameMap";
+import {HttpError} from "routing-controllers";
+import {UserModel} from "./User";
+import moment from "moment";
 
 export const START_TIMEOUT = 10000
 export const BASE_LEN = 10000
@@ -16,29 +20,6 @@ export interface MatchSettings {
     departedTimeout?: number
     maxRounds?: number
     maxMinuted?: number
-}
-
-
-export interface MapCellState {
-    v: number,
-    x: number,
-    y: number,
-    mxv?: number,
-    t?: number
-}
-
-type MatchMap = {
-    [key: number]: {
-        [key: number]: MapCellState
-    }
-}
-
-export interface MatchState {
-    powerPoints?: number
-    round: number
-    roundStage: number
-    team: number
-    cells: MatchMap
 }
 
 export class Match extends IDBase {
@@ -58,9 +39,6 @@ export class Match extends IDBase {
     startsAt: Date
 
     @prop()
-    state: MatchState
-
-    @prop()
     teamsRotation: number[]
 
     @prop()
@@ -69,134 +47,13 @@ export class Match extends IDBase {
     @prop()
     roomId: string
 
-    getWinner(): number | null {
-        const gen = this.allCells()
-        let winner: number = null
-        let result: IteratorResult<MapCellState>
-        while (!(result = gen.next()).done && winner == null) {
-            if (result.value.t > 0)
-                winner = result.value.t
-        }
-        if (!winner)
-            return winner
-
-        while (!(result = gen.next()).done) {
-            if (result.value.t > 0 && result.value.t !== winner)
-                return null
-        }
-
-        return winner
-    }
-
-    getStats(): MatchStats {
-        const stats: MatchStats = {
-            totalCells: 0,
-            totalPoints: 0,
-            maxPoints: 0,
-            teamPoints: this.teamsRotation.map(() => 0)
-        }
-
-        for (let cell of Array.from(this.allCells())) {
-            stats.totalCells++
-            stats.totalPoints += cell.v
-            stats.maxPoints += cell.mxv || MAX_VALUE
-            if (cell.t > 0)
-                stats.teamPoints[cell.t - 1] += cell.v
-        }
-
-        return stats
-    }
-
     getSocketIORoomName() {
         return 'Match' + this._id
-    }
-
-    *allCells() {
-        for (let row of Object.values(this.state.cells)) {
-            for (let cell of Object.values(row)) {
-                yield cell
-            }
-        }
-    }
-    async attemptAttack(fromX: number, fromY: number, direction: MoveDirection) {
-        const cell = this.getCell(fromX, fromY)
-        if (cell && cell.t > 0) {
-            const target = this.getCell(fromX, fromY, direction)
-            if (target.t == cell.t)
-                return
-        }
     }
 
     getTeam(userID: string) {
         const p = this.participants.find(p => p.id == userID)
         return p ? p.team : 0
-    }
-
-    getCell(x: number, y: number, direction?: MoveDirection): MapCellState | null {
-        if (typeof direction !== 'undefined') {
-            const [xOff, yOff] = (x % 2 == 0 ? Match.EVEN_X_INDEX_OFFSETS : Match.ODD_X_INDEX_OFFSETS)[direction]
-            x += xOff
-            y += yOff
-        }
-        const row = this.state.cells[y]
-        if (!row)
-            return null
-        return row[x] || null
-    }
-
-    getCellTeam(x: number, y: number): number {
-        const cell = this.getCell(x, y)
-        return cell ? cell.t : -1
-    }
-
-    get isPowerStage() { return this.state.roundStage == 2 }
-    get isMoveStage() { return this.state.roundStage == 1 }
-
-    canPower(userID: string, x: number, y: number) {
-        if (!this.isPowerStage)
-            return false
-        const userTeam = this.getTeam(userID)
-        const cell = this.getCell(x, y)
-        return userTeam > 0 && cell && cell.t == userTeam && cell.v < (cell.mxv || MAX_VALUE)
-    }
-
-    /**
-     * Returns true if cell with given index exists and can be moved by the player
-     * Returns false if cell does not exists, does not belong to the player's team or cannot be moved
-     * @param userID
-     * @param x
-     * @param y
-     * @param direction direction of move, if omitted will check if cell can move somewhere
-     */
-    canMove(userID: string, x: number, y: number, direction?: MoveDirection) {
-        const cell = this.getCell(x, y)
-        if (!cell || cell.t == 0 || cell.t !== this.getTeam(userID))
-            return false
-
-        if (typeof direction == 'undefined')
-            return this.getNeighbourCells(x, y).some(c => c.t !== cell.t)
-        return this.getCellOnDirection(x, y, direction) !== null
-    }
-
-    private getCellOnDirection(x: number, y: number, direction: MoveDirection): MapCellState | null {
-        const [xOff, yOff] = (x % 2 == 0 ? Match.EVEN_X_INDEX_OFFSETS : Match.ODD_X_INDEX_OFFSETS)[direction]
-        return this.getCell(x + xOff, y + yOff)
-    }
-
-    /**
-     * Returns true if cell with cellIndex belongs to the user's team
-     * (returns false if cell or user does not exists or if user is a spectator)
-     * @param userID
-     * @param x
-     * @param y
-     */
-    cellBelongsTo(userID: string, x: number, y: number) {
-        const userTeam = this.getTeam(userID)
-        return userTeam > 0 && this.getCellTeam(x, y) == userTeam
-    }
-
-    getNeighbourCells(x: number, y: number) {
-        return this.getNeighbourCellsIndexes(x, y).map(c => this.getCell(...c)).filter(c => c != null)
     }
 
     private getNeighbourCellsIndexes(x: number, y: number): [number, number][] {
@@ -225,6 +82,47 @@ export class Match extends IDBase {
         [1, 0], // bottom right
         [-1, 0], // bottom left
     ]
+
+    public static async createMatch(roomId: string, mapId: string, teams: string[][]): Promise<Match> {
+        if (teams.length < 2)
+            throw new HttpError(422, 'need at least 2 teams')
+
+        const map = await GameMapModel.findById(mapId)
+        if (!map)
+            throw new HttpError(404, "map not found")
+
+        const players: string[] = [].concat.apply([], teams)
+        if (new Set(players).size !== players.length)
+            throw new HttpError(422, "some teams share a player which is not allowed")
+
+        if (await UserModel.count({_id: {$in: players}}) == 0)
+            throw new HttpError(404, "not all players exists")
+
+        const participants: Participant[] = players.map(p => {
+            return {
+                id: p,
+                online: false,
+                team: teams.findIndex(team => team.includes(p)) + 1
+            }
+        })
+
+        const teamsRotation: number[] = Array.from(new Array(teams.length).keys()).map(t => t + 1)
+
+        for(let i = teamsRotation.length - 1; i > 0; i--) {
+            const j = Math.floor(Math.random() * i)
+            const temp = teamsRotation[i]
+            teamsRotation[i] = teamsRotation[j]
+            teamsRotation[j] = temp
+        }
+
+        return await MatchModel.create({
+            mapId,
+            participants,
+            roomId,
+            startsAt: moment().add(10, 'seconds').toDate(),
+            teamsRotation
+        })
+    }
 }
 
 export const MatchModel = getModelForClass(Match)

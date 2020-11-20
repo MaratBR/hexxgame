@@ -1,5 +1,5 @@
 import jwt from "jsonwebtoken"
-import config from "../../config";
+import config from "../config";
 import {v4} from "uuid";
 import {User, UserModel} from "../models/User";
 import Dict = NodeJS.Dict;

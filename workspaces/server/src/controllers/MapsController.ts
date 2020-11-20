@@ -1,8 +1,9 @@
-import {Body, Get, JsonController, Post} from "routing-controllers";
+import {Body, Get, JsonController, Param, Post} from "routing-controllers";
 import {GameMapCell, gameMapInfo} from "../models/GameMap";
 import MapsService from "../services/MapsService";
 import {IsOptional, Length, Max, Min, MinLength, ValidateNested} from "class-validator";
 import Dict = NodeJS.Dict;
+import {GameMapData} from "@hexx/common";
 
 
 class MapCell implements GameMapCell {
@@ -45,6 +46,16 @@ export class MapsController {
     @Get()
     getMaps() {
         return this.mapsService.getMapsInfo()
+    }
+
+    @Get(':id')
+    getMap(@Param('id') id: string): Promise<GameMapData> {
+        return this.mapsService.getMap(id).then(m => {
+            return {
+                info: gameMapInfo(m),
+                cells: m.cells
+            }
+        })
     }
 
     @Post()

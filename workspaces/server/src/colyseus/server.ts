@@ -1,7 +1,7 @@
 import {Server} from "colyseus";
 import http from "http";
 import Tokens from "../auth/tokens";
-import MatchLobbyRoom from "./LobbyRoom";
+import MatchLobbyRoom from "./GameRoom";
 
 export default function getColyseus(server: http.Server) {
     const gameServer = new Server({

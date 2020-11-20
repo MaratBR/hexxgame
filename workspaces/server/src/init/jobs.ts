@@ -1,5 +1,5 @@
 import moment from "moment";
-import config from "../../config";
+import config from "../config";
 import {UserModel} from "../models/User";
 import Bull, {DoneCallback, Job} from "bull";
 

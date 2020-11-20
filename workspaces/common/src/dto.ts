@@ -14,6 +14,19 @@ export type GameMapInfoDto = {
     id: string
 }
 
+export interface GameMapCell {
+    x: number
+    y: number
+    max?: number
+    initValue?: number
+    initTeam?: number
+}
+
+export type GameMapData = {
+    info: GameMapInfoDto,
+    cells: GameMapCell[]
+}
+
 export type GameMatchInfoDto = {
     id: string
     mapId: string

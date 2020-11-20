@@ -4,7 +4,7 @@ import initServer from "./initServer";
 import redisAdapter from "socketio.io-redis"
 import {REDIS_CLIENT, REDIS_CLIENT2} from "../init/redis";
 import SIO, {Server} from "socket.io";
-import config from "../../config";
+import config from "../config";
 
 
 export default function createSocketIOFromHTTPServer(server: http.Server, init?: (server: Server) => void) {

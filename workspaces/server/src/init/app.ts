@@ -6,7 +6,7 @@ import koaSession from "koa-session";
 import {SESSION_CONFIG} from "./session";
 import {Action, useContainer, useKoaServer} from "routing-controllers";
 import {resolve} from "path";
-import config from "../../config";
+import config from "../config";
 import {Container} from "typedi";
 import koaCors from "koa-cors";
 

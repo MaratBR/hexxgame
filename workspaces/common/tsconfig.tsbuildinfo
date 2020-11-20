@@ -202,18 +202,18 @@
         "affectsGlobalScope": true
       },
       "./src/colyseus.ts": {
-        "version": "acee66c70217d8825c912cc639b78c0b21c1944ad496d04d0631d6f37e93e2a4",
-        "signature": "1cf51d1cbf62ff9060a1fbc5c6b00d8f8acf358d17d0f10812a4ce61b8c567be",
-        "affectsGlobalScope": false
-      },
-      "./src/consts.ts": {
-        "version": "155146e8d9eb315a580fd07e600c94ca4beb69ed77a23e99f4053d55b789416d",
-        "signature": "b1d05eaba42a35766cc82d8206c19857b8368fbc136a0597a6556c3dcff9b732",
+        "version": "dc8dcd93b20574922be6a882afcf186b779513ab7e08f60d7fb41c320e386d1d",
+        "signature": "8b8671af9ba1fd656c86761eed4f37fc35a1182fd9fd143399e32d98895284fd",
         "affectsGlobalScope": false
       },
       "./src/dto.ts": {
-        "version": "b90a038d31f7df4e76bbbce8729e1351d6b4ccc1a53d4276c51dd4fb6eb05cec",
-        "signature": "e240f7f4a7d26f0dac4d735f75778687f26c0f7d0e98e80416275987e2d238ab",
+        "version": "b1f5d2f9309f4aec61f8923b688d4d2c86a9dd0c0232b1593f1810d236fc809b",
+        "signature": "f5777e73b8e8fbcacfd2183b89aaf017a71db8fd4af81b1e0a2e6d558e3ff857",
+        "affectsGlobalScope": false
+      },
+      "./src/consts.ts": {
+        "version": "b5f68fd4052f95ef00d8acf0a6868dbaf6fc17df1fee9f7da28a887ccf8ca182",
+        "signature": "275989e12794401862bac02fad15a31a2ed085b1c67214cafc79d180a6fc8243",
         "affectsGlobalScope": false
       },
       "../../node_modules/moment/ts3.1-typings/moment.d.ts": {
@@ -1028,6 +1028,7 @@
       "resolveJsonModule": true,
       "isolatedModules": true,
       "composite": true,
+      "incremental": true,
       "configFilePath": "./tsconfig.json"
     },
     "referencedMap": {
@@ -1539,6 +1540,9 @@
       ],
       "./node_modules/@types/node/zlib.d.ts": [
         "./node_modules/@types/node/stream.d.ts"
+      ],
+      "./src/consts.ts": [
+        "./src/dto.ts"
       ],
       "./src/index.ts": [
         "./src/colyseus.ts",
@@ -2059,6 +2063,9 @@
       ],
       "./node_modules/@types/node/zlib.d.ts": [
         "./node_modules/@types/node/stream.d.ts"
+      ],
+      "./src/consts.ts": [
+        "./src/dto.ts"
       ],
       "./src/index.ts": [
         "./src/colyseus.ts",

@@ -9,7 +9,7 @@
     "serve": "node dist/server.js",
     "build": "npm run lint && npm run build-ts && npm run copy-static-assets",
     "start": "npm run serve",
-    "watch-server": "yarn run nodemon --watch . -e ts,tsx --exec ts-node --prefer-ts-exts  server.ts",
+    "watch-server": "yarn run nodemon --watch . -e ts,tsx --exec ts-node --prefer-ts-exts server.ts",
     "dev": "yarn run watch-server",
     "test": "jest"
   },

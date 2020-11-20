@@ -16,14 +16,17 @@
     "noFallthroughCasesInSwitch": true,
     "module": "esnext",
     "moduleResolution": "node",
-    "outDir": "dist",
+    "outDir": "./dist",
     "rootDir": "src",
     "resolveJsonModule": true,
     "isolatedModules": true,
-    "composite": true
+    "composite": true,
+    "incremental": true
   },
   "exclude": [
     "node_modules"
   ],
-  "include": ["src"]
+  "include": [
+    "./src/**/*.ts"
+  ]
 }

@@ -2,7 +2,7 @@ import http from "http"
 import Application from "koa"
 import createApp, {IAppParams} from "./app";
 import {mongoose} from "@typegoose/typegoose";
-import config from "../../config";
+import config from "../config";
 import {initAuth} from "../auth";
 import getColyseus from "../colyseus/server";
 import initDB from "./initDB";

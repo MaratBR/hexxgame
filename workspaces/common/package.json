@@ -6,8 +6,9 @@
   "main:src": "src/index.ts",
   "scripts": {
     "_build": "tsc",
-    "clean": "rm -rf ./dist",
-    "build": "yarn clean && yarn _build"
+    "clean": "rm -rf ./dist && rm -f tsconfig.tsbuildinfo",
+    "build": "yarn clean && yarn _build",
+    "watch": "yarn build && tsc --watch"
   },
   "dependencies": {
     "colyseus": "^0.14.0",

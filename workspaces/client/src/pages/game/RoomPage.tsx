@@ -4,7 +4,6 @@ import AppAPI from "../../game/AppAPI";
 import {Room} from "colyseus.js";
 import styles from "./RoomPage.module.scss"
 import {getTeamColor, getTeamName, ILobbyState, GameMapInfoDto} from "@hexx/common";
-console.log(getTeamColor(0))
 
 
 
@@ -13,7 +12,8 @@ type RoomState = ILobbyState & {
         loading?: boolean,
         list?:  GameMapInfoDto[]
     }
-    expandedMap?: string
+    expandedMap?: string,
+    selectedMap?: GameMapInfoDto
 }
 
 const DEFAULT_STATE: RoomState = {
@@ -71,6 +71,7 @@ export default class RoomPage extends React.Component<any, RoomState> {
                     loading: false
                 }
             })
+            this.onMapChanged()
         } catch (e) {
             this.setState({
                 maps: {
@@ -87,12 +88,21 @@ export default class RoomPage extends React.Component<any, RoomState> {
     }
 
     onStateChanged(state: ILobbyState) {
+        const mapChanged = this.state.selectedMapID !== state.selectedMapID
         this.setState(state)
-        console.log(state)
+
+        if (mapChanged) {
+            this.onMapChanged()
+        }
     }
 
     render() {
         return <div className={styles.root}>
+            <div className={styles.selectedMap}>
+                Selected map: {this.state.selectedMap?.name}
+            </div>
+            <div></div>
+
             <div className={styles.playersList}>
                 {this.renderTeam(0, this.state.spectators)}
             </div>
@@ -102,7 +112,7 @@ export default class RoomPage extends React.Component<any, RoomState> {
                     {this.state.maps?.list?.map(m => {
                         return <div className={styles.map} onClick={() => this.setState({expandedMap: m.id})}>
                             <span>{m.name}</span>
-                            <button className={styles.select}>Select</button>
+                            <button className={styles.select} onClick={() => this.setMap(m.id)}>Select</button>
                             <div className={styles.mapInfo} style={{display: m.id == this.state.expandedMap ? 'block' : 'none'}}>
                                 <b>Cells:</b> {m.cellsCount} <br/>
                                 <b>Created at:</b> {m.createdAt} <br/>
@@ -134,6 +144,16 @@ export default class RoomPage extends React.Component<any, RoomState> {
                                   data-db-id={data.dbID}>
                 <div>{data.username}</div>
             </div>
+        })
+    }
+
+    private setMap(id: string) {
+        this.context.lobby!.send('setMap', id)
+    }
+
+    private onMapChanged() {
+        this.setState({
+            selectedMap: this.state.maps.list?.find(m => m.id == this.state.selectedMapID)
         })
     }
 }

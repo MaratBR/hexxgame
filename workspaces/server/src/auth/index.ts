@@ -5,7 +5,7 @@ import koaPassport from "koa-passport";
 import {Container} from "typedi";
 
 import UsersService from "../services/UsersService";
-import config from "../../config";
+import config from "../config";
 import Hasher from "../misc/hash";
 import {User, UserModel} from "../models/User";
 
