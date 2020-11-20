@@ -19,11 +19,15 @@ export default class MapsService {
             return Promise.reject(new HttpError(422, 'map definition contains less than 2 teams'))
         cells = cells.sort((a, b) => a.x * 100000 + a.y)
 
-        return GameMapModel.create({
-            cells,
-            description,
-            name,
-            maxTeams: teams.size
-        })
+        try {
+            return GameMapModel.create({
+                cells,
+                description,
+                name,
+                maxTeams: teams.size
+            })
+        } catch (e) {
+            throw e
+        }
     }
 }

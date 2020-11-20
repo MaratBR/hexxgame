@@ -19,8 +19,8 @@ class PlayPage extends React.Component<any, PlayPageState> {
             </div>
 
             <div className="buttons">
-                <button className="button" onClick={() => this.joinRoom()}>Join</button>
-                <button className="button" onClick={() => this.joinPrivateRoom()}>Join personal room</button>
+                <button onClick={() => this.joinRoom()}>Join</button>
+                <button onClick={() => this.joinPrivateRoom()}>Join personal room</button>
             </div>
         </div>
     }

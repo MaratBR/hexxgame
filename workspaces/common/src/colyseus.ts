@@ -15,11 +15,10 @@ export interface ITeamInfo {
 export interface IGameLobbyState {
     id?: string;
     selectedMapID?: string
-    teamsNum: number
     clients: {[key: string]: IClientInfo}
     spectators: string[]
     teams: ITeamInfo[]
-    match?: IMatchState
+    match: Partial<IMatchState>
 }
 
 export interface MatchMapCell {

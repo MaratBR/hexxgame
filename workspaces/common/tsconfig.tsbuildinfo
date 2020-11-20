@@ -202,8 +202,8 @@
         "affectsGlobalScope": true
       },
       "./src/colyseus.ts": {
-        "version": "dc8dcd93b20574922be6a882afcf186b779513ab7e08f60d7fb41c320e386d1d",
-        "signature": "8b8671af9ba1fd656c86761eed4f37fc35a1182fd9fd143399e32d98895284fd",
+        "version": "87a4756d9e5aa4357f3592bd542f3af69c76f083a5511b3ffcf6f9712ca6f4b3",
+        "signature": "8e46c8119883830086afa7c8ef7a320334e8cb7d2db65ba24152d1b98631725e",
         "affectsGlobalScope": false
       },
       "./src/dto.ts": {
@@ -212,7 +212,7 @@
         "affectsGlobalScope": false
       },
       "./src/consts.ts": {
-        "version": "b5f68fd4052f95ef00d8acf0a6868dbaf6fc17df1fee9f7da28a887ccf8ca182",
+        "version": "b0d2ef25734bdebb116ebec54b72f7bab82a9cbd1930c3a78ffe6b819961645c",
         "signature": "275989e12794401862bac02fad15a31a2ed085b1c67214cafc79d180a6fc8243",
         "affectsGlobalScope": false
       },
@@ -1008,7 +1008,7 @@
       }
     },
     "options": {
-      "module": 99,
+      "module": 1,
       "target": 1,
       "sourceMap": true,
       "lib": [
@@ -1029,6 +1029,7 @@
       "isolatedModules": true,
       "composite": true,
       "incremental": true,
+      "watch": true,
       "configFilePath": "./tsconfig.json"
     },
     "referencedMap": {

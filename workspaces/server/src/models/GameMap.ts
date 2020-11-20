@@ -4,6 +4,23 @@ import {GameMapCell, GameMapInfoDto} from "@hexx/common/src/dto";
 
 export {GameMapCell}
 
+export class GameMapCellImpl implements GameMapCell {
+    @prop()
+    initTeam?: number;
+
+    @prop()
+    initValue?: number;
+
+    @prop()
+    max: number;
+
+    @prop()
+    y: number;
+
+    @prop()
+    x: number;
+}
+
 export class GameMap extends IDBase {
     @prop()
     authorId?: string
@@ -17,7 +34,7 @@ export class GameMap extends IDBase {
     @prop({default: () => new Date()})
     createdAt?: Date
 
-    @prop({required: true})
+    @prop({required: true, type: () => [GameMapCellImpl], _id: false})
     cells: GameMapCell[]
 
     @prop()

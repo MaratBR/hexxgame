@@ -45,7 +45,7 @@ class WelcomePage extends React.Component<any, WelcomeState> {
             </div>
             <div className={styles.border} />
             <div className={styles.login}>
-                <button className="button" onClick={() => this.loginAsAnon()}>
+                <button onClick={() => this.loginAsAnon()}>
                     Login as anon
                 </button>
             </div>

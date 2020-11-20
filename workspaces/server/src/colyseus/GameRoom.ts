@@ -57,7 +57,7 @@ export class MatchState extends Schema implements IMatchState {
     constructor(match: Match, map: GameMap) {
         super();
         this.id = match._id
-        this.teamsRotation = match.teamsRotation
+        this.teamsRotation = Array.from(match.teamsRotation)
         this.startsAt = +match.startsAt
         const cells: Dict<MapCell> = {}
         for (let cell of map.cells) {
@@ -128,15 +128,16 @@ export class MatchState extends Schema implements IMatchState {
         const duration = Object.values(this.mapCells)
             .filter(c => c.team == this.currentTeam)
             .length * this.roundLengthPerCell + this.baseRoundLength
-        this.roundStageEndsAt = moment().add(duration, 'seconds').unix()
+        this.roundStageEndsAt = moment().add(duration, 'seconds').unix() * 1000
     }
 
     beginAttack() {
         this.currentRoundStage = 1
-        const duration = Object.values(this.mapCells)
-            .filter(c => c.team == this.currentTeam)
-            .length * this.roundLengthPerCell + this.baseRoundLength
-        this.roundStageEndsAt = moment().add(duration, 'seconds').unix()
+        const cells = Object.values(this.mapCells)
+                .filter(c => c.team == this.currentTeam).length
+        const duration = cells * this.roundLengthPerCell + this.baseRoundLength
+        this.powerPoints = cells
+        this.roundStageEndsAt = moment().add(duration, 'seconds').unix() * 1000
     }
 
     nextRound() {
@@ -153,9 +154,6 @@ export class GameRoomState extends Schema implements IGameLobbyState {
     @type('string')
     selectedMapID?: string
 
-    @type('number')
-    teamsNum: number = 0
-
     @type({map: ClientInfo})
     clients: {[key: string]: ClientInfo} = {}
 
@@ -166,12 +164,18 @@ export class GameRoomState extends Schema implements IGameLobbyState {
     teams: TeamInfo[] = []
 
     @type('number')
-    gameStartsAt: number = 0;
+    gameStartsAt: number
 
     @type(MatchState)
-    match?: MatchState
+    match: MatchState | null
 
     get inGame() { return !!this.match }
+
+    recalculateTeamReadyValue(team: number) {
+        this.teams[team - 1].ready = this.teams[team - 1].members.length && this.teams[team - 1].members.every(clientID => {
+            return this.clients[clientID].ready
+        })
+    }
 }
 
 export default class GameRoom extends AuthorizedRoom<GameRoomState> {
@@ -190,24 +194,45 @@ export default class GameRoom extends AuthorizedRoom<GameRoomState> {
         if (!room)
             throw new ServerError(404, 'no room with id ' + roomID)
         this.setState(new GameRoomState({
-            id: roomID
+            id: roomID,
+            match: null,
+            gameStartsAt: 0
         }))
 
         this.onMessage<number>("setTeam", (client, team) => {
             if (this.state.inGame)
                 return;
             if (typeof team === 'number') {
-                if (team < 0 || team >= this.state.teamsNum)
+                if (team < 0 || team > this.state.teams.length)
                     return
+                const oldTeam = this.state.clients[client.id].team
                 this.state.clients[client.id].team = team
+                if (oldTeam === 0) {
+                    this.state.spectators.splice(this.state.spectators.indexOf(client.id))
+                } else {
+                    const members = this.state.teams[oldTeam - 1].members
+                    members.splice(members.indexOf(client.id))
+                    this.state.recalculateTeamReadyValue(oldTeam)
+                }
+                if (team === 0) {
+                    this.state.spectators.push(client.id)
+                } else {
+                    this.state.teams[team - 1].members.push(client.id)
+                    this.state.recalculateTeamReadyValue(team)
+                }
             }
         })
 
         this.onMessage('toggleReady', client => {
             if (this.state.inGame)
                 return;
+            const clientData = this.state.clients[client.id]
+            if (clientData.team === 0)
+                return;
 
-            this.state.clients[client.id].ready = !this.state.clients[client.id].ready
+            clientData.ready = !this.state.clients[client.id].ready
+
+            this.state.recalculateTeamReadyValue(clientData.team)
         })
 
         this.onMessage<string>('setMap', async (client, mapID) => {
@@ -240,15 +265,7 @@ export default class GameRoom extends AuthorizedRoom<GameRoomState> {
 
     async onAuth(client: Client, options: any, request?: http.IncomingMessage): Promise<User> {
         const user = await super.onAuth(client, options, request);
-
-        if (user.getRoomID() && user.getRoomID() !== this.state.id) {
-            throw new ServerError(409, 'already in a different room')
-        }
-
-        if (!user.getRoomID()) {
-            await user.setRoom(await this.getRoom())
-        }
-
+        // TODO ???
         return user
     }
 
@@ -386,7 +403,7 @@ export default class GameRoom extends AuthorizedRoom<GameRoomState> {
         this.state.gameStartsAt = 0
         await MatchModel.update({_id: this.state.match.id}, {winner})
 
-        this.state.match = undefined
+        this.state.match = null
         this.broadcast("gameOver", {winner})
     }
 }

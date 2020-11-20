@@ -1,7 +1,7 @@
 import {getModelForClass, prop} from "@typegoose/typegoose";
 import {IDBase} from "./Base";
 import {GameMatchInfoDto, MatchStats, MoveDirection, Participant} from "@hexx/common";
-import {GameMapCell, GameMapModel} from "./GameMap";
+import {GameMapCell, GameMapCellImpl, GameMapModel} from "./GameMap";
 import {HttpError} from "routing-controllers";
 import {UserModel} from "./User";
 import moment from "moment";
@@ -22,14 +22,25 @@ export interface MatchSettings {
     maxMinuted?: number
 }
 
+class ParticipantImpl implements Participant {
+    @prop()
+    id: string;
+
+    @prop()
+    online: boolean;
+
+    @prop()
+    team: number;
+}
+
 export class Match extends IDBase {
     @prop({required: true})
     mapId: string;
 
-    @prop()
+    @prop({ _id: false })
     settings?: MatchSettings
 
-    @prop()
+    @prop({ type: () => [ParticipantImpl], _id: false })
     participants: Participant[]
 
     @prop()
@@ -41,10 +52,10 @@ export class Match extends IDBase {
     @prop()
     startsAt: Date
 
-    @prop()
+    @prop({ type: () => [Number] })
     teamsRotation: number[]
 
-    @prop()
+    @prop({ type: () => [GameMapCellImpl], _id: false })
     cells: GameMapCell[]
 
     @prop()
@@ -128,7 +139,13 @@ export class Match extends IDBase {
             startsAt: moment().add(10, 'seconds').toDate(),
             teamsRotation,
             cells: map.cells.map(c => {
-                const cell = {...c}
+                const cell: GameMapCell = {
+                    initValue: c.initValue,
+                    initTeam: c.initTeam,
+                    x: c.x,
+                    y: c.y,
+                    max: c.max
+                }
                 if (cell.initTeam && !teamsRotation.includes(cell.initTeam)) {
                     cell.initTeam = 0
                     cell.initValue = 0

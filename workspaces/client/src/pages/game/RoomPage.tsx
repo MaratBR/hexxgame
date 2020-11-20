@@ -3,11 +3,14 @@ import ApiContext from "../../game/context";
 import AppAPI from "../../game/AppAPI";
 import {Room} from "colyseus.js";
 import styles from "./RoomPage.module.scss"
-import {getTeamColor, getTeamName, ILobbyState, GameMapInfoDto} from "@hexx/common";
+import {getTeamColor, getTeamName, IGameLobbyState, GameMapInfoDto} from "@hexx/common";
+import Brand from "../../components/Brand";
+import GameMap from "./GameMap";
 
 
 
-type RoomState = ILobbyState & {
+
+type RoomState = IGameLobbyState & {
     maps: {
         loading?: boolean,
         list?:  GameMapInfoDto[]
@@ -17,17 +20,18 @@ type RoomState = ILobbyState & {
 }
 
 const DEFAULT_STATE: RoomState = {
-    teamsNum: 0,
     spectators: [],
     teams: [],
     clients: {},
-    maps: {}
+    maps: {},
+    match: {}
 }
 
 export default class RoomPage extends React.Component<any, RoomState> {
     static contextType = ApiContext;
     context!: AppAPI
-    private lobby?: Room<ILobbyState>
+    private lobby?: Room<IGameLobbyState>
+    private gameMap?: GameMap
 
     constructor(props: any) {
         super(props);
@@ -35,7 +39,12 @@ export default class RoomPage extends React.Component<any, RoomState> {
         this.state = DEFAULT_STATE
     }
 
-    onChangedHandler: (state: ILobbyState) => void
+    onChangedHandler: (state: IGameLobbyState) => void
+
+    get currentClient() {
+        const sid = this.lobby?.sessionId
+        return sid ? this.state.clients[sid] : undefined
+    }
 
     async componentDidMount() {
         this.lobby = this.context.lobby
@@ -54,6 +63,20 @@ export default class RoomPage extends React.Component<any, RoomState> {
         }
 
         await this.updateMaps()
+
+        if (this.state.match.id) {
+            this.onMatchChanged()
+        }
+    }
+
+    componentWillUnmount() {
+        if (this.lobby) {
+            this.lobby.onStateChange.remove(this.onChangedHandler)
+        }
+
+        if (this.gameMap) {
+            this.gameMap.dispose()
+        }
     }
 
     private async updateMaps() {
@@ -81,30 +104,53 @@ export default class RoomPage extends React.Component<any, RoomState> {
         }
     }
 
-    componentWillUnmount() {
-        if (this.lobby) {
-            this.lobby.onStateChange.remove(this.onChangedHandler)
-        }
-    }
-
-    onStateChanged(state: ILobbyState) {
+    onStateChanged(state: IGameLobbyState) {
+        console.log('state changed')
         const mapChanged = this.state.selectedMapID !== state.selectedMapID
+        const matchChanged = this.state.match.id !== state.match.id
         this.setState(state)
 
         if (mapChanged) {
             this.onMapChanged()
         }
+
+        console.log(`matchChanged = ${matchChanged}`)
+        console.log(state)
+        console.log(`matchChanged = ${!!(state.match && !this.gameMap)}`)
+        if (matchChanged || state.match && !this.gameMap) {
+            this.onMatchChanged()
+        }
     }
 
     render() {
+        if (this.state.match?.id) {
+            return this.renderGame()
+        }
+
         return <div className={styles.root}>
-            <div className={styles.selectedMap}>
-                Selected map: {this.state.selectedMap?.name}
+            <div className={styles.toolBar}>
+                <button
+                    onClick={() => this.lobby!.send('toggleReady')}
+                    className={this.currentClient?.ready ? styles.ready : styles.notReady}>
+                    {this.currentClient?.ready ? 'Ready' : 'Not ready'}
+                </button>
+                <div className={styles.toolBarSection}>
+                    <h3>Selected map</h3>
+                    {this.state.selectedMap?.name}
+                </div>
             </div>
-            <div></div>
+            <div className={styles.play} onClick={() => this.lobby!.send('start')}>
+                <button>
+                    <Brand text="Play" style={{fontSize: '1.5em'}} />
+                </button>
+            </div>
 
             <div className={styles.playersList}>
                 {this.renderTeam(0, this.state.spectators)}
+
+                {this.state.teams.map((team, index) => {
+                    return this.renderTeam(index + 1, team.members, team.ready)
+                })}
             </div>
 
             <div className={styles.mapsWrap}>
@@ -125,11 +171,23 @@ export default class RoomPage extends React.Component<any, RoomState> {
         </div>
     }
 
-    renderTeam(id: number, players: string[]) {
-        return <div className={styles.team}>
+    renderTeam(id: number, players: string[], ready?: boolean) {
+        return <div className={`${styles.team}${ready ? (' ' + styles.teamReady) : ''}`}>
             <div className={styles.poly} style={{background: getTeamColor(id)}} />
-            <h2>{getTeamName(id)}</h2>
+            <h2>
+                {getTeamName(id)}
+                <button
+                    hidden={
+                        typeof this.context.lobby?.sessionId === 'undefined'
+                        || typeof this.state.clients[this.context.lobby.sessionId] == 'undefined'
+                        || this.state.clients[this.context.lobby.sessionId].team == id
+                    }
+                    onClick={() => this.lobby!.send("setTeam", id)}>
+                    Join
+                </button>
+            </h2>
             <div className={styles.players}>
+                {this.context.lobby?.sessionId}
                 {this.renderPlayers(players)}
             </div>
         </div>
@@ -139,10 +197,12 @@ export default class RoomPage extends React.Component<any, RoomState> {
         return players.map(clientID => {
             const data = this.state.clients[clientID]
             if (data) return <div key={clientID}
-                                  className={styles.player}
+                                  className={`${styles.player}${data.ready ? (' ' + styles.playerReady) : ''}`}
                                   data-id={clientID}
                                   data-db-id={data.dbID}>
-                <div>{data.username}</div>
+                <div title={data.dbID}>
+                    {data.username.startsWith('Anonymous') ? ('Anon' + data.username.substr(9)) : data.username}
+                </div>
             </div>
         })
     }
@@ -155,5 +215,19 @@ export default class RoomPage extends React.Component<any, RoomState> {
         this.setState({
             selectedMap: this.state.maps.list?.find(m => m.id == this.state.selectedMapID)
         })
+    }
+
+    private onMatchChanged() {
+        if (this.gameMap) {
+            this.gameMap.dispose()
+        }
+        this.gameMap = new GameMap(this.lobby!)
+    }
+
+    private renderGame() {
+        return <div>
+            <h2>Game</h2>
+            <pre>{JSON.stringify(this.state.match, null, 2)}</pre>
+        </div>;
     }
 }

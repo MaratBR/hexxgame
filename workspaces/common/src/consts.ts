@@ -22,9 +22,7 @@ const TEAM_NAMES = [
 
 
 export function getTeamColor(index: number): string {
-    if (index < 0 || index >= TEAM_COLORS.length)
-        return '#999'
-    return 'zZ'
+    return index === 0 ? '#999' : TEAM_COLORS[index - 1] || '#999'
 }
 
 export function getTeamName(index: number) {
@@ -34,8 +32,8 @@ export function getTeamName(index: number) {
     if (index < 0)
         throw new Error('index cannot be negative')
 
-    if (index < TEAM_NAMES.length)
-        return TEAM_NAMES[index]
+    if (index < TEAM_NAMES.length + 1)
+        return TEAM_NAMES[index - 1]
 
     return 'Team #' + (index + 1)
 }

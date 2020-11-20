@@ -1,5 +1,5 @@
 import {AxiosInstance, default as axios} from "axios"
-import {GameMapInfoDto, RoomInfoDto, ILobbyState} from "@hexx/common";
+import {GameMapInfoDto, RoomInfoDto, IGameLobbyState} from "@hexx/common";
 import * as Colyseus from "colyseus.js"
 import {EventEmitter} from "events";
 
@@ -10,7 +10,7 @@ interface IAPIOptions {
 export default class AppAPI extends EventEmitter {
     private readonly client: AxiosInstance
     private readonly wsClient: Colyseus.Client
-    private _lobby?: Colyseus.Room<ILobbyState>
+    private _lobby?: Colyseus.Room<IGameLobbyState>
 
     constructor(opts: IAPIOptions) {
         super()
