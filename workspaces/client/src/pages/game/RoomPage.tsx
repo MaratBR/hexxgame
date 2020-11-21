@@ -11,7 +11,7 @@ import UIContext from "../UIContext";
 import Loading from "../../components/Loading";
 
 
-type RoomState = IGameLobbyState & {
+type RoomState = Partial<IGameLobbyState> & {
     maps: {
         loading?: boolean,
         list?:  GameMapInfoDto[]
@@ -22,18 +22,13 @@ type RoomState = IGameLobbyState & {
 }
 
 const DEFAULT_STATE: RoomState = {
-    spectators: [],
-    teams: [],
-    clients: {},
-    maps: {},
-    match: {}
+    maps: {}
 }
 
 export default class RoomPage extends React.Component<any, RoomState> {
     static contextType = ApiContext;
     context!: AppAPI
     private lobby?: Room<IGameLobbyState>
-    private gameMap?: GameMap
 
     constructor(props: any) {
         super(props);
@@ -45,7 +40,7 @@ export default class RoomPage extends React.Component<any, RoomState> {
 
     get currentClient() {
         const sid = this.lobby?.sessionId
-        return sid ? this.state.clients[sid] : undefined
+        return sid && this.state.clients ? this.state.clients.get(sid) : undefined
     }
 
     async componentDidMount() {
@@ -57,7 +52,9 @@ export default class RoomPage extends React.Component<any, RoomState> {
             try {
                 await this.context.joinRoom(this.props.match.params.id)
                 this.lobby = this.context.lobby
-                this.setState(this.lobby!.state)
+                if (this.lobby!.state.id) {
+                    this.onStateChanged(this.lobby!.state)
+                }
                 this.lobby!.onStateChange(this.onChangedHandler)
             } catch (e) {
                 console.log(e)
@@ -66,18 +63,14 @@ export default class RoomPage extends React.Component<any, RoomState> {
 
         await this.updateMaps()
 
-        if (this.state.match.id) {
-            this.onMatchChanged()
+        if (this.state.match && this.state.match.id) {
+            UIContext.fullscreen.next(true)
         }
     }
 
     componentWillUnmount() {
         if (this.lobby) {
             this.lobby.onStateChange.remove(this.onChangedHandler)
-        }
-
-        if (this.gameMap) {
-            this.gameMap.dispose()
         }
     }
 
@@ -107,20 +100,19 @@ export default class RoomPage extends React.Component<any, RoomState> {
     }
 
     onStateChanged(state: IGameLobbyState) {
-        console.log('state changed')
         const mapChanged = this.state.selectedMapID !== state.selectedMapID
-        let matchChanged = this.state.match.id !== state.match.id
+        console.log(this.state.loaded)
         if (!this.state.loaded) {
             ;(state as RoomState).loaded = true;
+            console.log('set loaded to true')
+        } else {
+            console.log('did not set loaded to true')
+            console.warn(this.state.loaded)
         }
         this.setState(state)
 
         if (mapChanged) {
             this.onMapChanged()
-        }
-
-        if (matchChanged || state.match.id && !this.gameMap) {
-            this.onMatchChanged()
         }
     }
 
@@ -151,11 +143,11 @@ export default class RoomPage extends React.Component<any, RoomState> {
             </div>
 
             <div className={styles.playersList}>
-                {this.renderTeam(0, this.state.spectators)}
+                {this.state.spectators ? this.renderTeam(0, this.state.spectators) : undefined}
 
-                {this.state.teams.map((team, index) => {
+                {this.state.teams ? this.state.teams.map((team, index) => {
                     return this.renderTeam(index + 1, team.members, team.ready)
-                })}
+                }) : undefined}
             </div>
 
             <div className={styles.mapsWrap}>
@@ -182,11 +174,7 @@ export default class RoomPage extends React.Component<any, RoomState> {
             <h2>
                 {getTeamName(id)}
                 <button
-                    hidden={
-                        typeof this.context.lobby?.sessionId === 'undefined'
-                        || typeof this.state.clients[this.context.lobby.sessionId] == 'undefined'
-                        || this.state.clients[this.context.lobby.sessionId].team == id
-                    }
+                    hidden={!this.canJoinTeam(id)}
                     onClick={() => this.lobby!.send("setTeam", id)}>
                     Join
                 </button>
@@ -198,17 +186,26 @@ export default class RoomPage extends React.Component<any, RoomState> {
         </div>
     }
 
+    canJoinTeam(team: number) {
+        const sessionId = this.lobby?.sessionId
+        if (!sessionId)
+            return false
+        const currentTeam = this.currentClient?.team
+        return typeof currentTeam !== 'undefined' && currentTeam !== team
+    }
+
     renderPlayers(players: string[]) {
         return players.map(clientID => {
-            const data = this.state.clients[clientID]
-            if (data) return <div key={clientID}
+            const data = this.state.clients?.get(clientID)
+            if (data)
+                return <div key={clientID}
                                   className={`${styles.player}${data.ready ? (' ' + styles.playerReady) : ''}`}
                                   data-id={clientID}
                                   data-db-id={data.dbID}>
-                <div title={data.dbID}>
-                    {data.username.startsWith('Anonymous') ? ('Anon' + data.username.substr(9)) : data.username}
+                    <div title={data.dbID}>
+                        {data.username.startsWith('Anonymous') ? ('Anon' + data.username.substr(9)) : data.username}
+                    </div>
                 </div>
-            </div>
         })
     }
 
@@ -222,29 +219,9 @@ export default class RoomPage extends React.Component<any, RoomState> {
         })
     }
 
-    private onMatchChanged() {
-        if (this.gameMap) {
-            this.gameMap.dispose()
-        }
-        if (!this.state.match.id) {
-            this.gameMap = undefined
-            return
-        }
-
-        UIContext.fullscreen.next(true)
-        this.gameMap = new GameMap(this.lobby!)
-
-        const $el = this.canvasRootRef.current
-        if ($el) {
-            $el.appendChild(this.gameMap.view)
-        }
-    }
-
-    private canvasRootRef = React.createRef<HTMLDivElement>()
-
     private renderGame() {
         return <div className={styles.gameRoot}>
-            <div id="game" ref={this.canvasRootRef} />
-        </div>;
+            <GameMap room={this.lobby!} />
+        </div>
     }
 }

@@ -11,6 +11,7 @@
     "watch": "yarn build && tsc --watch"
   },
   "dependencies": {
+    "@colyseus/schema": "^1.0.3",
     "colyseus": "^0.14.0",
     "moment": "^2.29.1"
   },

@@ -14,19 +14,18 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="4ab1c6cd-2206-4d65-81b2-41909449377e" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/workspaces/client/src/pages/UIContext.ts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/workspaces/client/src/pages/game/GameCell.ts" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/workspaces/client/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/workspaces/client/package.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/workspaces/client/src/App.scss" beforeDir="false" afterPath="$PROJECT_DIR$/workspaces/client/src/App.scss" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/workspaces/client/src/components/Brand.module.scss" beforeDir="false" afterPath="$PROJECT_DIR$/workspaces/client/src/components/Brand.module.scss" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/workspaces/client/src/components/Brand.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/workspaces/client/src/components/Brand.tsx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/workspaces/client/src/components/Loading.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/workspaces/client/src/components/Loading.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/workspaces/client/src/pages/GamePage.module.scss" beforeDir="false" afterPath="$PROJECT_DIR$/workspaces/client/src/pages/GamePage.module.scss" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/workspaces/client/src/pages/GamePage.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/workspaces/client/src/pages/GamePage.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/workspaces/client/src/pages/game/GameMap.ts" beforeDir="false" afterPath="$PROJECT_DIR$/workspaces/client/src/pages/game/GameMap.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/workspaces/client/src/pages/game/RoomPage.module.scss" beforeDir="false" afterPath="$PROJECT_DIR$/workspaces/client/src/pages/game/RoomPage.module.scss" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/workspaces/client/src/pages/game/GameCell.ts" beforeDir="false" afterPath="$PROJECT_DIR$/workspaces/client/src/pages/game/GameCell.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/workspaces/client/src/pages/game/GameMap.ts" beforeDir="false" afterPath="$PROJECT_DIR$/workspaces/client/src/pages/game/GameMap.tsx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/workspaces/client/src/pages/game/RoomPage.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/workspaces/client/src/pages/game/RoomPage.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/workspaces/client/tsconfig.json" beforeDir="false" afterPath="$PROJECT_DIR$/workspaces/client/tsconfig.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/workspaces/common/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/workspaces/common/package.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/workspaces/common/src/colyseus.ts" beforeDir="false" afterPath="$PROJECT_DIR$/workspaces/common/src/colyseus.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/workspaces/common/tsconfig.json" beforeDir="false" afterPath="$PROJECT_DIR$/workspaces/common/tsconfig.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/workspaces/common/tsconfig.tsbuildinfo" beforeDir="false" afterPath="$PROJECT_DIR$/workspaces/common/tsconfig.tsbuildinfo" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/workspaces/server/src/colyseus/server.ts" beforeDir="false" afterPath="$PROJECT_DIR$/workspaces/server/src/colyseus/server.ts" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/yarn.lock" beforeDir="false" afterPath="$PROJECT_DIR$/yarn.lock" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -172,7 +171,8 @@
       <workItem from="1605397578846" duration="5893000" />
       <workItem from="1605438719094" duration="27775000" />
       <workItem from="1605838088694" duration="48308000" />
-      <workItem from="1605937383849" duration="2497000" />
+      <workItem from="1605937383849" duration="6667000" />
+      <workItem from="1605973455521" duration="7267000" />
     </task>
     <task id="LOCAL-00001" summary="finishing basics">
       <created>1605153963739</created>
@@ -223,7 +223,14 @@
       <option name="project" value="LOCAL" />
       <updated>1605872637070</updated>
     </task>
-    <option name="localTasksCounter" value="8" />
+    <task id="LOCAL-00008" summary="Some client changes">
+      <created>1605940004822</created>
+      <option name="number" value="00008" />
+      <option name="presentableId" value="LOCAL-00008" />
+      <option name="project" value="LOCAL" />
+      <updated>1605940004822</updated>
+    </task>
+    <option name="localTasksCounter" value="9" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -250,7 +257,8 @@
     <MESSAGE value="Game logic" />
     <MESSAGE value="Removing old code" />
     <MESSAGE value="client side improvements, bug fixes" />
-    <option name="LAST_COMMIT_MESSAGE" value="client side improvements, bug fixes" />
+    <MESSAGE value="Some client changes" />
+    <option name="LAST_COMMIT_MESSAGE" value="Some client changes" />
   </component>
   <component name="WindowStateProjectService">
     <state x="420" y="189" width="1079" height="862" key="#com.intellij.execution.impl.EditConfigurationsDialog" timestamp="1605589030619">
@@ -280,26 +288,26 @@
       <screen x="0" y="32" width="1920" height="1048" />
     </state>
     <state x="0" y="32" key="FileDocumentManager.FileCacheConflict/0.32.1920.1048@0.32.1920.1048" timestamp="1604823999607" />
-    <state width="1896" height="264" key="GridCell.Tab.0.bottom" timestamp="1605937719069">
+    <state width="1896" height="278" key="GridCell.Tab.0.bottom" timestamp="1605978883804">
       <screen x="0" y="32" width="1920" height="960" />
     </state>
     <state width="1896" height="224" key="GridCell.Tab.0.bottom/0.32.1920.1048@0.32.1920.1048" timestamp="1605345454862" />
-    <state width="1896" height="264" key="GridCell.Tab.0.bottom/0.32.1920.960@0.32.1920.960" timestamp="1605937719069" />
-    <state width="1896" height="264" key="GridCell.Tab.0.center" timestamp="1605937719069">
+    <state width="1896" height="278" key="GridCell.Tab.0.bottom/0.32.1920.960@0.32.1920.960" timestamp="1605978883804" />
+    <state width="1896" height="278" key="GridCell.Tab.0.center" timestamp="1605978883803">
       <screen x="0" y="32" width="1920" height="960" />
     </state>
     <state width="1896" height="224" key="GridCell.Tab.0.center/0.32.1920.1048@0.32.1920.1048" timestamp="1605345454861" />
-    <state width="1896" height="264" key="GridCell.Tab.0.center/0.32.1920.960@0.32.1920.960" timestamp="1605937719069" />
-    <state width="1896" height="264" key="GridCell.Tab.0.left" timestamp="1605937719068">
+    <state width="1896" height="278" key="GridCell.Tab.0.center/0.32.1920.960@0.32.1920.960" timestamp="1605978883803" />
+    <state width="1896" height="278" key="GridCell.Tab.0.left" timestamp="1605978883802">
       <screen x="0" y="32" width="1920" height="960" />
     </state>
     <state width="1896" height="224" key="GridCell.Tab.0.left/0.32.1920.1048@0.32.1920.1048" timestamp="1605345454861" />
-    <state width="1896" height="264" key="GridCell.Tab.0.left/0.32.1920.960@0.32.1920.960" timestamp="1605937719068" />
-    <state width="1896" height="264" key="GridCell.Tab.0.right" timestamp="1605937719069">
+    <state width="1896" height="278" key="GridCell.Tab.0.left/0.32.1920.960@0.32.1920.960" timestamp="1605978883802" />
+    <state width="1896" height="278" key="GridCell.Tab.0.right" timestamp="1605978883803">
       <screen x="0" y="32" width="1920" height="960" />
     </state>
     <state width="1896" height="224" key="GridCell.Tab.0.right/0.32.1920.1048@0.32.1920.1048" timestamp="1605345454862" />
-    <state width="1896" height="264" key="GridCell.Tab.0.right/0.32.1920.960@0.32.1920.960" timestamp="1605937719069" />
+    <state width="1896" height="278" key="GridCell.Tab.0.right/0.32.1920.960@0.32.1920.960" timestamp="1605978883803" />
     <state width="1896" height="205" key="GridCell.Tab.1.bottom" timestamp="1605889877871">
       <screen x="0" y="32" width="1920" height="960" />
     </state>
@@ -373,11 +381,11 @@
       <screen x="0" y="32" width="1920" height="1048" />
     </state>
     <state x="100" y="132" width="1720" height="848" key="dock-window-2/0.32.1920.1048@0.32.1920.1048" timestamp="1604748662033" />
-    <state x="830" y="212" width="739" height="633" key="find.popup" timestamp="1605866034825">
+    <state x="830" y="212" width="739" height="633" key="find.popup" timestamp="1605942097080">
       <screen x="0" y="32" width="1920" height="960" />
     </state>
     <state x="590" y="211" width="739" height="690" key="find.popup/0.32.1920.1048@0.32.1920.1048" timestamp="1605074471831" />
-    <state x="830" y="212" width="739" height="633" key="find.popup/0.32.1920.960@0.32.1920.960" timestamp="1605866034825" />
+    <state x="830" y="212" width="739" height="633" key="find.popup/0.32.1920.960@0.32.1920.960" timestamp="1605942097080" />
     <state x="540" y="231" key="run.anything.popup" timestamp="1605862421937">
       <screen x="0" y="32" width="1920" height="960" />
     </state>

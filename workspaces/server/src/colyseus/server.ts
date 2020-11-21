@@ -12,7 +12,7 @@ export default function getColyseus(server: http.Server) {
     })
 
     gameServer.define('gameLobby', MatchLobbyRoom)
-    gameServer.simulateLatency(160)
+    //gameServer.simulateLatency(160)
 
     return gameServer
 }

@@ -201,9 +201,79 @@
         "signature": "cd6efb9467a8b6338ece2e2855e37765700f2cd061ca54b01b33878cf5c7677e",
         "affectsGlobalScope": true
       },
+      "../../node_modules/@colyseus/schema/lib/spec.d.ts": {
+        "version": "a1e6ce3e926931f0ac0c49bf650d07d478db564f3dcc5f141800d2b0b4d5346a",
+        "signature": "a1e6ce3e926931f0ac0c49bf650d07d478db564f3dcc5f141800d2b0b4d5346a",
+        "affectsGlobalScope": false
+      },
+      "../../node_modules/@colyseus/schema/lib/annotations.d.ts": {
+        "version": "6d4fc354752de667fc12117f8a1b5aaea4880ce34e09dd620984b04936b23045",
+        "signature": "6d4fc354752de667fc12117f8a1b5aaea4880ce34e09dd620984b04936b23045",
+        "affectsGlobalScope": false
+      },
+      "../../node_modules/@colyseus/schema/lib/encoding/decode.d.ts": {
+        "version": "1c99cd39cb54d8387761914102cbd80a6a0053039847f7891331d3ba9aa5c9d1",
+        "signature": "1c99cd39cb54d8387761914102cbd80a6a0053039847f7891331d3ba9aa5c9d1",
+        "affectsGlobalScope": false
+      },
+      "../../node_modules/@colyseus/schema/lib/types/MapSchema.d.ts": {
+        "version": "67a6af81a1ac51830489bb9145ab9ffe8ef458107be3791c3c683d830a8105c6",
+        "signature": "67a6af81a1ac51830489bb9145ab9ffe8ef458107be3791c3c683d830a8105c6",
+        "affectsGlobalScope": false
+      },
+      "../../node_modules/@colyseus/schema/lib/types/ArraySchema.d.ts": {
+        "version": "e1b7acdc8a7f48c951f26ac07bb02d98984d59983ee011668367da85917d6d44",
+        "signature": "e1b7acdc8a7f48c951f26ac07bb02d98984d59983ee011668367da85917d6d44",
+        "affectsGlobalScope": false
+      },
+      "../../node_modules/@colyseus/schema/lib/types/CollectionSchema.d.ts": {
+        "version": "2b0ea9d60b7ff0f33f56c3c4804909263e4cc35b2a77b89482f9ee6330503d71",
+        "signature": "2b0ea9d60b7ff0f33f56c3c4804909263e4cc35b2a77b89482f9ee6330503d71",
+        "affectsGlobalScope": false
+      },
+      "../../node_modules/@colyseus/schema/lib/types/SetSchema.d.ts": {
+        "version": "285f174061f02966cb32da15966385ac25fca712d31aeeeece2ce2094f35dd21",
+        "signature": "285f174061f02966cb32da15966385ac25fca712d31aeeeece2ce2094f35dd21",
+        "affectsGlobalScope": false
+      },
+      "../../node_modules/@colyseus/schema/lib/changes/ChangeTree.d.ts": {
+        "version": "604271e049040a621813c7e23c2bfd63de400160f6355b32caf44ba8ab9a9f81",
+        "signature": "604271e049040a621813c7e23c2bfd63de400160f6355b32caf44ba8ab9a9f81",
+        "affectsGlobalScope": false
+      },
+      "../../node_modules/@colyseus/schema/lib/types/HelperTypes.d.ts": {
+        "version": "c3061d0717ba8888e069f20c449928e1fa04aaadaf5947f291c4d8d251ca54d9",
+        "signature": "c3061d0717ba8888e069f20c449928e1fa04aaadaf5947f291c4d8d251ca54d9",
+        "affectsGlobalScope": false
+      },
+      "../../node_modules/@colyseus/schema/lib/events/EventEmitter.d.ts": {
+        "version": "8db1d1d778f014bd5a73381779108463da8cc11b5d10b31aa3302458001c94d9",
+        "signature": "8db1d1d778f014bd5a73381779108463da8cc11b5d10b31aa3302458001c94d9",
+        "affectsGlobalScope": false
+      },
+      "../../node_modules/@colyseus/schema/lib/Schema.d.ts": {
+        "version": "7af8e623fcc446a21a0de0966c3611e2ddae6a27cfe918f2496942bc2e7c6408",
+        "signature": "7af8e623fcc446a21a0de0966c3611e2ddae6a27cfe918f2496942bc2e7c6408",
+        "affectsGlobalScope": false
+      },
+      "../../node_modules/@colyseus/schema/lib/utils.d.ts": {
+        "version": "9e2aa2a4ffd1e3a5b96501cd2881278ff35126cdc7aaa26888fb23b159f4f716",
+        "signature": "9e2aa2a4ffd1e3a5b96501cd2881278ff35126cdc7aaa26888fb23b159f4f716",
+        "affectsGlobalScope": false
+      },
+      "../../node_modules/@colyseus/schema/lib/Reflection.d.ts": {
+        "version": "f6ddaf871ed8f7d61c0105fd0268219ab9e4997963e899f6a2524c5697cd1155",
+        "signature": "f6ddaf871ed8f7d61c0105fd0268219ab9e4997963e899f6a2524c5697cd1155",
+        "affectsGlobalScope": false
+      },
+      "../../node_modules/@colyseus/schema/lib/index.d.ts": {
+        "version": "69356297ec185742dd1037f15f444c51cab534e77ea934b885a02b384e3f0882",
+        "signature": "69356297ec185742dd1037f15f444c51cab534e77ea934b885a02b384e3f0882",
+        "affectsGlobalScope": false
+      },
       "./src/colyseus.ts": {
-        "version": "87a4756d9e5aa4357f3592bd542f3af69c76f083a5511b3ffcf6f9712ca6f4b3",
-        "signature": "8e46c8119883830086afa7c8ef7a320334e8cb7d2db65ba24152d1b98631725e",
+        "version": "b10cf44538c1afe389f3e65609a562ad2863cf57d85db2c37eda073ddd9261d3",
+        "signature": "c9e3bf2353967107cc55537bfcf2d5e9d424e43591e0f8ea7d58003acca6d98f",
         "affectsGlobalScope": false
       },
       "./src/dto.ts": {
@@ -1026,7 +1096,6 @@
       "outDir": "./dist",
       "rootDir": "./src",
       "resolveJsonModule": true,
-      "isolatedModules": true,
       "composite": true,
       "incremental": true,
       "watch": true,
@@ -1035,6 +1104,62 @@
     "referencedMap": {
       "../../node_modules/@babel/parser/typings/babel-parser.d.ts": [
         "../../node_modules/@babel/types/lib/index.d.ts"
+      ],
+      "../../node_modules/@colyseus/schema/lib/Reflection.d.ts": [
+        "../../node_modules/@colyseus/schema/lib/Schema.d.ts",
+        "../../node_modules/@colyseus/schema/lib/encoding/decode.d.ts",
+        "../../node_modules/@colyseus/schema/lib/types/ArraySchema.d.ts"
+      ],
+      "../../node_modules/@colyseus/schema/lib/Schema.d.ts": [
+        "../../node_modules/@colyseus/schema/lib/annotations.d.ts",
+        "../../node_modules/@colyseus/schema/lib/changes/ChangeTree.d.ts",
+        "../../node_modules/@colyseus/schema/lib/encoding/decode.d.ts",
+        "../../node_modules/@colyseus/schema/lib/events/EventEmitter.d.ts",
+        "../../node_modules/@colyseus/schema/lib/spec.d.ts",
+        "../../node_modules/@colyseus/schema/lib/types/HelperTypes.d.ts"
+      ],
+      "../../node_modules/@colyseus/schema/lib/annotations.d.ts": [
+        "../../node_modules/@colyseus/schema/lib/Schema.d.ts"
+      ],
+      "../../node_modules/@colyseus/schema/lib/changes/ChangeTree.d.ts": [
+        "../../node_modules/@colyseus/schema/lib/Schema.d.ts",
+        "../../node_modules/@colyseus/schema/lib/annotations.d.ts",
+        "../../node_modules/@colyseus/schema/lib/spec.d.ts",
+        "../../node_modules/@colyseus/schema/lib/types/ArraySchema.d.ts",
+        "../../node_modules/@colyseus/schema/lib/types/CollectionSchema.d.ts",
+        "../../node_modules/@colyseus/schema/lib/types/MapSchema.d.ts",
+        "../../node_modules/@colyseus/schema/lib/types/SetSchema.d.ts"
+      ],
+      "../../node_modules/@colyseus/schema/lib/index.d.ts": [
+        "../../node_modules/@colyseus/schema/lib/Reflection.d.ts",
+        "../../node_modules/@colyseus/schema/lib/Schema.d.ts",
+        "../../node_modules/@colyseus/schema/lib/annotations.d.ts",
+        "../../node_modules/@colyseus/schema/lib/encoding/decode.d.ts",
+        "../../node_modules/@colyseus/schema/lib/spec.d.ts",
+        "../../node_modules/@colyseus/schema/lib/types/ArraySchema.d.ts",
+        "../../node_modules/@colyseus/schema/lib/types/CollectionSchema.d.ts",
+        "../../node_modules/@colyseus/schema/lib/types/MapSchema.d.ts",
+        "../../node_modules/@colyseus/schema/lib/types/SetSchema.d.ts",
+        "../../node_modules/@colyseus/schema/lib/utils.d.ts"
+      ],
+      "../../node_modules/@colyseus/schema/lib/types/ArraySchema.d.ts": [
+        "../../node_modules/@colyseus/schema/lib/Schema.d.ts",
+        "../../node_modules/@colyseus/schema/lib/changes/ChangeTree.d.ts"
+      ],
+      "../../node_modules/@colyseus/schema/lib/types/CollectionSchema.d.ts": [
+        "../../node_modules/@colyseus/schema/lib/Schema.d.ts",
+        "../../node_modules/@colyseus/schema/lib/changes/ChangeTree.d.ts"
+      ],
+      "../../node_modules/@colyseus/schema/lib/types/MapSchema.d.ts": [
+        "../../node_modules/@colyseus/schema/lib/Schema.d.ts",
+        "../../node_modules/@colyseus/schema/lib/changes/ChangeTree.d.ts"
+      ],
+      "../../node_modules/@colyseus/schema/lib/types/SetSchema.d.ts": [
+        "../../node_modules/@colyseus/schema/lib/Schema.d.ts",
+        "../../node_modules/@colyseus/schema/lib/changes/ChangeTree.d.ts"
+      ],
+      "../../node_modules/@colyseus/schema/lib/utils.d.ts": [
+        "../../node_modules/@colyseus/schema/lib/index.d.ts"
       ],
       "../../node_modules/@types/accepts/index.d.ts": [
         "./node_modules/@types/node/http.d.ts",
@@ -1541,6 +1666,9 @@
       ],
       "./node_modules/@types/node/zlib.d.ts": [
         "./node_modules/@types/node/stream.d.ts"
+      ],
+      "./src/colyseus.ts": [
+        "../../node_modules/@colyseus/schema/lib/index.d.ts"
       ],
       "./src/consts.ts": [
         "./src/dto.ts"
@@ -1559,6 +1687,62 @@
       "../../node_modules/@babel/parser/typings/babel-parser.d.ts": [
         "../../node_modules/@babel/types/lib/index.d.ts"
       ],
+      "../../node_modules/@colyseus/schema/lib/Reflection.d.ts": [
+        "../../node_modules/@colyseus/schema/lib/Schema.d.ts",
+        "../../node_modules/@colyseus/schema/lib/encoding/decode.d.ts",
+        "../../node_modules/@colyseus/schema/lib/types/ArraySchema.d.ts"
+      ],
+      "../../node_modules/@colyseus/schema/lib/Schema.d.ts": [
+        "../../node_modules/@colyseus/schema/lib/annotations.d.ts",
+        "../../node_modules/@colyseus/schema/lib/changes/ChangeTree.d.ts",
+        "../../node_modules/@colyseus/schema/lib/encoding/decode.d.ts",
+        "../../node_modules/@colyseus/schema/lib/events/EventEmitter.d.ts",
+        "../../node_modules/@colyseus/schema/lib/spec.d.ts",
+        "../../node_modules/@colyseus/schema/lib/types/HelperTypes.d.ts"
+      ],
+      "../../node_modules/@colyseus/schema/lib/annotations.d.ts": [
+        "../../node_modules/@colyseus/schema/lib/Schema.d.ts"
+      ],
+      "../../node_modules/@colyseus/schema/lib/changes/ChangeTree.d.ts": [
+        "../../node_modules/@colyseus/schema/lib/Schema.d.ts",
+        "../../node_modules/@colyseus/schema/lib/annotations.d.ts",
+        "../../node_modules/@colyseus/schema/lib/spec.d.ts",
+        "../../node_modules/@colyseus/schema/lib/types/ArraySchema.d.ts",
+        "../../node_modules/@colyseus/schema/lib/types/CollectionSchema.d.ts",
+        "../../node_modules/@colyseus/schema/lib/types/MapSchema.d.ts",
+        "../../node_modules/@colyseus/schema/lib/types/SetSchema.d.ts"
+      ],
+      "../../node_modules/@colyseus/schema/lib/index.d.ts": [
+        "../../node_modules/@colyseus/schema/lib/Reflection.d.ts",
+        "../../node_modules/@colyseus/schema/lib/Schema.d.ts",
+        "../../node_modules/@colyseus/schema/lib/annotations.d.ts",
+        "../../node_modules/@colyseus/schema/lib/encoding/decode.d.ts",
+        "../../node_modules/@colyseus/schema/lib/spec.d.ts",
+        "../../node_modules/@colyseus/schema/lib/types/ArraySchema.d.ts",
+        "../../node_modules/@colyseus/schema/lib/types/CollectionSchema.d.ts",
+        "../../node_modules/@colyseus/schema/lib/types/MapSchema.d.ts",
+        "../../node_modules/@colyseus/schema/lib/types/SetSchema.d.ts",
+        "../../node_modules/@colyseus/schema/lib/utils.d.ts"
+      ],
+      "../../node_modules/@colyseus/schema/lib/types/ArraySchema.d.ts": [
+        "../../node_modules/@colyseus/schema/lib/Schema.d.ts",
+        "../../node_modules/@colyseus/schema/lib/changes/ChangeTree.d.ts"
+      ],
+      "../../node_modules/@colyseus/schema/lib/types/CollectionSchema.d.ts": [
+        "../../node_modules/@colyseus/schema/lib/Schema.d.ts",
+        "../../node_modules/@colyseus/schema/lib/changes/ChangeTree.d.ts"
+      ],
+      "../../node_modules/@colyseus/schema/lib/types/MapSchema.d.ts": [
+        "../../node_modules/@colyseus/schema/lib/Schema.d.ts",
+        "../../node_modules/@colyseus/schema/lib/changes/ChangeTree.d.ts"
+      ],
+      "../../node_modules/@colyseus/schema/lib/types/SetSchema.d.ts": [
+        "../../node_modules/@colyseus/schema/lib/Schema.d.ts",
+        "../../node_modules/@colyseus/schema/lib/changes/ChangeTree.d.ts"
+      ],
+      "../../node_modules/@colyseus/schema/lib/utils.d.ts": [
+        "../../node_modules/@colyseus/schema/lib/index.d.ts"
+      ],
       "../../node_modules/@types/accepts/index.d.ts": [
         "./node_modules/@types/node/http.d.ts",
         "./node_modules/@types/node/index.d.ts"
@@ -2065,6 +2249,9 @@
       "./node_modules/@types/node/zlib.d.ts": [
         "./node_modules/@types/node/stream.d.ts"
       ],
+      "./src/colyseus.ts": [
+        "../../node_modules/@colyseus/schema/lib/index.d.ts"
+      ],
       "./src/consts.ts": [
         "./src/dto.ts"
       ],
@@ -2079,115 +2266,6 @@
       ]
     },
     "semanticDiagnosticsPerFile": [
-      "../../node_modules/@babel/parser/typings/babel-parser.d.ts",
-      "../../node_modules/@babel/types/lib/index.d.ts",
-      "../../node_modules/@types/accepts/index.d.ts",
-      "../../node_modules/@types/anymatch/index.d.ts",
-      "../../node_modules/@types/aria-query/index.d.ts",
-      "../../node_modules/@types/babel__core/index.d.ts",
-      "../../node_modules/@types/babel__generator/index.d.ts",
-      "../../node_modules/@types/babel__template/index.d.ts",
-      "../../node_modules/@types/babel__traverse/index.d.ts",
-      "../../node_modules/@types/body-parser/index.d.ts",
-      "../../node_modules/@types/bson/index.d.ts",
-      "../../node_modules/@types/bull/index.d.ts",
-      "../../node_modules/@types/component-emitter/index.d.ts",
-      "../../node_modules/@types/connect/index.d.ts",
-      "../../node_modules/@types/content-disposition/index.d.ts",
-      "../../node_modules/@types/cookies/index.d.ts",
-      "../../node_modules/@types/eslint/helpers.d.ts",
-      "../../node_modules/@types/eslint/index.d.ts",
-      "../../node_modules/@types/estree/index.d.ts",
-      "../../node_modules/@types/events/index.d.ts",
-      "../../node_modules/@types/express-serve-static-core/index.d.ts",
-      "../../node_modules/@types/express/index.d.ts",
-      "../../node_modules/@types/glob/index.d.ts",
-      "../../node_modules/@types/graceful-fs/index.d.ts",
-      "../../node_modules/@types/history/DOMUtils.d.ts",
-      "../../node_modules/@types/history/LocationUtils.d.ts",
-      "../../node_modules/@types/history/PathUtils.d.ts",
-      "../../node_modules/@types/history/createBrowserHistory.d.ts",
-      "../../node_modules/@types/history/createHashHistory.d.ts",
-      "../../node_modules/@types/history/createMemoryHistory.d.ts",
-      "../../node_modules/@types/history/index.d.ts",
-      "../../node_modules/@types/html-minifier-terser/index.d.ts",
-      "../../node_modules/@types/http-assert/index.d.ts",
-      "../../node_modules/@types/http-errors/index.d.ts",
-      "../../node_modules/@types/ioredis/index.d.ts",
-      "../../node_modules/@types/istanbul-lib-coverage/index.d.ts",
-      "../../node_modules/@types/istanbul-lib-report/index.d.ts",
-      "../../node_modules/@types/istanbul-reports/index.d.ts",
-      "../../node_modules/@types/jest/index.d.ts",
-      "../../node_modules/@types/json-schema/index.d.ts",
-      "../../node_modules/@types/json5/index.d.ts",
-      "../../node_modules/@types/jsonwebtoken/index.d.ts",
-      "../../node_modules/@types/keygrip/index.d.ts",
-      "../../node_modules/@types/keyv/index.d.ts",
-      "../../node_modules/@types/koa-compose/index.d.ts",
-      "../../node_modules/@types/koa-cors/index.d.ts",
-      "../../node_modules/@types/koa-logger/index.d.ts",
-      "../../node_modules/@types/koa-passport/index.d.ts",
-      "../../node_modules/@types/koa-redis/index.d.ts",
-      "../../node_modules/@types/koa-session/index.d.ts",
-      "../../node_modules/@types/koa/index.d.ts",
-      "../../node_modules/@types/mime/index.d.ts",
-      "../../node_modules/@types/minimatch/index.d.ts",
-      "../../node_modules/@types/mongodb/index.d.ts",
-      "../../node_modules/@types/mongoose/index.d.ts",
-      "../../node_modules/@types/normalize-package-data/index.d.ts",
-      "../../node_modules/@types/parse-json/index.d.ts",
-      "../../node_modules/@types/passport-local/index.d.ts",
-      "../../node_modules/@types/passport-strategy/index.d.ts",
-      "../../node_modules/@types/passport/index.d.ts",
-      "../../node_modules/@types/prettier/index.d.ts",
-      "../../node_modules/@types/prop-types/index.d.ts",
-      "../../node_modules/@types/q/index.d.ts",
-      "../../node_modules/@types/qs/index.d.ts",
-      "../../node_modules/@types/range-parser/index.d.ts",
-      "../../node_modules/@types/react-dom/index.d.ts",
-      "../../node_modules/@types/react-router-dom/index.d.ts",
-      "../../node_modules/@types/react-router/index.d.ts",
-      "../../node_modules/@types/react/global.d.ts",
-      "../../node_modules/@types/react/index.d.ts",
-      "../../node_modules/@types/redis/index.d.ts",
-      "../../node_modules/@types/resolve/index.d.ts",
-      "../../node_modules/@types/responselike/index.d.ts",
-      "../../node_modules/@types/sass/index.d.ts",
-      "../../node_modules/@types/serve-static/index.d.ts",
-      "../../node_modules/@types/source-list-map/index.d.ts",
-      "../../node_modules/@types/stack-utils/index.d.ts",
-      "../../node_modules/@types/tapable/index.d.ts",
-      "../../node_modules/@types/testing-library__jest-dom/index.d.ts",
-      "../../node_modules/@types/uglify-js/index.d.ts",
-      "../../node_modules/@types/validator/index.d.ts",
-      "../../node_modules/@types/webpack-sources/index.d.ts",
-      "../../node_modules/@types/webpack-sources/lib/CachedSource.d.ts",
-      "../../node_modules/@types/webpack-sources/lib/CompatSource.d.ts",
-      "../../node_modules/@types/webpack-sources/lib/ConcatSource.d.ts",
-      "../../node_modules/@types/webpack-sources/lib/OriginalSource.d.ts",
-      "../../node_modules/@types/webpack-sources/lib/PrefixSource.d.ts",
-      "../../node_modules/@types/webpack-sources/lib/RawSource.d.ts",
-      "../../node_modules/@types/webpack-sources/lib/ReplaceSource.d.ts",
-      "../../node_modules/@types/webpack-sources/lib/SizeOnlySource.d.ts",
-      "../../node_modules/@types/webpack-sources/lib/Source.d.ts",
-      "../../node_modules/@types/webpack-sources/lib/SourceMapSource.d.ts",
-      "../../node_modules/@types/webpack-sources/lib/index.d.ts",
-      "../../node_modules/@types/webpack-sources/node_modules/source-map/source-map.d.ts",
-      "../../node_modules/@types/webpack/index.d.ts",
-      "../../node_modules/@types/ws/index.d.ts",
-      "../../node_modules/@types/yargs-parser/index.d.ts",
-      "../../node_modules/@types/yargs/index.d.ts",
-      "../../node_modules/anymatch/index.d.ts",
-      "../../node_modules/csstype/index.d.ts",
-      "../../node_modules/jest-diff/build/cleanupSemantic.d.ts",
-      "../../node_modules/jest-diff/build/diffLines.d.ts",
-      "../../node_modules/jest-diff/build/index.d.ts",
-      "../../node_modules/jest-diff/build/printDiffs.d.ts",
-      "../../node_modules/jest-diff/build/types.d.ts",
-      "../../node_modules/moment/ts3.1-typings/moment.d.ts",
-      "../../node_modules/pretty-format/build/index.d.ts",
-      "../../node_modules/pretty-format/build/types.d.ts",
-      "../../node_modules/source-map/source-map.d.ts",
       "../../node_modules/typescript/lib/lib.es2015.collection.d.ts",
       "../../node_modules/typescript/lib/lib.es2015.core.d.ts",
       "../../node_modules/typescript/lib/lib.es2015.d.ts",
@@ -2227,59 +2305,7 @@
       "../../node_modules/typescript/lib/lib.esnext.d.ts",
       "../../node_modules/typescript/lib/lib.esnext.intl.d.ts",
       "../../node_modules/typescript/lib/lib.esnext.promise.d.ts",
-      "../../node_modules/typescript/lib/lib.esnext.string.d.ts",
-      "./node_modules/@types/node/assert.d.ts",
-      "./node_modules/@types/node/async_hooks.d.ts",
-      "./node_modules/@types/node/base.d.ts",
-      "./node_modules/@types/node/buffer.d.ts",
-      "./node_modules/@types/node/child_process.d.ts",
-      "./node_modules/@types/node/cluster.d.ts",
-      "./node_modules/@types/node/console.d.ts",
-      "./node_modules/@types/node/constants.d.ts",
-      "./node_modules/@types/node/crypto.d.ts",
-      "./node_modules/@types/node/dgram.d.ts",
-      "./node_modules/@types/node/dns.d.ts",
-      "./node_modules/@types/node/domain.d.ts",
-      "./node_modules/@types/node/events.d.ts",
-      "./node_modules/@types/node/fs.d.ts",
-      "./node_modules/@types/node/fs/promises.d.ts",
-      "./node_modules/@types/node/globals.d.ts",
-      "./node_modules/@types/node/globals.global.d.ts",
-      "./node_modules/@types/node/http.d.ts",
-      "./node_modules/@types/node/http2.d.ts",
-      "./node_modules/@types/node/https.d.ts",
-      "./node_modules/@types/node/index.d.ts",
-      "./node_modules/@types/node/inspector.d.ts",
-      "./node_modules/@types/node/module.d.ts",
-      "./node_modules/@types/node/net.d.ts",
-      "./node_modules/@types/node/os.d.ts",
-      "./node_modules/@types/node/path.d.ts",
-      "./node_modules/@types/node/perf_hooks.d.ts",
-      "./node_modules/@types/node/process.d.ts",
-      "./node_modules/@types/node/punycode.d.ts",
-      "./node_modules/@types/node/querystring.d.ts",
-      "./node_modules/@types/node/readline.d.ts",
-      "./node_modules/@types/node/repl.d.ts",
-      "./node_modules/@types/node/stream.d.ts",
-      "./node_modules/@types/node/string_decoder.d.ts",
-      "./node_modules/@types/node/timers.d.ts",
-      "./node_modules/@types/node/tls.d.ts",
-      "./node_modules/@types/node/trace_events.d.ts",
-      "./node_modules/@types/node/ts3.4/base.d.ts",
-      "./node_modules/@types/node/ts3.6/base.d.ts",
-      "./node_modules/@types/node/tty.d.ts",
-      "./node_modules/@types/node/url.d.ts",
-      "./node_modules/@types/node/util.d.ts",
-      "./node_modules/@types/node/v8.d.ts",
-      "./node_modules/@types/node/vm.d.ts",
-      "./node_modules/@types/node/wasi.d.ts",
-      "./node_modules/@types/node/worker_threads.d.ts",
-      "./node_modules/@types/node/zlib.d.ts",
-      "./src/colyseus.ts",
-      "./src/consts.ts",
-      "./src/dto.ts",
-      "./src/index.ts",
-      "./src/promise.ts"
+      "../../node_modules/typescript/lib/lib.esnext.string.d.ts"
     ]
   },
   "version": "4.0.5"

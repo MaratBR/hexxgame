@@ -1,4 +1,4 @@
-import Dict = NodeJS.Dict;
+import {ArraySchema, MapSchema} from "@colyseus/schema"
 
 export interface IClientInfo {
     dbID: string
@@ -9,15 +9,15 @@ export interface IClientInfo {
 
 export interface ITeamInfo {
     ready: boolean
-    members: string[]
+    members: ArraySchema<string>
 }
 
 export interface IGameLobbyState {
     id?: string;
     selectedMapID?: string
-    clients: {[key: string]: IClientInfo}
-    spectators: string[]
-    teams: ITeamInfo[]
+    clients: MapSchema<IClientInfo>
+    spectators: ArraySchema<string>
+    teams: ArraySchema<ITeamInfo>
     match: Partial<IMatchState>
 }
 
@@ -33,7 +33,7 @@ export interface MatchMapCell {
 export interface IMatchState {
     id: string
     teamsRotation: number[]
-    mapCells: Dict<MatchMapCell>
+    mapCells: MapSchema<MatchMapCell>
     startsAt: number
     currentRound: number
     currentRoundStage: number
@@ -45,7 +45,7 @@ export interface IMatchState {
 
 export interface IGameDominationState {
     cells: number
-    teamCells: Dict<number>
-    teamPoints: Dict<number>
+    teamCells: MapSchema<number>
+    teamPoints: MapSchema<number>
     totalPoints: number
 }

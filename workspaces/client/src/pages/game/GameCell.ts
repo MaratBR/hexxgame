@@ -47,21 +47,14 @@ export default class GameCell extends PIXI.Container {
             new PIXI.Point(-Math.cos(Math.PI / 6) * options.maxRadius, Math.sin(Math.PI / 6) * options.maxRadius),
             new PIXI.Point(-Math.cos(Math.PI / 6) * options.maxRadius, -Math.sin(Math.PI / 6) * options.maxRadius),
         ])
-        this.poly.interactive = true
         let dragging = false
-        this.poly.on('pointerdown', () => {
+        this.poly.on('pointerover', () => {
             this.poly.tint = 0xff0000
             dragging = true
         })
-        this.poly.on('pointerup', () => {
+        this.poly.on('pointer', () => {
             this.poly.tint = 0x555555
             dragging = false
-        })
-        this.poly.on('pointermove', (event: PIXI.InteractionEvent) => {
-            if (dragging) {
-                const newPosition = event.data.getLocalPosition(this.parent)
-                this.position = newPosition
-            }
         })
 
         this.text = new PIXI.Text(
@@ -72,10 +65,6 @@ export default class GameCell extends PIXI.Container {
                 fill: '#fff'
             })
         )
-        setInterval(() => {
-            this.value = Math.floor(Math.random()*100)
-            this.team = Math.floor(Math.random()*5)
-        }, 1000)
         this.text.anchor.set(0.5)
 
         this.addChild(this.poly)

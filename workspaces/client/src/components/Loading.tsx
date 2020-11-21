@@ -30,10 +30,11 @@ export default class Loading extends React.Component<LoadingProps, LoadingState>
     }
 
     private renderLoading() {
+        const style = {display: this.state.appeared ? 'initial' : 'none'}
         if (this.props.type == 'spinner')
-            return <div className={styles.loading} style={{display: this.state.appeared ? 'initial' : 'none'}}>
+            return <div className={styles.loading} style={style}>
                 Loading...
             </div>
-        return <Brand animated delay={0} text="Loading..." />
+        return <Brand animated delay={0} text="Loading..." style={style} />
     }
 }
