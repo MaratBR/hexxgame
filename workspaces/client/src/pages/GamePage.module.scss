@@ -4,6 +4,8 @@
   height: 100vh;
 
   nav {
+    z-index: 1000;
+    top: 0;
     border-bottom: 1px solid rgba(white, 0.05);
     padding-left: 11px;
     display: flex;
@@ -28,7 +30,7 @@
           padding: 5px 15px;
           color: white;
           text-decoration: white;
-          transition: .2s;
+          transitiofullscreenn: .2s;
 
           &:hover, &.active {
             border-bottom: 3px solid white;
@@ -48,6 +50,35 @@
   }
 }
 
+.navToggle {
+  display: none;
+}
+
+.fullscreen {
+  nav {
+    position: fixed;
+    left: 0;
+    transition: .2s;
+    top: -100%;
+
+    &.shown {
+      top: 0;
+    }
+
+    .navToggle {
+      display: block;
+      background: #3f3f3f;
+      height: 40px;
+      width: 40px;
+      position: fixed;
+      right: 0;
+      top: 0;
+      z-index: 1000;
+      border-radius: 0 0 0 50px;
+      border: none;
+    }
+  }
+}
+
 .body {
-  margin-top: 50px;
 }

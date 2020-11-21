@@ -6,17 +6,39 @@ type BrandParams = {
     onClick?: () => void,
     text?: string
     style?: CSSProperties
+    delay?: number
+    animated?: boolean
 }
 
-const Brand: React.FunctionComponent<BrandParams> = (params) => {
-    const text = params.text || (params.small ? 'h' : 'hexx')
-    return <div className={styles.brand} onClick={() => params.onClick ? params.onClick() : undefined} style={params.style}>
-        <h2>{text}</h2>
-        <h2>{text}</h2>
-        <h2>{text}</h2>
-        <h2>{text}</h2>
-        <h2>{text}</h2>
-    </div>
-};
+type BrandState = {
+    animated?: boolean
+}
+
+class Brand extends React.Component<BrandParams, BrandState> {
+    state: BrandState = {}
+
+    componentDidMount() {
+        if (this.props.animated) {
+            setTimeout(() => this.setState({animated: true}), this.props.delay || 0)
+        }
+    }
+
+    render() {
+        const text = this.props.text || (this.props.small ? 'h' : 'hexx')
+        return <div className={`${styles.brand}${this.state.animated ? (' ' + styles.brandAnimated) : ''}`}
+                    onClick={() => this.props.onClick ? this.props.onClick() : undefined}
+                    style={this.props.style}>
+            <h2>{text}</h2>
+            {
+                this.state.animated ? [
+                    <h2>{text}</h2>,
+                    <h2>{text}</h2>,
+                    <h2>{text}</h2>,
+                    <h2>{text}</h2>
+                ] : undefined
+            }
+        </div>
+    }
+}
 
 export default Brand

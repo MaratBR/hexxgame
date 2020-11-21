@@ -1,4 +1,5 @@
 import React from "react";
+import ReactDOM from "react-dom"
 import ApiContext from "../../game/context";
 import AppAPI from "../../game/AppAPI";
 import {Room} from "colyseus.js";
@@ -6,8 +7,8 @@ import styles from "./RoomPage.module.scss"
 import {getTeamColor, getTeamName, IGameLobbyState, GameMapInfoDto} from "@hexx/common";
 import Brand from "../../components/Brand";
 import GameMap from "./GameMap";
-
-
+import UIContext from "../UIContext";
+import Loading from "../../components/Loading";
 
 
 type RoomState = IGameLobbyState & {
@@ -17,6 +18,7 @@ type RoomState = IGameLobbyState & {
     }
     expandedMap?: string,
     selectedMap?: GameMapInfoDto
+    loaded?: boolean
 }
 
 const DEFAULT_STATE: RoomState = {
@@ -107,22 +109,25 @@ export default class RoomPage extends React.Component<any, RoomState> {
     onStateChanged(state: IGameLobbyState) {
         console.log('state changed')
         const mapChanged = this.state.selectedMapID !== state.selectedMapID
-        const matchChanged = this.state.match.id !== state.match.id
+        let matchChanged = this.state.match.id !== state.match.id
+        if (!this.state.loaded) {
+            ;(state as RoomState).loaded = true;
+        }
         this.setState(state)
 
         if (mapChanged) {
             this.onMapChanged()
         }
 
-        console.log(`matchChanged = ${matchChanged}`)
-        console.log(state)
-        console.log(`matchChanged = ${!!(state.match && !this.gameMap)}`)
-        if (matchChanged || state.match && !this.gameMap) {
+        if (matchChanged || state.match.id && !this.gameMap) {
             this.onMatchChanged()
         }
     }
 
     render() {
+        if (!this.state.loaded)
+            return <Loading />
+
         if (this.state.match?.id) {
             return this.renderGame()
         }
@@ -221,13 +226,25 @@ export default class RoomPage extends React.Component<any, RoomState> {
         if (this.gameMap) {
             this.gameMap.dispose()
         }
+        if (!this.state.match.id) {
+            this.gameMap = undefined
+            return
+        }
+
+        UIContext.fullscreen.next(true)
         this.gameMap = new GameMap(this.lobby!)
+
+        const $el = this.canvasRootRef.current
+        if ($el) {
+            $el.appendChild(this.gameMap.view)
+        }
     }
 
+    private canvasRootRef = React.createRef<HTMLDivElement>()
+
     private renderGame() {
-        return <div>
-            <h2>Game</h2>
-            <pre>{JSON.stringify(this.state.match, null, 2)}</pre>
+        return <div className={styles.gameRoot}>
+            <div id="game" ref={this.canvasRootRef} />
         </div>;
     }
 }

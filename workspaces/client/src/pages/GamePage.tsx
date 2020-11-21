@@ -7,10 +7,14 @@ import PlayPage from "./game/PlayPage";
 import ApiContext from "../game/context";
 import AppAPI from "../game/AppAPI";
 import RoomPage from "./game/RoomPage";
+import UIContext from "./UIContext";
+import {NextObserver, Subscription} from "rxjs"
 
 
 type GamePageState = {
     roomID: string | null
+    fullscreen?: boolean
+    navShown?: boolean
 }
 
 export default class GamePage extends React.Component<any, GamePageState> {
@@ -30,20 +34,30 @@ export default class GamePage extends React.Component<any, GamePageState> {
 
     leftLobbyHandler: () => void
     joinedLobbyHandler: () => void
+    fullscreenSubscription?: Subscription
 
     componentDidMount() {
         this.context.addListener('leftLobby', this.leftLobbyHandler)
         this.context.addListener('joinedLobby', this.joinedLobbyHandler)
+        this.fullscreenSubscription = UIContext.fullscreen.subscribe(this.onFullscreenChange.bind(this))
     }
 
     componentWillUnmount() {
         this.context.removeListener('leftLobby', this.leftLobbyHandler)
         this.context.removeListener('joinedLobby', this.joinedLobbyHandler)
+        this.fullscreenSubscription?.unsubscribe()
+    }
+
+    onFullscreenChange(v: boolean) {
+        this.setState({
+            fullscreen: v
+        })
     }
 
     render() {
-        return <div className={styles.root}>
-            <nav>
+        return <div className={`${styles.root} ${this.state.fullscreen ? styles.fullscreen : ''}`}>
+            <nav className={this.state.navShown ? styles.shown : ''}>
+                <button className={styles.navToggle} />
                 <Brand  />
 
                 <ul>

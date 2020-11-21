@@ -1,5 +1,36 @@
 @import "../imports/colors";
 
+.brandAnimated {
+  @keyframes text-color {
+    0% {
+      clip-path: polygon(0 0, 0 0, 0 100%, 0 100%);
+    }
+    10% {
+      clip-path: polygon(0 0, 100% 0, 100% 100%, 0 100%);
+    }
+    20%, 100% {
+      clip-path: polygon(100% 0, 100% 0, 100% 100%, 100% 100%);
+    }
+  }
+
+  h2:not(:first-child) {
+    position: absolute;
+    top: 0;
+    animation: text-color 5s infinite;
+    clip-path: polygon(0 0, 0 0, 0 100%, 0 100%);
+  }
+
+  @for $i from 1 through length($brand-colors) {
+    $c: nth($brand-colors, $i);
+
+    h2:nth-child(#{$i + 1}) {
+      color: $c;
+      animation-delay: #{$i * 250ms};
+      text-shadow: 0 0 5px $c;
+    }
+  }
+}
+
 .brand {
   font-size: 5em;
 
@@ -13,34 +44,5 @@
 
   h2 {
     margin: 0;
-  }
-
-  h2:not(:first-child) {
-    position: absolute;
-    top: 0;
-    animation: text-color 5s infinite;
-    clip-path: polygon(0 0, 0 0, 0 100%, 0 100%);
-  }
-
-  @keyframes text-color {
-    0%, 60% {
-      clip-path: polygon(0 0, 0 0, 0 100%, 0 100%);
-    }
-    70% {
-      clip-path: polygon(0 0, 100% 0, 100% 100%, 0 100%);
-    }
-    80% {
-      clip-path: polygon(100% 0, 100% 0, 100% 100%, 100% 100%);
-    }
-  }
-
-  @for $i from 1 through length($brand-colors) {
-    $c: nth($brand-colors, $i);
-
-    h2:nth-child(#{$i + 1}) {
-      color: $c;
-      animation-delay: #{$i * 250ms};
-      text-shadow: 0 0 5px $c;
-    }
   }
 }
