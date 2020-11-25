@@ -1,24 +1,50 @@
 import {AxiosInstance, default as axios} from "axios"
-import {GameMapInfoDto, RoomInfoDto, IGameLobbyState} from "@hexx/common";
+import {GameMapInfoDto, RoomInfoDto, IGameLobbyState, GameRoomState} from "@hexx/common";
 import * as Colyseus from "colyseus.js"
 import {EventEmitter} from "events";
+import {fromEvent, Observable, Subject} from "rxjs";
+import {truncate} from "fs";
 
 interface IAPIOptions {
     address: string
 }
 
-export default class AppAPI extends EventEmitter {
+export type IGameRoomConnectionState = {
+    connected: boolean
+}
+
+export default class AppAPI {
     private readonly client: AxiosInstance
     private readonly wsClient: Colyseus.Client
-    private _lobby?: Colyseus.Room<IGameLobbyState>
+    private _room?: Colyseus.Room<GameRoomState>
+    private _roomSubject = new Subject<Colyseus.Room<GameRoomState>>()
+    private _roomConnection = new Subject<IGameRoomConnectionState>()
+
+    get roomSubject(): Observable<Colyseus.Room<GameRoomState>> {
+        return this._roomSubject
+    }
+
+    get roomConnection(): Observable<IGameRoomConnectionState> {
+        return this._roomConnection
+    }
 
     constructor(opts: IAPIOptions) {
-        super()
         this.client = axios.create({
             baseURL: 'http://' + opts.address,
             withCredentials: true
         })
         this.wsClient = new Colyseus.Client('ws://' + opts.address)
+    }
+
+    //#region REST
+
+    async pingApi(): Promise<boolean> {
+        try {
+            await this.client.get('api/hi')
+            return true
+        } catch (e) {
+            return false
+        }
     }
 
     authenticateAnon(): Promise<void> {
@@ -46,28 +72,45 @@ export default class AppAPI extends EventEmitter {
         }
     }
 
-    async joinRoom(id: string) {
-        if(this.lobby) {
-            this.lobby.leave(true)
-            this.emit('leftLobby', {id: this.lobby.state.id})
+    //#endregion
+
+    //#region WS game API
+
+    async joinRoom(id: string): Promise<Colyseus.Room<GameRoomState>> {
+        if(this.room) {
+            this.room.leave(true)
         }
-        this._lobby = await this.wsClient
-            .joinOrCreate('gameLobby', {accessToken: await this.getGameToken(), id})
-        return new Promise((resolve, reject) => {
+        const opts = {accessToken: await this.getGameToken(), id}
+        let lobby: Colyseus.Room<GameRoomState>
+
+        try {
+            lobby = await this.wsClient.joinOrCreate('gameLobby', opts)
+        } catch (e) {
+            this._roomConnection.next({connected: false})
+            this.setRoom()
+            throw e
+        }
+
+        return await new Promise((resolve, reject) => {
             let completed = false
             const onInitialized = () => {
                 if (!completed) {
                     completed = true;
-                    this.emit('joinedLobby', {id})
-                    resolve()
+                    console.log('connected to room ' + lobby.id)
+                    this._room = lobby
+                    this._roomSubject.next(this._room)
+                    this._roomConnection.next({connected: true})
+                    resolve(this._room)
                 }
             }
-            this._lobby!.onMessage('initialized', onInitialized)
-            this._lobby!.onStateChange(onInitialized)
+            lobby.onMessage('initialized', onInitialized)
+            lobby.onStateChange(onInitialized)
+            this._roomConnection.next({connected: false})
             setTimeout(() => {
                 if (!completed) {
                     completed = true
-                    this._lobby!.leave(false)
+                    lobby.leave(false)
+                    this._roomSubject.next()
                     reject('timed out')
                 }
             }, 2000)
@@ -75,11 +118,24 @@ export default class AppAPI extends EventEmitter {
         })
     }
 
-    get lobby() {
-        return this._lobby
+    private setRoom(room?: Colyseus.Room<GameRoomState>) {
+        this._room = room
+        this._roomSubject.next(room)
+    }
+
+    //#endregion
+
+    get room() {
+        return this._room
+    }
+
+    requireRoom() {
+        if (this._room)
+            return this._room
+        throw new Error('No room found')
     }
 
     get lobbyID() {
-        return this._lobby?.state.id || null
+        return this._room?.state.id || null
     }
 }

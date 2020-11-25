@@ -1,18 +1,18 @@
-import {Schema, type} from "@colyseus/schema";
-import {GameMapCell, IGameDominationState} from "@hexx/common";
+import {Schema, type, MapSchema} from "@colyseus/schema";
+import {IGameDominationState} from "@hexx/common";
 import {GameMap} from "../models/GameMap";
-import Dict = NodeJS.Dict;
 import {MapCell} from "./MapCell";
+import Dict = NodeJS.Dict;
 
 export class DominationState extends Schema implements IGameDominationState {
     @type('number')
     cells: number = 0;
 
     @type({map: 'number'})
-    teamCells: Dict<number> = {};
+    teamCells: MapSchema<number> = new MapSchema<number>();
 
     @type({map: 'number'})
-    teamPoints: Dict<number> = {};
+    teamPoints: MapSchema<number> = new MapSchema<number>();
 
     @type('number')
     totalPoints: number = 0;

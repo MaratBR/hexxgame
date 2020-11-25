@@ -3,7 +3,7 @@ import http from "http"
 import {Client, Delayed, ServerError} from "colyseus";
 import {User} from "../models/User";
 import {Room, RoomModel} from "../models/Room";
-import {Schema, type} from "@colyseus/schema";
+import {Schema, MapSchema, ArraySchema, type} from "@colyseus/schema";
 import {GameMap, GameMapModel} from "../models/GameMap";
 import {IGameLobbyState, IMatchState, MapUtils, MoveDirection} from "@hexx/common";
 import {Match, MatchModel, MAX_VALUE} from "../models/Match";
@@ -34,7 +34,7 @@ export class MatchState extends Schema implements IMatchState {
     id: string;
 
     @type({map: MapCell})
-    mapCells: Dict<MapCell>;
+    mapCells: MapSchema<MapCell>;
 
     @type('number')
     roundStageEndsAt: number;
@@ -65,10 +65,10 @@ export class MatchState extends Schema implements IMatchState {
             if (cell.initTeam && !match.teamsRotation.includes(cell.initTeam)) {
                 mapCell.team = 0
             }
-            cells[cell.y + ':' + cell.x] = mapCell
+            cells[MapUtils.getKey()] = mapCell
         }
         this.domination = new DominationState(cells)
-        this.mapCells = cells
+        this.mapCells = new MapSchema<MapCell>(cells)
     }
 
 
@@ -124,10 +124,12 @@ export class MatchState extends Schema implements IMatchState {
     }
 
     beginPowerUp() {
-        this.currentRoundStage = 2
-        const duration = Object.values(this.mapCells)
+        const cellsCount = Array.from(this.mapCells.values())
             .filter(c => c.team == this.currentTeam)
-            .length * this.roundLengthPerCell + this.baseRoundLength
+            .length
+        this.currentRoundStage = 2
+        this.powerPoints = cellsCount
+        const duration = cellsCount * this.roundLengthPerCell + this.baseRoundLength
         this.roundStageEndsAt = moment().add(duration, 'seconds').unix() * 1000
     }
 
@@ -145,6 +147,21 @@ export class MatchState extends Schema implements IMatchState {
         const index = this.teamsRotation.indexOf(this.currentTeam)
         this.currentTeam = index + 1 >= this.teamsRotation.length ? this.teamsRotation[0] : this.teamsRotation[index + 1]
     }
+
+    distributePowerPoints() {
+        if (this.powerPoints === 0)
+            return;
+
+        let cells = Array.from(this.mapCells.values()).filter(c => c.team === this.currentTeam)
+        if (cells.length === 0)
+            return;
+        const sorting = (a: MapCell, b: MapCell): number => a.value < b.value ? -1 : 0
+
+        do {
+            cells.sort(sorting)
+            cells[0].value += 1
+        } while (--this.powerPoints)
+    }
 }
 
 export class GameRoomState extends Schema implements IGameLobbyState {
@@ -155,13 +172,13 @@ export class GameRoomState extends Schema implements IGameLobbyState {
     selectedMapID?: string
 
     @type({map: ClientInfo})
-    clients: {[key: string]: ClientInfo} = {}
+    clients: MapSchema<ClientInfo> = new MapSchema<ClientInfo>()
 
     @type(['string'])
-    spectators: string[] = []
+    spectators: ArraySchema<string> = new ArraySchema<string>()
 
     @type([TeamInfo])
-    teams: TeamInfo[] = []
+    teams: ArraySchema<TeamInfo> = new ArraySchema<TeamInfo>()
 
     @type('number')
     gameStartsAt: number
@@ -247,6 +264,9 @@ export default class GameRoom extends AuthorizedRoom<GameRoomState> {
                 for (let i = map.maxTeams; i < this.state.teams.length; i++) {
                     const team = this.state.teams[i]
                     this.state.spectators.push(...team.members)
+                    for (let memberClientID of team.members) {
+                        this.state.clients[memberClientID].team = 0
+                    }
                 }
                 this.state.teams.splice(map.maxTeams, this.state.teams.length - map.maxTeams)
             } else {
@@ -389,6 +409,7 @@ export default class GameRoom extends AuthorizedRoom<GameRoomState> {
         } else if (match.currentRoundStage == 1) {
             match.beginPowerUp()
         } else if (match.currentRoundStage == 2) {
+            match.distributePowerPoints()
             match.nextRound()
             match.beginAttack()
         }

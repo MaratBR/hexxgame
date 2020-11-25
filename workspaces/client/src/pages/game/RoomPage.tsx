@@ -1,61 +1,63 @@
 import React from "react";
-import ReactDOM from "react-dom"
 import ApiContext from "../../game/context";
 import AppAPI from "../../game/AppAPI";
 import {Room} from "colyseus.js";
 import styles from "./RoomPage.module.scss"
-import {getTeamColor, getTeamName, IGameLobbyState, GameMapInfoDto} from "@hexx/common";
+import {getTeamColor, getTeamName, IGameLobbyState, GameMapInfoDto, GameRoomState} from "@hexx/common";
 import Brand from "../../components/Brand";
 import GameMap from "./GameMap";
 import UIContext from "../UIContext";
 import Loading from "../../components/Loading";
 
+type Props = {
+    room: Room<GameRoomState>
+} | any
 
-type RoomState = Partial<IGameLobbyState> & {
-    maps: {
+
+type RoomState = {
+    maps?: {
         loading?: boolean,
         list?:  GameMapInfoDto[]
     }
     expandedMap?: string,
     selectedMap?: GameMapInfoDto
     loaded?: boolean
+    room: GameRoomState
 }
 
-const DEFAULT_STATE: RoomState = {
-    maps: {}
-}
-
-export default class RoomPage extends React.Component<any, RoomState> {
+export default class RoomPage extends React.Component<Props, RoomState> {
     static contextType = ApiContext;
     context!: AppAPI
-    private lobby?: Room<IGameLobbyState>
+    private lobby?: Room<GameRoomState>
 
     constructor(props: any) {
         super(props);
+        this.state = {
+            room: new GameRoomState()
+        }
         this.onChangedHandler = this.onStateChanged.bind(this)
-        this.state = DEFAULT_STATE
     }
 
-    onChangedHandler: (state: IGameLobbyState) => void
+    readonly onChangedHandler: (state: GameRoomState) => void
 
     get currentClient() {
         const sid = this.lobby?.sessionId
-        return sid && this.state.clients ? this.state.clients.get(sid) : undefined
+        return sid && this.state.room.clients ? this.state.room.clients.get(sid) : undefined
     }
 
     async componentDidMount() {
-        this.lobby = this.context.lobby
+        this.lobby = this.context.room
         if (this.lobby) {
             this.lobby.onStateChange(this.onChangedHandler)
-            this.setState(this.lobby.state)
+            this.setState({room: this.lobby.state})
         } else {
             try {
                 await this.context.joinRoom(this.props.match.params.id)
-                this.lobby = this.context.lobby
+                this.lobby = this.context.room
                 if (this.lobby!.state.id) {
                     this.onStateChanged(this.lobby!.state)
                 }
-                this.lobby!.onStateChange(this.onChangedHandler)
+                this.lobby!.onStateChange(this.onChangedHandler!)
             } catch (e) {
                 console.log(e)
             }
@@ -63,19 +65,19 @@ export default class RoomPage extends React.Component<any, RoomState> {
 
         await this.updateMaps()
 
-        if (this.state.match && this.state.match.id) {
+        if (this.state.room.match) {
             UIContext.fullscreen.next(true)
         }
     }
 
     componentWillUnmount() {
         if (this.lobby) {
-            this.lobby.onStateChange.remove(this.onChangedHandler)
+            this.lobby.onStateChange.remove(this.onChangedHandler!)
         }
     }
 
     private async updateMaps() {
-        if (this.state.maps.loading)
+        if (this.state.maps?.loading)
             return
 
         this.setState({
@@ -99,17 +101,13 @@ export default class RoomPage extends React.Component<any, RoomState> {
         }
     }
 
-    onStateChanged(state: IGameLobbyState) {
-        const mapChanged = this.state.selectedMapID !== state.selectedMapID
+    onStateChanged(state: GameRoomState) {
+        const mapChanged = this.state.room.selectedMapID !== state.selectedMapID
         console.log(this.state.loaded)
         if (!this.state.loaded) {
-            ;(state as RoomState).loaded = true;
-            console.log('set loaded to true')
-        } else {
-            console.log('did not set loaded to true')
-            console.warn(this.state.loaded)
+            this.setState({loaded: true});
         }
-        this.setState(state)
+        this.setState({room: state})
 
         if (mapChanged) {
             this.onMapChanged()
@@ -117,13 +115,6 @@ export default class RoomPage extends React.Component<any, RoomState> {
     }
 
     render() {
-        if (!this.state.loaded)
-            return <Loading />
-
-        if (this.state.match?.id) {
-            return this.renderGame()
-        }
-
         return <div className={styles.root}>
             <div className={styles.toolBar}>
                 <button
@@ -143,9 +134,9 @@ export default class RoomPage extends React.Component<any, RoomState> {
             </div>
 
             <div className={styles.playersList}>
-                {this.state.spectators ? this.renderTeam(0, this.state.spectators) : undefined}
+                {this.state.room.spectators ? this.renderTeam(0, this.state.room.spectators) : undefined}
 
-                {this.state.teams ? this.state.teams.map((team, index) => {
+                {this.state.room.teams ? this.state.room.teams.map((team, index) => {
                     return this.renderTeam(index + 1, team.members, team.ready)
                 }) : undefined}
             </div>
@@ -180,7 +171,6 @@ export default class RoomPage extends React.Component<any, RoomState> {
                 </button>
             </h2>
             <div className={styles.players}>
-                {this.context.lobby?.sessionId}
                 {this.renderPlayers(players)}
             </div>
         </div>
@@ -196,7 +186,7 @@ export default class RoomPage extends React.Component<any, RoomState> {
 
     renderPlayers(players: string[]) {
         return players.map(clientID => {
-            const data = this.state.clients?.get(clientID)
+            const data = this.state.room.clients?.get(clientID)
             if (data)
                 return <div key={clientID}
                                   className={`${styles.player}${data.ready ? (' ' + styles.playerReady) : ''}`}
@@ -210,18 +200,12 @@ export default class RoomPage extends React.Component<any, RoomState> {
     }
 
     private setMap(id: string) {
-        this.context.lobby!.send('setMap', id)
+        this.context.room!.send('setMap', id)
     }
 
     private onMapChanged() {
         this.setState({
-            selectedMap: this.state.maps.list?.find(m => m.id == this.state.selectedMapID)
+            selectedMap: this.state.maps?.list?.find(m => m.id == this.state.room.selectedMapID)
         })
-    }
-
-    private renderGame() {
-        return <div className={styles.gameRoot}>
-            <GameMap room={this.lobby!} />
-        </div>
     }
 }

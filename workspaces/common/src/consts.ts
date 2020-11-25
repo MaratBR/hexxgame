@@ -76,5 +76,7 @@ export const MapUtils = {
     },
     getOffset(x: number, direction: MoveDirection): [number, number] {
         return (x % 2 == 0 ? EVEN_X_INDEX_OFFSETS : ODD_X_INDEX_OFFSETS)[direction]
-    }
+    },
+
+    getKey(x: number, y: number): string { return y + ':' + x }
 }

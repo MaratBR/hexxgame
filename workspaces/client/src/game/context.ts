@@ -1,11 +1,9 @@
-import Manager from "./Manager";
 import React from "react";
+import AppAPI from "./AppAPI";
 
-const manager = new Manager({
-    host: 'localhost',
-    port: 8000
+const api = new AppAPI({
+    address: 'localhost:8000'
 })
-const api = manager.API()
 const ApiContext = React.createContext(api)
 
 export default ApiContext

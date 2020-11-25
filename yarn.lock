@@ -1594,6 +1594,7 @@ __metadata:
     colyseus.js: ^0.14.0
     events: ^3.2.0
     jest: 26.6.0
+    pixi-filters: ^3.1.1
     pixi-fps: ^2.0.1
     pixi-viewport: ^4.17.1
     pixi.js: ^5.3.3
@@ -1957,7 +1958,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@pixi/core@npm:5.3.3":
+"@pixi/core@npm:5.3.3, @pixi/core@npm:^5.0.0":
   version: 5.3.3
   resolution: "@pixi/core@npm:5.3.3"
   dependencies:
@@ -1993,7 +1994,28 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@pixi/filter-alpha@npm:5.3.3":
+"@pixi/filter-adjustment@npm:3.1.1":
+  version: 3.1.1
+  resolution: "@pixi/filter-adjustment@npm:3.1.1"
+  peerDependencies:
+    "@pixi/core": ^5.0.0
+  checksum: 63abd8e4ea511a7b867765f78399b950670754a42b23fe32f6675078151d4f3f808d37c91eb74d636491aa7214e771ec3898afe2e336e8f23e4c5fcf6f1b263b
+  languageName: node
+  linkType: hard
+
+"@pixi/filter-advanced-bloom@npm:3.1.1":
+  version: 3.1.1
+  resolution: "@pixi/filter-advanced-bloom@npm:3.1.1"
+  dependencies:
+    "@pixi/filter-kawase-blur": 3.1.1
+  peerDependencies:
+    "@pixi/core": ^5.0.0
+    "@pixi/settings": ^5.0.0
+  checksum: b9c645eaa3997d8e75585a75247c76f0d5d3377254c39d89f5efd9201e2f82e2e195d194962d88ffa4a4354cb536870446232d159fd787d0e84945db4431695e
+  languageName: node
+  linkType: hard
+
+"@pixi/filter-alpha@npm:5.3.3, @pixi/filter-alpha@npm:^5.0.0":
   version: 5.3.3
   resolution: "@pixi/filter-alpha@npm:5.3.3"
   dependencies:
@@ -2002,7 +2024,42 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@pixi/filter-blur@npm:5.3.3":
+"@pixi/filter-ascii@npm:3.1.1":
+  version: 3.1.1
+  resolution: "@pixi/filter-ascii@npm:3.1.1"
+  peerDependencies:
+    "@pixi/core": ^5.0.0
+  checksum: 1a37609283e2543f311ce8a1ce6c6716c27ff946d3c1f9175d6f6b3f4bf8fa675c41e99fa8cd3aff6e23b7008d1a162d51c95aa513143121843d79fc999b8d59
+  languageName: node
+  linkType: hard
+
+"@pixi/filter-bevel@npm:3.1.1":
+  version: 3.1.1
+  resolution: "@pixi/filter-bevel@npm:3.1.1"
+  peerDependencies:
+    "@pixi/core": ^5.0.0
+    "@pixi/math": ^5.0.0
+    "@pixi/utils": ^5.0.0
+  checksum: 8713574cf40a1f846527ef27a2325f56c87d86925a2873a895efa6d8109a036f240b177cab3629da7a88715e1cf036eea923d95a05aa5eade727afc89de20611
+  languageName: node
+  linkType: hard
+
+"@pixi/filter-bloom@npm:3.1.1":
+  version: 3.1.1
+  resolution: "@pixi/filter-bloom@npm:3.1.1"
+  dependencies:
+    "@pixi/filter-alpha": ^5.0.0
+    "@pixi/filter-blur": ^5.0.0
+  peerDependencies:
+    "@pixi/constants": ^5.0.0
+    "@pixi/core": ^5.0.0
+    "@pixi/math": ^5.0.0
+    "@pixi/settings": ^5.0.0
+  checksum: 84e118f3ddacafb2056b05b28d2df4aaa250ffe4a088ea6c924e5d06a7c0974b1bd82314dfa5e95aa4f75c58d59114cab5697725e8a6c635f67d692a440a4d48
+  languageName: node
+  linkType: hard
+
+"@pixi/filter-blur@npm:5.3.3, @pixi/filter-blur@npm:^5.0.0":
   version: 5.3.3
   resolution: "@pixi/filter-blur@npm:5.3.3"
   dependencies:
@@ -2012,12 +2069,78 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@pixi/filter-bulge-pinch@npm:3.1.1":
+  version: 3.1.1
+  resolution: "@pixi/filter-bulge-pinch@npm:3.1.1"
+  peerDependencies:
+    "@pixi/core": ^5.0.0
+  checksum: f60dfd204795af042d62bed06a3228117abae059dda8ab172b67e1e384b5dd16b418cc5a11e963901af16fccf2fd9d73b6808ce30272525c113d1080fd4d1253
+  languageName: node
+  linkType: hard
+
+"@pixi/filter-color-map@npm:3.1.1":
+  version: 3.1.1
+  resolution: "@pixi/filter-color-map@npm:3.1.1"
+  peerDependencies:
+    "@pixi/constants": ^5.0.0
+    "@pixi/core": ^5.0.0
+  checksum: ff045d078639477599e3cc1bf9d85bcc7a3bcbe162485f960c9b0a16d735fb708e340fe8c3cf2d4e04d76f8c3d443697d96b54ed564265bc7089cbc9acbffcfc
+  languageName: node
+  linkType: hard
+
 "@pixi/filter-color-matrix@npm:5.3.3":
   version: 5.3.3
   resolution: "@pixi/filter-color-matrix@npm:5.3.3"
   dependencies:
     "@pixi/core": 5.3.3
   checksum: ed36747d4af79686323da71ae6150b6d138f3525f69cd1383a08883f69e916f60598de20aaeaf112344c7db9c0db13d7ab9104367fb1eb906f76c0c6a98cdb5b
+  languageName: node
+  linkType: hard
+
+"@pixi/filter-color-overlay@npm:3.1.1":
+  version: 3.1.1
+  resolution: "@pixi/filter-color-overlay@npm:3.1.1"
+  peerDependencies:
+    "@pixi/core": ^5.0.0
+    "@pixi/utils": ^5.0.0
+  checksum: 6035aae8a06b331e8f38fd1550c09aba25c53eeb5b7e328703b05f7ed85444b6a8856669e42b5cd90c4ef1de77c67ccf76fc620d8fe7cad577294d73af5f7955
+  languageName: node
+  linkType: hard
+
+"@pixi/filter-color-replace@npm:3.1.1":
+  version: 3.1.1
+  resolution: "@pixi/filter-color-replace@npm:3.1.1"
+  peerDependencies:
+    "@pixi/core": ^5.0.0
+    "@pixi/utils": ^5.0.0
+  checksum: 436a111f6db9c71c7db444cf01c34fe2addde96e60a572211bb74d2017989ecd3159c5c7c1982df1a0a1be22684054acadd40a95b0e984bdd5fd45c717dc44d7
+  languageName: node
+  linkType: hard
+
+"@pixi/filter-convolution@npm:3.1.1":
+  version: 3.1.1
+  resolution: "@pixi/filter-convolution@npm:3.1.1"
+  peerDependencies:
+    "@pixi/core": ^5.0.0
+  checksum: 552531b45af78defa3e6e069ce2d0576d2642927ab18779d9c5d0daea240d44f4dc96ada78297fd8e5f6218b20401d21552ec3032aacf2bbb11c066a1c7ffc27
+  languageName: node
+  linkType: hard
+
+"@pixi/filter-cross-hatch@npm:3.1.1":
+  version: 3.1.1
+  resolution: "@pixi/filter-cross-hatch@npm:3.1.1"
+  peerDependencies:
+    "@pixi/core": ^5.0.0
+  checksum: 5710346f0770c20a662bd8aa329df29596810f445e92de8b244c37e3434b01a5a63078269990ac801e13d8c13ea3cd81f01298a83645052963e09bfea467e097
+  languageName: node
+  linkType: hard
+
+"@pixi/filter-crt@npm:3.1.1":
+  version: 3.1.1
+  resolution: "@pixi/filter-crt@npm:3.1.1"
+  peerDependencies:
+    "@pixi/core": ^5.0.0
+  checksum: 4bde951b2f181fecc2aac69a607f8da0ccc2ce674545c211f1216f983a892128ff25f2a55a15eca8c18d110c20de8c0b6a6ae9e085db9e5581156f38d8246c95
   languageName: node
   linkType: hard
 
@@ -2031,6 +2154,38 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@pixi/filter-dot@npm:3.1.1":
+  version: 3.1.1
+  resolution: "@pixi/filter-dot@npm:3.1.1"
+  peerDependencies:
+    "@pixi/core": ^5.0.0
+  checksum: 8d5cc9e3fe917d7d8a4eddad652aacd9fc56cdc338e8b007f0f4889f18c5b4aa456d8a2780f2bae3e174d9bd3cc48a189560e204c95edb4edc191e1bf62b5401
+  languageName: node
+  linkType: hard
+
+"@pixi/filter-drop-shadow@npm:3.1.1":
+  version: 3.1.1
+  resolution: "@pixi/filter-drop-shadow@npm:3.1.1"
+  dependencies:
+    "@pixi/filter-kawase-blur": 3.1.1
+  peerDependencies:
+    "@pixi/core": ^5.0.0
+    "@pixi/math": ^5.0.0
+    "@pixi/settings": ^5.0.0
+    "@pixi/utils": ^5.0.0
+  checksum: 74e589b7d3994b97031308d82dd76ae139c441bc676fd37d4c01c921cc509bf3bd9ceabc91f10defc35760b67cf6beb14540d3553e174b74befb87dc9894be81
+  languageName: node
+  linkType: hard
+
+"@pixi/filter-emboss@npm:3.1.1":
+  version: 3.1.1
+  resolution: "@pixi/filter-emboss@npm:3.1.1"
+  peerDependencies:
+    "@pixi/core": ^5.0.0
+  checksum: 8d671c9fdd55dce96be42d5035f7c4bd8648a1ef46a6887311cf5a193ffdf1f4a71e057e8ca8615872737dc81977855f6bfd1a92ba6bceb9d3a89f67de5e4278
+  languageName: node
+  linkType: hard
+
 "@pixi/filter-fxaa@npm:5.3.3":
   version: 5.3.3
   resolution: "@pixi/filter-fxaa@npm:5.3.3"
@@ -2040,12 +2195,175 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@pixi/filter-glitch@npm:3.1.1":
+  version: 3.1.1
+  resolution: "@pixi/filter-glitch@npm:3.1.1"
+  peerDependencies:
+    "@pixi/constants": ^5.0.0
+    "@pixi/core": ^5.0.0
+    "@pixi/math": ^5.0.0
+  checksum: 7d0466d66f1175def79bc89ddbdaea8cc4acd9a20a6589fc3a5e9edc1910e94a4072077a929e55a008d459c9fcfc933d024eb397a0abc19e092eca5463fd0234
+  languageName: node
+  linkType: hard
+
+"@pixi/filter-glow@npm:3.1.1":
+  version: 3.1.1
+  resolution: "@pixi/filter-glow@npm:3.1.1"
+  dependencies:
+    "@pixi/core": ^5.0.0
+    "@pixi/utils": ^5.0.0
+  checksum: 24f9090c3bc56b6ec0b46aa63d8bdd39d7b0254acb7f8885558f97e9e80857c35dccea1e7382fae9ee7ab7baeb51f41021abce07fede710f7f33cfc206dadbf4
+  languageName: node
+  linkType: hard
+
+"@pixi/filter-godray@npm:3.1.1":
+  version: 3.1.1
+  resolution: "@pixi/filter-godray@npm:3.1.1"
+  peerDependencies:
+    "@pixi/core": ^5.0.0
+    "@pixi/math": ^5.0.0
+  checksum: c6280d349353c7c213dce370de9db8d93778bb06a0b5a3602a1649c53293dc1f570280ea8193191d0c3554bd5fed09a8a14e12f543a3602545a094fba5fa0238
+  languageName: node
+  linkType: hard
+
+"@pixi/filter-kawase-blur@npm:3.1.1":
+  version: 3.1.1
+  resolution: "@pixi/filter-kawase-blur@npm:3.1.1"
+  peerDependencies:
+    "@pixi/core": ^5.0.0
+    "@pixi/math": ^5.0.0
+  checksum: cf09c1499e723604230e5dd828f1efd4b55f4d1fb0fd29329c8f98027b18dff46dd8bd9f9c66c86b84bf4adb384ff669c1cba33c2fce01b4f8af5071236649df
+  languageName: node
+  linkType: hard
+
+"@pixi/filter-motion-blur@npm:3.1.1":
+  version: 3.1.1
+  resolution: "@pixi/filter-motion-blur@npm:3.1.1"
+  peerDependencies:
+    "@pixi/core": ^5.0.0
+    "@pixi/math": ^5.0.0
+  checksum: 471f043ff6d5cec189bcc63d4ee34fc58f67afaf2b2ff5a23308a94b6e938718ace38d5a3090d34ca339b91248222dc552ef709cc62c3676c295cdedd574633a
+  languageName: node
+  linkType: hard
+
+"@pixi/filter-multi-color-replace@npm:3.1.1":
+  version: 3.1.1
+  resolution: "@pixi/filter-multi-color-replace@npm:3.1.1"
+  peerDependencies:
+    "@pixi/core": ^5.0.0
+    "@pixi/utils": ^5.0.0
+  checksum: ef6022f5d464c662c6bcdb243d0249ceb7b5126a57c49fa90d0a1cc5c46a5ca5b7a972c4c544ef3dace6b99ed20b88ae9d3e257323008fb135ece90fedfc49d6
+  languageName: node
+  linkType: hard
+
 "@pixi/filter-noise@npm:5.3.3":
   version: 5.3.3
   resolution: "@pixi/filter-noise@npm:5.3.3"
   dependencies:
     "@pixi/core": 5.3.3
   checksum: 2ffdd6717d7666551fa9886816170623a9950cb37679a5967809fc17a4c4852c2341d3e06157cdf9ccebd2d9882dbda0ae88112209eaf84d33f61f531791f22f
+  languageName: node
+  linkType: hard
+
+"@pixi/filter-old-film@npm:3.1.1":
+  version: 3.1.1
+  resolution: "@pixi/filter-old-film@npm:3.1.1"
+  peerDependencies:
+    "@pixi/core": ^5.0.0
+  checksum: 0658009e8d8d06d68eb4023c1e7d645bd1336c44c5940d29a380463bae7091af4b66991002d0d996c0ae1b2a77dc61925300f16eec6265e13075905d4ea91d1c
+  languageName: node
+  linkType: hard
+
+"@pixi/filter-outline@npm:3.1.1":
+  version: 3.1.1
+  resolution: "@pixi/filter-outline@npm:3.1.1"
+  peerDependencies:
+    "@pixi/core": ^5.0.0
+    "@pixi/utils": ^5.0.0
+  checksum: f8aa23b2a332c9b16a4ff23b3c5fb387c522640c953367217d313afa30294e5affe994fdb1dfdaf61bc8c6484535594347f0c3b32106f476fd2bc51fc9bb1a84
+  languageName: node
+  linkType: hard
+
+"@pixi/filter-pixelate@npm:3.1.1":
+  version: 3.1.1
+  resolution: "@pixi/filter-pixelate@npm:3.1.1"
+  peerDependencies:
+    "@pixi/core": ^5.0.0
+  checksum: c15a32e04dea75b84aae5b0c94d6d2140c41bf99e7d30af574c6797a3f8061cc1b3a3a8ddc47f4a6e02aab0c2ba321cfb983381ea2f4e332ce79144729156fa4
+  languageName: node
+  linkType: hard
+
+"@pixi/filter-radial-blur@npm:3.1.1":
+  version: 3.1.1
+  resolution: "@pixi/filter-radial-blur@npm:3.1.1"
+  peerDependencies:
+    "@pixi/core": ^5.0.0
+  checksum: 300684af7250e13d2dc931cb1c587d1bedc97c76780b8335f98be350e07a1718cc605c7b03daf26c8b17ae2a89986f0b6c6728936f53c230557aeae64d49ec25
+  languageName: node
+  linkType: hard
+
+"@pixi/filter-reflection@npm:3.1.1":
+  version: 3.1.1
+  resolution: "@pixi/filter-reflection@npm:3.1.1"
+  peerDependencies:
+    "@pixi/core": ^5.0.0
+  checksum: 50abb4aebd378f2a53ff1dd4f5dcc824d4ebb179013a9e4714f225d0fcb44500a16fcd06d250ca94fab1e8316b9395f8b16755e74a7d4cc64d6eacde62cfa6a7
+  languageName: node
+  linkType: hard
+
+"@pixi/filter-rgb-split@npm:3.1.1":
+  version: 3.1.1
+  resolution: "@pixi/filter-rgb-split@npm:3.1.1"
+  peerDependencies:
+    "@pixi/core": ^5.0.0
+  checksum: bc12a09c80a96f810881efe64146adb97c2035b6a34599fb0c83e3b00fc7cba2981abdb3f44e4c13776c8eee1cfd63431ea4ee9395ebdab9ebe12ae5bb79a352
+  languageName: node
+  linkType: hard
+
+"@pixi/filter-shockwave@npm:3.1.1":
+  version: 3.1.1
+  resolution: "@pixi/filter-shockwave@npm:3.1.1"
+  peerDependencies:
+    "@pixi/core": ^5.0.0
+  checksum: 20ceedc322c39dbe4dcca507d004b18f55f647a0508fe6135870426ef3f7b42b7d78be9e3976f6a7f10cc9ef219e6e9671fa857575963cc208a57fe2cffbd6df
+  languageName: node
+  linkType: hard
+
+"@pixi/filter-simple-lightmap@npm:3.1.1":
+  version: 3.1.1
+  resolution: "@pixi/filter-simple-lightmap@npm:3.1.1"
+  peerDependencies:
+    "@pixi/core": ^5.0.0
+    "@pixi/utils": ^5.0.0
+  checksum: 463e66bf249d25260787bc60cce7ecf08c7c1dd2f2e650c3cd1c1228e5ff3f32450a2086bf484482eb0aebbbfefea53301b1d5b187af26b35cac955a3b2fe4b1
+  languageName: node
+  linkType: hard
+
+"@pixi/filter-tilt-shift@npm:3.1.1":
+  version: 3.1.1
+  resolution: "@pixi/filter-tilt-shift@npm:3.1.1"
+  peerDependencies:
+    "@pixi/core": ^5.0.0
+    "@pixi/math": ^5.0.0
+  checksum: 236db15c0d9ae2c921e53ab8bf57fcf72d7f1cde9056e0e13be5842832f36df06f935bde6360c7921303cfd9ac6f42f53076e1c5be32a68498777914140044f5
+  languageName: node
+  linkType: hard
+
+"@pixi/filter-twist@npm:3.1.1":
+  version: 3.1.1
+  resolution: "@pixi/filter-twist@npm:3.1.1"
+  peerDependencies:
+    "@pixi/core": ^5.0.0
+  checksum: c509fbe5b3a62d3fe38bb6aec698d37dbce141c498749edc5e86672757fd15bf9728f4666fca32bbb082af93d2d63695d4231e28878376543ef64e2fd7dab70b
+  languageName: node
+  linkType: hard
+
+"@pixi/filter-zoom-blur@npm:3.1.1":
+  version: 3.1.1
+  resolution: "@pixi/filter-zoom-blur@npm:3.1.1"
+  peerDependencies:
+    "@pixi/core": ^5.0.0
+  checksum: a1063dab636006b352f979e3dfc53fd4d76f3a5e83beed2ecca2d45b74a661b9dcaea1f2025d7b4c1c49629e06f390d32128ac37d466c206c664e5ba7621d9f3
   languageName: node
   linkType: hard
 
@@ -2296,7 +2614,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@pixi/utils@npm:5.3.3":
+"@pixi/utils@npm:5.3.3, @pixi/utils@npm:^5.0.0":
   version: 5.3.3
   resolution: "@pixi/utils@npm:5.3.3"
   dependencies:
@@ -13325,6 +13643,46 @@ fsevents@~2.1.2:
   dependencies:
     node-modules-regexp: ^1.0.0
   checksum: 21604008c36ab6e14ac458e1a267dd7322cfd36b9e1042e9e277dd064582717e30b9aba8c0a47d738bf004ee7946ed27f6b982d30968534f2c6b5b168a52b555
+  languageName: node
+  linkType: hard
+
+"pixi-filters@npm:^3.1.1":
+  version: 3.1.1
+  resolution: "pixi-filters@npm:3.1.1"
+  dependencies:
+    "@pixi/filter-adjustment": 3.1.1
+    "@pixi/filter-advanced-bloom": 3.1.1
+    "@pixi/filter-ascii": 3.1.1
+    "@pixi/filter-bevel": 3.1.1
+    "@pixi/filter-bloom": 3.1.1
+    "@pixi/filter-bulge-pinch": 3.1.1
+    "@pixi/filter-color-map": 3.1.1
+    "@pixi/filter-color-overlay": 3.1.1
+    "@pixi/filter-color-replace": 3.1.1
+    "@pixi/filter-convolution": 3.1.1
+    "@pixi/filter-cross-hatch": 3.1.1
+    "@pixi/filter-crt": 3.1.1
+    "@pixi/filter-dot": 3.1.1
+    "@pixi/filter-drop-shadow": 3.1.1
+    "@pixi/filter-emboss": 3.1.1
+    "@pixi/filter-glitch": 3.1.1
+    "@pixi/filter-glow": 3.1.1
+    "@pixi/filter-godray": 3.1.1
+    "@pixi/filter-kawase-blur": 3.1.1
+    "@pixi/filter-motion-blur": 3.1.1
+    "@pixi/filter-multi-color-replace": 3.1.1
+    "@pixi/filter-old-film": 3.1.1
+    "@pixi/filter-outline": 3.1.1
+    "@pixi/filter-pixelate": 3.1.1
+    "@pixi/filter-radial-blur": 3.1.1
+    "@pixi/filter-reflection": 3.1.1
+    "@pixi/filter-rgb-split": 3.1.1
+    "@pixi/filter-shockwave": 3.1.1
+    "@pixi/filter-simple-lightmap": 3.1.1
+    "@pixi/filter-tilt-shift": 3.1.1
+    "@pixi/filter-twist": 3.1.1
+    "@pixi/filter-zoom-blur": 3.1.1
+  checksum: b2313174f73ccd41da794d675eee9c8a89e0b13138518c0f4bc888f73fd88d714b0027c7fdff97ae7fb04b2d5a8b823cd8a2fb2b6ba6c420b49aef38039052e9
   languageName: node
   linkType: hard
 

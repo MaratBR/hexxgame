@@ -8,11 +8,14 @@ import ApiContext from "../game/context";
 import AppAPI from "../game/AppAPI";
 import RoomPage from "./game/RoomPage";
 import UIContext from "./UIContext";
-import {NextObserver, Subscription} from "rxjs"
+import {Subscription} from "rxjs"
+import {Room} from "colyseus.js";
+import {GameRoomState} from "@hexx/common";
+import {GameCoordinatorPage} from "./game/GameCoordinatorPage";
 
 
 type GamePageState = {
-    roomID: string | null
+    roomID?: string
     fullscreen?: boolean
     navShown?: boolean
 }
@@ -20,32 +23,23 @@ type GamePageState = {
 export default class GamePage extends React.Component<any, GamePageState> {
     static contextType = ApiContext;
     context!: AppAPI
-    state: GamePageState = {
-        roomID: null
-    }
+    state: GamePageState = {}
 
     constructor(props: any) {
-        super(props);
-
-
-        this.leftLobbyHandler = this.leftLobby.bind(this)
-        this.joinedLobbyHandler = this.joinedLobby.bind(this)
+        super(props)
     }
 
-    leftLobbyHandler: () => void
-    joinedLobbyHandler: () => void
-    fullscreenSubscription?: Subscription
+    private subs: Subscription[] = []
 
     componentDidMount() {
-        this.context.addListener('leftLobby', this.leftLobbyHandler)
-        this.context.addListener('joinedLobby', this.joinedLobbyHandler)
-        this.fullscreenSubscription = UIContext.fullscreen.subscribe(this.onFullscreenChange.bind(this))
+        this.subs.push(
+            UIContext.fullscreen.subscribe(this.onFullscreenChange.bind(this)),
+            this.context.roomSubject.subscribe(this.onRoomChanged.bind(this))
+        )
     }
 
     componentWillUnmount() {
-        this.context.removeListener('leftLobby', this.leftLobbyHandler)
-        this.context.removeListener('joinedLobby', this.joinedLobbyHandler)
-        this.fullscreenSubscription?.unsubscribe()
+        this.subs.forEach(s => s.unsubscribe())
     }
 
     onFullscreenChange(v: boolean) {
@@ -86,7 +80,7 @@ export default class GamePage extends React.Component<any, GamePageState> {
 
             <div className={styles.body}>
 
-                <Route exact path={this.props.match.path + '/room/:id'} component={RoomPage} />
+                <Route exact path={this.props.match.path + '/room/:id'} component={GameCoordinatorPage} />
                 <Route exact path={this.props.match.path + '/settings'} component={SettingsPage} />
                 <Route exact path={this.props.match.path} component={PlayPage} />
 
@@ -94,18 +88,9 @@ export default class GamePage extends React.Component<any, GamePageState> {
         </div>
     }
 
-    private leftLobby() {
-        console.log('left room')
+    private onRoomChanged(room?: Room<GameRoomState>) {
         this.setState({
-            roomID: null
+            roomID: room?.state.id
         })
-    }
-
-    private joinedLobby() {
-        console.log('joined')
-        this.setState({
-            roomID: this.context.lobbyID
-        })
-        this.props.history.push(this.props.match.url + '/room/' + this.context.lobbyID)
     }
 }

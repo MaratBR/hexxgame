@@ -14,8 +14,10 @@ async function createGameMap(size: number, teams: number) {
         }
     }
 
-    for (let t = 1; t < teams + 1; t++)
+    for (let t = 1; t < teams + 1; t++) {
+        cells[t].initValue = 1
         cells[t].initTeam = t
+    }
 
     return await service.createMap(`Generic ${size}x${size} map with ${teams} teams`, cells)
 }

@@ -1,9 +1,9 @@
-import {Schema, type} from "@colyseus/schema";
+import {Schema, ArraySchema, type} from "@colyseus/schema";
 
 export class TeamInfo extends Schema {
     @type('boolean')
     ready: boolean = false;
 
     @type(['string'])
-    members: string[] = []
+    members: ArraySchema<string> = new ArraySchema<string>()
 }
