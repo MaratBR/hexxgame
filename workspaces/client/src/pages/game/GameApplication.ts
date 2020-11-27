@@ -73,6 +73,9 @@ export default class GameApplication extends PIXI.Application {
         Object.values(this._cellsObjects).forEach(c => {
             c.disabled = c.team !== v && c.team !== 0
         })
+
+        if (this.selectedCell?.team !== v)
+            this.selectedCell = null
     }
 
     get selectedCell() {
@@ -100,6 +103,12 @@ export default class GameApplication extends PIXI.Application {
         gameCell.cell = cell
         gameCell.x = x;
         gameCell.y = y;
+        console.log('click handler added')
+        gameCell.on('click', () => {
+            console.log('toggle selected')
+            gameCell.selected = !gameCell.selected
+            return
+        })
         this._container.addChild(gameCell)
     }
 
@@ -131,7 +140,7 @@ export default class GameApplication extends PIXI.Application {
             return []
         return MapUtils.getNeighbours(gameCell.cell.x, gameCell.cell.y).map(([x, y]) => {
             return this._cellsObjects[MapUtils.getKey(x, y)]
-        })
+        }).filter(v => !!v)
     }
 
     private getCellOrigin(cell: MapCell) {

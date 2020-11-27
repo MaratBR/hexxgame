@@ -29,20 +29,19 @@ const POINTS = [
     new PIXI.Point(-Math.cos(Math.PI / 6), -Math.sin(Math.PI / 6))
 ]
 
-namespace utils {
-    export function drawHexBorder(gfx: PIXI.Graphics, points: PIXI.Point[], width: number, color: number) {
-        gfx
-            .moveTo(points[0].x, points[0].y)
-            .lineStyle(width, color)
-            .lineTo(points[1].x, points[1].y)
-            .lineTo(points[2].x, points[2].y)
-            .lineTo(points[3].x, points[3].y)
-            .lineTo(points[4].x, points[4].y)
-            .lineTo(points[5].x, points[5].y)
-            .lineTo(points[0].x, points[0].y)
-            .lineTo(points[1].x, points[1].y)
-    }
+function drawHexBorder(gfx: PIXI.Graphics, points: PIXI.Point[], width: number, color: number) {
+    gfx
+        .moveTo(points[0].x, points[0].y)
+        .lineStyle(width, color)
+        .lineTo(points[1].x, points[1].y)
+        .lineTo(points[2].x, points[2].y)
+        .lineTo(points[3].x, points[3].y)
+        .lineTo(points[4].x, points[4].y)
+        .lineTo(points[5].x, points[5].y)
+        .lineTo(points[0].x, points[0].y)
+        .lineTo(points[1].x, points[1].y)
 }
+
 
 //#endregion
 
@@ -62,26 +61,25 @@ export default class GameCell extends PIXI.Container {
             return _c
         })
         this.text = new PIXI.Text('0', {fontSize: 300, fontFamily: 'Righteous', fill: '#fff'})
-
         this.text.anchor.set(0.5)
         this.text.scale.set(0.1)
 
         this.poly = new PIXI.Graphics()
-        this.interactive = true
+        this.poly.interactive = true
 
-        this.on('pointerover', () => {
+        this.poly.on('pointerover', () => {
             this.setVisualState(VisualState.MouseOver)
         })
 
-        this.on('pointerout', () => {
+        this.poly.on('pointerout', () => {
             this.setVisualState(VisualState.None)
         })
 
-        this.on('pointerdown', () => {
+        this.poly.on('pointerdown', () => {
             this.setVisualState(VisualState.Pressed)
         })
 
-        this.on('pointerup', () => {
+        this.poly.on('pointerup', () => {
             if (this._state == VisualState.Pressed) {
                 this.setVisualState(VisualState.MouseOver)
             }
@@ -113,6 +111,7 @@ export default class GameCell extends PIXI.Container {
 
     onCellChanged() {
         this._value = this._cell!.value
+        this.text.text = this._value+''
         this._team = this._cell!.team
         this.redrawGfx()
     }
@@ -143,7 +142,8 @@ export default class GameCell extends PIXI.Container {
     }
 
     set selected(v) {
-        this.cellState = GameCellState.Selected
+        console.log('set selected to ' + v)
+        this.cellState = v ? GameCellState.Selected : GameCellState.None
     }
 
     get value() {
@@ -164,7 +164,7 @@ export default class GameCell extends PIXI.Container {
             .endFill()
 
         if (this._disabled) {
-            this.alpha = 0.9
+            this.alpha = 0.5
             return
         } else if (this.alpha !== 1)
             this.alpha = 1
@@ -173,15 +173,12 @@ export default class GameCell extends PIXI.Container {
 
         switch (this._cellState) {
             case GameCellState.None:
-                if (this._state === VisualState.MouseOver) {
-                    utils.drawHexBorder(this.poly, this.points, 1, 0xdddddd)
-                }
                 break
             case GameCellState.Targeted:
-                utils.drawHexBorder(this.poly, this.points, 2, 0xff6f00)
+                drawHexBorder(this.poly, this.points, 2, 0xff6f00)
                 break
             case GameCellState.Selected:
-                utils.drawHexBorder(this.poly, this.points, 3, 0xffffff)
+                drawHexBorder(this.poly, this.points, 3, 0xffffff)
                 break
         }
     }

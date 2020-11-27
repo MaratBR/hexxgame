@@ -10,6 +10,7 @@ import {Redirect} from "react-router"
 import Modal from "../../components/Modal";
 import GameMap from "./GameMap";
 import RoomPage from "./RoomPage";
+import UIContext from "../UIContext";
 
 enum RootStatus {
 
@@ -49,11 +50,18 @@ export class GameCoordinatorPage extends React.Component<Params, State> {
     static contextType = ApiContext
     context!: AppAPI
     private subs: Subscription[] = []
+    private readonly onRoomStateChangedListener: (cs: GameRoomState) => void
     state: State = {
         loggedIn: true,
         loading: true,
         reconnecting: false,
         inGame: false
+    }
+
+    constructor(props: Params) {
+        super(props);
+
+        this.onRoomStateChangedListener = this.onRoomStateChanged.bind(this)
     }
 
     async componentDidMount() {
@@ -102,7 +110,6 @@ export class GameCoordinatorPage extends React.Component<Params, State> {
         }
 
         if (this.state.room) {
-            console.log('inGame in render = ' + this.state.inGame)
             return this.state.inGame ? <GameMap room={this.state.room} /> : <RoomPage room={this.state.room} />
         }
     }
@@ -119,18 +126,32 @@ export class GameCoordinatorPage extends React.Component<Params, State> {
         }
     }
 
+    private onRoomStateChanged(cs: GameRoomState) {
+        const inGame = !!cs.match?.id
+        this.setState({
+            inGame
+        })
+        UIContext.fullscreen.next(inGame)
+    }
+
     private onLobbyChanged(lobby?: Room<GameRoomState>) {
+
+        if (this.state.room) {
+            this.state.room.onStateChange.remove(this.onRoomStateChangedListener)
+        }
+
         this.setState({
             room: lobby
         })
+
         if (lobby) {
-            console.log(`inGame = ${!!lobby.state.match?.id}`)
+            lobby.onStateChange(this.onRoomStateChangedListener)
             this.setState({
                 err: undefined,
                 loading: false,
-                reconnecting: false,
-                inGame: !!lobby.state.match?.id
+                reconnecting: false
             })
+            this.onRoomStateChanged(lobby.state)
         } else {
             this.setState({
                 err: 'Game not found'

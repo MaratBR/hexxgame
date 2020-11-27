@@ -272,8 +272,8 @@
         "affectsGlobalScope": false
       },
       "./src/colyseus.ts": {
-        "version": "02841fe5d883b5400ee52133ff84889862cc509d427b4d173b75befd5f930091",
-        "signature": "5b9c3c971575d2f8d2acffa0c8d846fa0ff07cd8cdaf6ac34189e4002ec86495",
+        "version": "5a15d936d05b1900e3d11c08b83f89d12e246c476aec73eefe657566ce2757d6",
+        "signature": "6d5264ecd84c7e18dc5c7c7bf3cb4917f74b7fa0f854cd3b278ce0be9080bc34",
         "affectsGlobalScope": false
       },
       "./src/dto.ts": {
@@ -1098,6 +1098,7 @@
       "resolveJsonModule": true,
       "composite": true,
       "incremental": true,
+      "watch": true,
       "configFilePath": "./tsconfig.json"
     },
     "referencedMap": {

@@ -3,9 +3,9 @@ import http from "http"
 import {Client, Delayed, ServerError} from "colyseus";
 import {User} from "../models/User";
 import {Room, RoomModel} from "../models/Room";
-import {Schema, MapSchema, ArraySchema, type} from "@colyseus/schema";
+import {Schema, MapSchema, type} from "@colyseus/schema";
 import {GameMap, GameMapModel} from "../models/GameMap";
-import {IGameLobbyState, IMatchState, MapUtils, MoveDirection} from "@hexx/common";
+import {GameRoomState, MapUtils, MatchState, MoveDirection} from "@hexx/common";
 import {Match, MatchModel, MAX_VALUE} from "../models/Match";
 import {ClientInfo} from "./ClientInfo";
 import {TeamInfo} from "./TeamInfo";
@@ -14,46 +14,7 @@ import {AttackOutcome, MapCell} from "./MapCell";
 import Dict = NodeJS.Dict;
 import moment from "moment";
 
-export class MatchState extends Schema implements IMatchState {
-    @type('number')
-    baseRoundLength: number = 20
-
-    @type('number')
-    roundLengthPerCell: number = 5
-
-    @type('number')
-    roundLengthPerPoint: number = 1.5
-
-    @type('number')
-    currentRound: number = 0;
-
-    @type('number')
-    currentRoundStage: number = 0;
-
-    @type('string')
-    id: string;
-
-    @type({map: MapCell})
-    mapCells: MapSchema<MapCell>;
-
-    @type('number')
-    roundStageEndsAt: number;
-
-    @type('number')
-    startsAt: number;
-
-    @type(['number'])
-    teamsRotation: number[];
-
-    @type('number')
-    currentTeam: number = 0
-
-    @type('number')
-    powerPoints: number = 0;
-
-    @type(DominationState)
-    domination: DominationState
-
+export class ServerMatchState extends MatchState {
     constructor(match: Match, map: GameMap) {
         super();
         this.id = match._id
@@ -65,7 +26,7 @@ export class MatchState extends Schema implements IMatchState {
             if (cell.initTeam && !match.teamsRotation.includes(cell.initTeam)) {
                 mapCell.team = 0
             }
-            cells[MapUtils.getKey()] = mapCell
+            cells[MapUtils.getKey(cell.x, cell.y)] = mapCell
         }
         this.domination = new DominationState(cells)
         this.mapCells = new MapSchema<MapCell>(cells)
@@ -94,13 +55,13 @@ export class MatchState extends Schema implements IMatchState {
         return null
     }
 
-    performAttack(fromX: number, fromY: number, direction: MoveDirection) {
+    performAttack(fromX: number, fromY: number, direction: MoveDirection): boolean {
         const cell = this.get(fromX, fromY)
         if (!cell)
-            return
+            return false
         const target = this.get(fromX, fromY, direction)
         if (!target)
-            return;
+            return false;
         const result = cell.attack(target)
         if (result) {
             if (result.outcome == AttackOutcome.Absorb) {
@@ -109,7 +70,10 @@ export class MatchState extends Schema implements IMatchState {
                 this.domination.teamCells[result.attackerTeam] += result.attackerPointsDiff
                 this.domination.teamCells[result.targetTeam] += result.targetPointsDiff
             }
+
+            return true
         }
+        return false
     }
 
     performPowerUp(x: number, y: number, maxOut: boolean) {
@@ -164,27 +128,9 @@ export class MatchState extends Schema implements IMatchState {
     }
 }
 
-export class GameRoomState extends Schema implements IGameLobbyState {
-    @type('string')
-    id?: string;
-
-    @type('string')
-    selectedMapID?: string
-
-    @type({map: ClientInfo})
-    clients: MapSchema<ClientInfo> = new MapSchema<ClientInfo>()
-
-    @type(['string'])
-    spectators: ArraySchema<string> = new ArraySchema<string>()
-
-    @type([TeamInfo])
-    teams: ArraySchema<TeamInfo> = new ArraySchema<TeamInfo>()
-
-    @type('number')
-    gameStartsAt: number
-
+export class ServerGameRoomState extends GameRoomState {
     @type(MatchState)
-    match: MatchState | null
+    match: ServerMatchState | null
 
     get inGame() { return !!this.match }
 
@@ -195,7 +141,7 @@ export class GameRoomState extends Schema implements IGameLobbyState {
     }
 }
 
-export default class GameRoom extends AuthorizedRoom<GameRoomState> {
+export default class GameRoom extends AuthorizedRoom<ServerGameRoomState> {
     matchTimeout?: Delayed
 
     private async getRoom(): Promise<Room> {
@@ -210,7 +156,7 @@ export default class GameRoom extends AuthorizedRoom<GameRoomState> {
         const room = await RoomModel.findById(roomID)
         if (!room)
             throw new ServerError(404, 'no room with id ' + roomID)
-        this.setState(new GameRoomState({
+        this.setState(new ServerGameRoomState({
             id: roomID,
             match: null,
             gameStartsAt: 0
@@ -321,7 +267,7 @@ export default class GameRoom extends AuthorizedRoom<GameRoomState> {
         const teams = this.state.teams.map(t => t.members.map(clientID => this.state.clients[clientID].dbID))
         const match = await Match.createMatch(this.state.id, this.state.selectedMapID, teams)
         const map = await GameMapModel.findById(match.mapId)
-        this.state.match = new MatchState(match, map)
+        this.state.match = new ServerMatchState(match, map)
         this.broadcast('gameStarts', {
             matchID: match._id,
             startsAt: +match.startsAt
@@ -366,7 +312,10 @@ export default class GameRoom extends AuthorizedRoom<GameRoomState> {
             if (!clientData || clientData.team === 0 || this.state.match.currentTeam == clientData.team)
                 return;
 
-            this.state.match.performAttack(fromX, fromY, direction)
+            if (!this.state.match.performAttack(fromX, fromY, direction)) {
+                client.send('invalid_move', d.returnID || null)
+                return
+            }
 
             const winner = this.state.match.getWinner()
             if (winner !== null) {

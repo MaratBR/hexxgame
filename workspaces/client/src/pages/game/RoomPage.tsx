@@ -64,10 +64,6 @@ export default class RoomPage extends React.Component<Props, RoomState> {
         }
 
         await this.updateMaps()
-
-        if (this.state.room.match) {
-            UIContext.fullscreen.next(true)
-        }
     }
 
     componentWillUnmount() {

@@ -67,6 +67,9 @@ export class MatchState extends Schema implements IMatchState {
     @type('number')
     currentRoundStage: number = 0;
 
+    @type('number')
+    currentMoveID: number = 0;
+
     @type('string')
     id: string;
 
@@ -122,7 +125,6 @@ export class GameRoomState extends Schema implements IGameLobbyState {
     @type(MatchState)
     match: MatchState | null
 }
-
 
 export interface MatchMapCell {
     x: number

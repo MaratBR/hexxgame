@@ -1,13 +1,13 @@
-import {Container, Service} from "typedi";
+import {Service} from "typedi";
 import {
     Match,
-    MatchModel
+    MatchModel, MAX_VALUE
 } from "../models/Match";
 import {GameMapModel} from "../models/GameMap";
 import {HttpError} from "routing-controllers";
 import {UserModel} from "../models/User";
 import moment from "moment";
-import {Participant} from "@hexx/common";
+import {GameMapCell, Participant} from "@hexx/common";
 
 @Service()
 export default class GameService {
@@ -45,22 +45,17 @@ export default class GameService {
             teamsRotation[j] = temp
         }
 
-        return await MatchModel.create({
+        return await MatchModel.create(<Match>{
             mapId,
             participants,
             roomId,
-            state: {
-                cells: map.cells.map(mapCell => ({
-                    v: mapCell.initValue || 0,
-                    t: mapCell.initTeam,
-                    mxv: mapCell.max,
-                    x: mapCell.x,
-                    y: mapCell.y
-                })),
-                round: 0,
-                roundStage: 0,
-                team: 0
-            },
+            cells: map.cells.map(mapCell => (<GameMapCell>{
+                initValue: mapCell.initValue || 0,
+                initTeam: mapCell.initTeam || 0,
+                max: mapCell.max || MAX_VALUE,
+                x: mapCell.x,
+                y: mapCell.y
+            })),
             startsAt: moment().add(10, 'seconds').toDate(),
             teamsRotation
         })

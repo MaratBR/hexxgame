@@ -5,10 +5,10 @@
   "scripts": {
     "clean": "rm -rf ./dist",
     "build-ts": "yarn tsc",
-    "lint": "tsc --noEmit && eslint \"**/*.{js,ts}\" --quiet --fix",
+    "lint": "tsc --noEmit",
     "serve": "node dist/server.js",
-    "build": "npm run lint && npm run build-ts && npm run copy-static-assets",
-    "start": "npm run serve",
+    "build": "yarn run lint && yarn run build-ts",
+    "start": "yarn run serve",
     "watch-server": "yarn run nodemon --watch . -e ts,tsx --exec ts-node --prefer-ts-exts server.ts",
     "dev": "yarn run watch-server",
     "test": "jest"
@@ -47,8 +47,6 @@
     "passport-local": "^1.0.0",
     "reflect-metadata": "^0.1.13",
     "routing-controllers": "^0.9.0-alpha.6",
-    "socket.io": "^3.0.0",
-    "socket.io-redis": "^5.4.0",
     "typedi": "^0.8.0"
   },
   "devDependencies": {
