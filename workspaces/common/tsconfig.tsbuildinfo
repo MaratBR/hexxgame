@@ -272,18 +272,18 @@
         "affectsGlobalScope": false
       },
       "./src/colyseus.ts": {
-        "version": "e5a06dcc3cf1338131f5354d48b0d863e0bcd829a8a23f45b931efcf206fdcc8",
-        "signature": "ae16909c13a26569e8e05ef6cf2dfd144ca31fcee77771401ba9429668205b8e",
+        "version": "5ed66cf5614e96987b4841afdd567c1340e3fe764cc3a9d3e7a46fe9e2e07964",
+        "signature": "911bb86f6846b4464efbab037442fe38fd960c3bfe3129d257520d1de668b891",
         "affectsGlobalScope": false
       },
       "./src/dto.ts": {
-        "version": "b1f5d2f9309f4aec61f8923b688d4d2c86a9dd0c0232b1593f1810d236fc809b",
-        "signature": "f5777e73b8e8fbcacfd2183b89aaf017a71db8fd4af81b1e0a2e6d558e3ff857",
+        "version": "a2b0a760b81508fb84ff5f6f8d35505140fbde7e8cdef23c72fec40a12dfa9d5",
+        "signature": "f6931dc9e9055b2ce080953086bbdfc0e6278df6eb06df243c7942b2082165c2",
         "affectsGlobalScope": false
       },
       "./src/consts.ts": {
-        "version": "efc75fea50d007cbac07829ec9a3910a82c04e313f0f98dd987f0487ea62c15d",
-        "signature": "8e53b61a78be062d5401882f113752ec8285b271d3be84a9f4e1af37ee1f01db",
+        "version": "7b816816efea515119b698805a9411f1e5bc19caf0f523ff00aa1f8a8d7f6b7f",
+        "signature": "051ea0085072d7e79e66a57e19b400d25b2eb88cfdea9b5edf1f0fceb03d591e",
         "affectsGlobalScope": false
       },
       "../../node_modules/moment/ts3.1-typings/moment.d.ts": {

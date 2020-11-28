@@ -1,6 +1,7 @@
 import React from "react";
 import styles from "./GameOverlay.module.scss"
 import {getTeamColor, getTeamName} from "@hexx/common";
+import GameTimer from "./GameTimer";
 
 type Props = {
     teamsRotation: number[]
@@ -33,7 +34,7 @@ export default class GameOverlay extends React.Component<Props, any> {
             <div className={styles.top}>
                 <div></div>
 
-                <div className={styles.timer} />
+                <GameTimer endsAt={this.props.endsAt} />
             </div>
         </div>
     }

@@ -1,6 +1,6 @@
 import {getModelForClass, prop} from "@typegoose/typegoose";
 import {IDBase} from "./Base";
-import {GameMatchInfoDto, MatchStats, MoveDirection, Participant} from "@hexx/common";
+import {GameMatchInfoDto, Participant} from "@hexx/common";
 import {GameMapCell, GameMapCellImpl, GameMapModel} from "./GameMap";
 import {HttpError} from "routing-controllers";
 import {UserModel} from "./User";

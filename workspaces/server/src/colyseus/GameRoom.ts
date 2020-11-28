@@ -376,13 +376,12 @@ export default class GameRoom extends AuthorizedRoom<ServerGameRoomState> {
         this.onMessage("setSelected", (client, message: any) => {
             if (typeof message !== 'string')
                 return;
-            const match = this.state.match
-            if (!match)
+            if (!this.state.match)
                 return;
-            const clientData = this.state.clients.get(client.id)
-            if (clientData && MatchState.isAttackStageFor(match, clientData.team)) {
-                if (match.mapCells.has(message))
-                    match.selectedCellKey = message
+            const participantTeam = GameRoomState.getParticipantTeamFromClientID(this.state, client.id)
+            if (MatchState.isAttackStageFor(this.state.match, participantTeam)) {
+                if (this.state.match.mapCells.has(message))
+                    this.state.match.selectedCellKey = message
             }
         })
     }

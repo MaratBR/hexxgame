@@ -121,7 +121,12 @@ export class MatchState extends Schema implements IMatchState {
     }
 
     static isAttackStageFor(s: MatchState, team: number) {
-        return this.isAttackStage(s) && s.currentTeam === team
+        return this.isAttackStage(s) && s.currentTeam === team && team > 0
+    }
+
+    static getParticipantTeam(s: MatchState, dbID: string) {
+        const participantData = s.participants.get(dbID)
+        return participantData ? participantData.team : 0
     }
 }
 
@@ -154,6 +159,21 @@ export class GameRoomState extends Schema implements IGameLobbyState {
 
     @type(MatchState)
     match: MatchState | null
+
+    static getUserDBID(s: GameRoomState, clientID: string): string | undefined {
+        const clientData = s.clients.get(clientID)
+        return clientData ? clientData.dbID : undefined
+    }
+
+    static getParticipantTeamFromClientID(s: GameRoomState, clientID: string) {
+        const match = s.match
+        if (!match)
+            return 0
+        const dbID = this.getUserDBID(s, clientID)
+        if (!dbID)
+            return 0
+        return MatchState.getParticipantTeam(match, dbID)
+    }
 }
 
 export interface MatchMapCell {

@@ -1600,6 +1600,7 @@ __metadata:
     pixi.js: ^5.3.3
     pretty-ms: ^7.0.1
     react: ^17.0.1
+    react-compound-timer: ^1.2.0
     react-dom: ^17.0.1
     react-pixi-fiber: ^0.14.1
     react-router-dom: ^5.2.0
@@ -14992,6 +14993,15 @@ fsevents@~2.1.2:
     regenerator-runtime: ^0.13.7
     whatwg-fetch: ^3.4.1
   checksum: 96b8bb3bdeb5279ebb73622744dcaba75a2f48861e8353052cb758e33db850845b11fa7da87c52663a4e4ee9ed356069f6a1e42151a74f01dc24bbfbbc5ad79a
+  languageName: node
+  linkType: hard
+
+"react-compound-timer@npm:^1.2.0":
+  version: 1.2.0
+  resolution: "react-compound-timer@npm:1.2.0"
+  peerDependencies:
+    react: ^16.8.6
+  checksum: 45b14451e482b7b5d5ae44e86f64949a2517454ed7433edcb59506f2ad748b60d19839bd206c55e178031d1151e0c92f167fb578f049972dbfc985c5b2918d84
   languageName: node
   linkType: hard
 

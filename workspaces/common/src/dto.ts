@@ -54,17 +54,10 @@ export type PlayerInfoDto = {
 }
 
 export enum MoveDirection {
-    Top,
-    Bottom,
     TopRight,
-    TopLeft,
+    Right,
     BottomRight,
-    BottomLeft
-}
-
-export type MatchStats = {
-    totalPoints: number
-    totalCells: number
-    maxPoints: number
-    teamPoints: number[]
+    BottomLeft,
+    Left,
+    TopLeft
 }

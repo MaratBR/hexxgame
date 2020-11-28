@@ -1,5 +1,6 @@
 import React from "react";
 import pretty from "pretty-ms"
+import Timer from "react-compound-timer"
 
 type Props = {
     endsAt: number
@@ -11,31 +12,15 @@ type State = {
     interval?: NodeJS.Timeout
 }
 
-export default class GameTimer extends React.Component<Props, State> {
-    state: State = {
-        pretty: '',
-        secondsRemain: 0
-    }
+export default class GameTimer extends React.Component<Props, any> {
 
-    componentDidMount() {
-        this.setState({
-            interval: setInterval(this.tick.bind(this), 1000)
-        })
-    }
-
-    tick() {
-        this.setState({
-            secondsRemain: this.state.secondsRemain-1,
-            pretty: pretty(this.state.secondsRemain*1000-1000)
-        })
-    }
-
-    componentWillUnmount() {
-        if (this.state.interval)
-            clearInterval(this.state.interval)
+    shouldComponentUpdate(nextProps: Readonly<Props>, nextState: Readonly<any>, nextContext: any): boolean {
+        return nextProps.endsAt !== this.props.endsAt
     }
 
     render() {
-        return <div>{this.state.pretty}</div>
+        return <Timer initialTime={this.props.endsAt - +new Date()} direction="backward">
+            <Timer.Minutes />:<Timer.Seconds />
+        </Timer>
     }
 }

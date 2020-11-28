@@ -40,27 +40,27 @@ export function getTeamName(index: number) {
 
 type Offsets = [number, number][]
 
-const EVEN_X_INDEX_OFFSETS: Offsets = [
-    [0, -1], // top
-    [0, 1], // bottom
-    [1, 0], // top right
-    [-1, 0], // top left
+const EVEN_Y_INDEX_OFFSETS: Offsets = [
+    [0, -1], // top left
+    [1, -1], // top right
+    [1, 0], // right
     [1, 1], // bottom right
-    [-1, 1], // bottom left
+    [0, 1], // bottom left
+    [-1, 0], // bottom left
 ]
 
-const ODD_X_INDEX_OFFSETS: Offsets = [
-    [0, -1], // top
-    [0, 1], // bottom
-    [1, -1], // top right
+const ODD_Y_INDEX_OFFSETS: Offsets = [
     [-1, -1], // top left
-    [1, 0], // bottom right
-    [-1, 0], // bottom left
+    [0, -1], // top right
+    [1, 0], // right
+    [0, 1], // bottom right
+    [-1, 1], // bottom left
+    [-1, 0], // left
 ]
 
 export const MapUtils = {
     getNeighbours(x: number, y: number) {
-        return (x % 2 == 0 ? EVEN_X_INDEX_OFFSETS : ODD_X_INDEX_OFFSETS).map((v, index) => {
+        return (y % 2 == 0 ? EVEN_Y_INDEX_OFFSETS : ODD_Y_INDEX_OFFSETS).map((v, index) => {
             return [
                 v[0] + x,
                 v[1] + y
@@ -68,14 +68,14 @@ export const MapUtils = {
         })
     },
     getNeighbour(x: number, y: number, direction: MoveDirection): [number, number] {
-        const [xOff, yOff] = this.getOffset(x, direction)
+        const [xOff, yOff] = this.getOffset(y, direction)
         return [
             x + xOff,
             y + yOff
         ]
     },
-    getOffset(x: number, direction: MoveDirection): [number, number] {
-        return (x % 2 == 0 ? EVEN_X_INDEX_OFFSETS : ODD_X_INDEX_OFFSETS)[direction]
+    getOffset(y: number, direction: MoveDirection): [number, number] {
+        return (y % 2 == 0 ? EVEN_Y_INDEX_OFFSETS : ODD_Y_INDEX_OFFSETS)[direction]
     },
 
     getKey(x: number, y: number): string { return y + ':' + x }
