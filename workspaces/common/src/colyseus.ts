@@ -16,6 +16,20 @@ export class ClientInfo extends Schema implements IClientInfo {
     ready: boolean = false;
 }
 
+export class MatchParticipant extends Schema {
+    @type('string')
+    dbID: string
+
+    @type('number')
+    team: number
+
+    @type('string')
+    username: string
+
+    @type('boolean')
+    online: boolean = true;
+}
+
 export class DominationState extends Schema implements IGameDominationState {
     @type('number')
     cells: number = 0;
@@ -49,7 +63,6 @@ export class MapCell extends Schema implements MatchMapCell {
     @type('boolean')
     locked: boolean = false
 }
-
 
 export class MatchState extends Schema implements IMatchState {
     @type('number')
@@ -93,6 +106,23 @@ export class MatchState extends Schema implements IMatchState {
 
     @type(DominationState)
     domination: DominationState
+
+    @type('string')
+    selectedCellKey?: string;
+
+    @type({map: MatchParticipant})
+    participants: MapSchema<MatchParticipant> = new MapSchema<MatchParticipant>()
+
+    static isPowerStage(s: MatchState) { return s.currentRoundStage == 2 }
+    static isAttackStage(s: MatchState) { return s.currentRoundStage == 1 }
+
+    static isPowerStageFor(s: MatchState, team: number) {
+        return this.isPowerStage(s) && s.currentTeam === team
+    }
+
+    static isAttackStageFor(s: MatchState, team: number) {
+        return this.isAttackStage(s) && s.currentTeam === team
+    }
 }
 
 export class TeamInfo extends Schema {

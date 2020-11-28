@@ -4,6 +4,7 @@ import {MapCell, MapUtils} from "@hexx/common";
 import PixiFps from "pixi-fps";
 import {Viewport} from 'pixi-viewport'
 import GameCell, {GameCellState} from "./GameCell";
+import {Observable, Subject} from "rxjs";
 
 type CellsObjects = {
     [key: string]: GameCell
@@ -27,8 +28,10 @@ export default class GameApplication extends PIXI.Application {
     private _cells!: MapSchema<MapCell>
     private props: RenderProps
     private _currentTeam: number = 0
-    private _selectedCell: GameCell | null = null
+    private _canSelectCell: boolean = true
+    private _selectedGameCell: GameCell | null = null
     private _targetCells: GameCell[] = []
+    private _selectedCellSub = new Subject<MapCell>()
 
     constructor(props: Partial<RenderProps>) {
         super({
@@ -40,11 +43,24 @@ export default class GameApplication extends PIXI.Application {
             ...DEFAULT_PROPS,
             ...props
         }
+        this.resizeTo = window
         this.renderer.plugins.interaction.moveWhenInside = true
 
         this.cells = props.cells || new MapSchema<MapCell>()
 
         this.makeAll()
+    }
+
+    get selectedCellSub(): Observable<MapCell> {
+        return this._selectedCellSub
+    }
+
+    get canSelectCell() {
+        return this._canSelectCell
+    }
+
+    set canSelectCell(v) {
+        this._canSelectCell = v
     }
 
     get cells(): MapSchema<MapCell> {
@@ -74,20 +90,31 @@ export default class GameApplication extends PIXI.Application {
             c.disabled = c.team !== v && c.team !== 0
         })
 
-        if (this.selectedCell?.team !== v)
-            this.selectedCell = null
+        if (this.selectedGameCell?.team !== v)
+            this.selectedGameCell = null
     }
 
     get selectedCell() {
-        return this._selectedCell
+        return this.selectedGameCell?.cell || null
     }
 
     set selectedCell(v) {
-        if (this._selectedCell) {
+        if (!v)
+            this.selectedGameCell = null
+        else
+            this.selectedGameCell = this._cellsObjects[MapUtils.getKey(v.x, v.y)]
+    }
+
+    get selectedGameCell() {
+        return this._selectedGameCell
+    }
+
+    set selectedGameCell(v) {
+        if (this._selectedGameCell) {
             this._targetCells.forEach(c => c.cellState = GameCellState.None)
-            this._selectedCell.selected = false
+            this._selectedGameCell.selected = false
         }
-        this._selectedCell = v
+        this._selectedGameCell = v
         if (v) {
             this._targetCells = this.getCellNeighbours(v).filter(a => a.team !== v.team)
             this._targetCells.forEach(c => c.cellState = GameCellState.Targeted)
@@ -103,11 +130,10 @@ export default class GameApplication extends PIXI.Application {
         gameCell.cell = cell
         gameCell.x = x;
         gameCell.y = y;
-        console.log('click handler added')
         gameCell.on('click', () => {
-            console.log('toggle selected')
-            gameCell.selected = !gameCell.selected
-            return
+            if (this.canSelectCell) {
+                this._selectedCellSub.next(gameCell.cell)
+            }
         })
         this._container.addChild(gameCell)
     }

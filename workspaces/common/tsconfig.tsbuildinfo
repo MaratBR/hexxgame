@@ -272,8 +272,8 @@
         "affectsGlobalScope": false
       },
       "./src/colyseus.ts": {
-        "version": "5a15d936d05b1900e3d11c08b83f89d12e246c476aec73eefe657566ce2757d6",
-        "signature": "6d5264ecd84c7e18dc5c7c7bf3cb4917f74b7fa0f854cd3b278ce0be9080bc34",
+        "version": "e5a06dcc3cf1338131f5354d48b0d863e0bcd829a8a23f45b931efcf206fdcc8",
+        "signature": "ae16909c13a26569e8e05ef6cf2dfd144ca31fcee77771401ba9429668205b8e",
         "affectsGlobalScope": false
       },
       "./src/dto.ts": {

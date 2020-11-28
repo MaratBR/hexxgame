@@ -1,9 +1,7 @@
 import {AxiosInstance, default as axios} from "axios"
-import {GameMapInfoDto, RoomInfoDto, IGameLobbyState, GameRoomState} from "@hexx/common";
+import {GameMapInfoDto, RoomInfoDto, GameRoomState} from "@hexx/common";
 import * as Colyseus from "colyseus.js"
-import {EventEmitter} from "events";
-import {fromEvent, Observable, Subject} from "rxjs";
-import {truncate} from "fs";
+import {Observable, Subject} from "rxjs";
 
 interface IAPIOptions {
     address: string

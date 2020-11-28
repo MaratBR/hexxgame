@@ -1,5 +1,5 @@
 import {Schema, type} from "@colyseus/schema";
-import {GameMapCell, MatchMapCell} from "@hexx/common";
+import {GameMapCell, MapCell, MatchMapCell} from "@hexx/common";
 
 
 export enum AttackOutcome {
@@ -17,25 +17,7 @@ export type AttackResult = {
     outcome: AttackOutcome
 }
 
-export class MapCell extends Schema implements MatchMapCell {
-    @type('number')
-    x: number
-
-    @type('number')
-    y: number
-
-    @type('number')
-    value: number = 0;
-
-    @type('number')
-    maxValue?: number
-
-    @type('number')
-    team: number = 0
-
-    @type('boolean')
-    locked: boolean = false
-
+export class ServerMapCell extends MapCell {
     constructor(cell: GameMapCell) {
         super();
         this.team = cell.initTeam || 0
@@ -45,7 +27,7 @@ export class MapCell extends Schema implements MatchMapCell {
         this.maxValue = cell.max
     }
 
-    attack(other: MapCell): AttackResult | undefined {
+    attack(other: ServerMapCell): AttackResult | undefined {
         if (this.team === other.team || this.team === 0 || this.value <= 1)
             return
 

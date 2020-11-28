@@ -1,0 +1,44 @@
+.overlay > *, .overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+}
+
+.teams {
+  padding-left: 0;
+  top: 200px;
+  list-style: none;
+}
+
+.team {
+  display: flex;
+  align-items: stretch;
+  width: 200px;
+
+  .text {
+    margin: 10px 0 10px 10px;
+    transition: transform .4s;
+    transform: translateX(0);
+  }
+
+  .poly {
+    width: 6px;
+  }
+
+}
+
+.currentTeam {
+  background: rgba(white, 0.05);
+
+  .text {
+    transform: translateX(5px);
+    text-shadow: 0 0 10px rgba(white, 0.5);
+    font-weight: bold;
+  }
+}
+
+.top {
+  left: 0;
+  top: 10px;
+  transform: translateX(-50%);
+}

@@ -1,39 +1,60 @@
-import AuthorizedRoom from "./AuthorizedRoom";
 import http from "http"
 import {Client, Delayed, ServerError} from "colyseus";
+import {MapSchema, type} from "@colyseus/schema";
+
+
+import AuthorizedRoom from "./AuthorizedRoom";
 import {User} from "../models/User";
-import {Room, RoomModel} from "../models/Room";
-import {Schema, MapSchema, type} from "@colyseus/schema";
-import {GameMap, GameMapModel} from "../models/GameMap";
-import {GameRoomState, MapUtils, MatchState, MoveDirection} from "@hexx/common";
 import {Match, MatchModel, MAX_VALUE} from "../models/Match";
-import {ClientInfo} from "./ClientInfo";
-import {TeamInfo} from "./TeamInfo";
-import {DominationState} from "./DominationState";
-import {AttackOutcome, MapCell} from "./MapCell";
+import {Room, RoomModel} from "../models/Room";
+import {GameMap, GameMapModel} from "../models/GameMap";
+
+import {
+    ClientInfo,
+    DominationState,
+    GameRoomState, MapCell,
+    MapUtils, MatchParticipant,
+    MatchState,
+    MoveDirection,
+    TeamInfo
+} from "@hexx/common";
 import Dict = NodeJS.Dict;
 import moment from "moment";
+import {AttackOutcome, ServerMapCell} from "./MapCell";
 
 export class ServerMatchState extends MatchState {
-    constructor(match: Match, map: GameMap) {
+    mapCells: MapSchema<ServerMapCell>
+
+    constructor(roomState: GameRoomState, match: Match, map: GameMap) {
         super();
         this.id = match._id
         this.teamsRotation = Array.from(match.teamsRotation)
         this.startsAt = +match.startsAt
-        const cells: Dict<MapCell> = {}
+        const cells: Dict<ServerMapCell> = {}
         for (let cell of map.cells) {
-            const mapCell = new MapCell(cell)
+            const mapCell = new ServerMapCell(cell)
             if (cell.initTeam && !match.teamsRotation.includes(cell.initTeam)) {
                 mapCell.team = 0
             }
             cells[MapUtils.getKey(cell.x, cell.y)] = mapCell
         }
         this.domination = new DominationState(cells)
-        this.mapCells = new MapSchema<MapCell>(cells)
+        this.mapCells = new MapSchema<ServerMapCell>(cells)
+
+        for (let player of roomState.clients.values()) {
+            if (player.team === 0)
+                return;
+            this.participants.set(player.dbID, new MatchParticipant({
+                dbID: player.dbID,
+                username: player.username,
+                online: true,
+                team: player.team
+            }))
+        }
     }
 
 
-    get(x: number, y: number, direction?: MoveDirection): MapCell | undefined {
+    get(x: number, y: number, direction?: MoveDirection): ServerMapCell | undefined {
         if (typeof direction !== 'undefined') {
             const [xOff, yOff] = MapUtils.getOffset(x, direction)
             x += xOff
@@ -88,6 +109,7 @@ export class ServerMatchState extends MatchState {
     }
 
     beginPowerUp() {
+        this.selectedCellKey = undefined
         const cellsCount = Array.from(this.mapCells.values())
             .filter(c => c.team == this.currentTeam)
             .length
@@ -129,7 +151,9 @@ export class ServerMatchState extends MatchState {
 }
 
 export class ServerGameRoomState extends GameRoomState {
-    @type(MatchState)
+    // NOTE: That is a BAD way to implement custom functions for match state
+    // TODO: Use functions instead (like, regular functions not methods)
+    // Or move logic to common package, sort of like Meteor does
     match: ServerMatchState | null
 
     get inGame() { return !!this.match }
@@ -143,10 +167,6 @@ export class ServerGameRoomState extends GameRoomState {
 
 export default class GameRoom extends AuthorizedRoom<ServerGameRoomState> {
     matchTimeout?: Delayed
-
-    private async getRoom(): Promise<Room> {
-        return RoomModel.findById(this.state.id);
-    }
 
     async onCreate(options: any): Promise<any> {
         const roomID = options.id
@@ -168,8 +188,8 @@ export default class GameRoom extends AuthorizedRoom<ServerGameRoomState> {
             if (typeof team === 'number') {
                 if (team < 0 || team > this.state.teams.length)
                     return
-                const oldTeam = this.state.clients[client.id].team
-                this.state.clients[client.id].team = team
+                const oldTeam = this.state.clients.get(client.id).team
+                this.state.clients.get(client.id).team = team
                 if (oldTeam === 0) {
                     this.state.spectators.splice(this.state.spectators.indexOf(client.id))
                 } else {
@@ -236,9 +256,18 @@ export default class GameRoom extends AuthorizedRoom<ServerGameRoomState> {
     }
 
     onJoin(client: Client, options?: any, auth?: User): void | Promise<any> {
+        let team: number | undefined
+        if (this.state.match) {
+            if (this.state.match.participants.has(auth._id)) {
+                const data = this.state.match.participants.get(auth._id)
+                data.online = true
+                team = data.team
+            }
+        }
         this.state.clients[client.id] = new ClientInfo({
             dbID: auth._id,
-            username: auth.username
+            username: auth.username,
+            team
         })
         this.state.spectators.push(client.id)
     }
@@ -250,6 +279,11 @@ export default class GameRoom extends AuthorizedRoom<ServerGameRoomState> {
         } else {
             const members = this.state.teams[data.team - 1].members
             members.splice(members.indexOf(client.id))
+        }
+
+        if (this.state.match && this.state.match.participants.has(client.id)) {
+            // player left
+            this.state.match.participants.get(client.auth._id).online = false
         }
 
         delete this.state.clients[client.id]
@@ -267,11 +301,7 @@ export default class GameRoom extends AuthorizedRoom<ServerGameRoomState> {
         const teams = this.state.teams.map(t => t.members.map(clientID => this.state.clients[clientID].dbID))
         const match = await Match.createMatch(this.state.id, this.state.selectedMapID, teams)
         const map = await GameMapModel.findById(match.mapId)
-        this.state.match = new ServerMatchState(match, map)
-        this.broadcast('gameStarts', {
-            matchID: match._id,
-            startsAt: +match.startsAt
-        })
+        this.state.match = new ServerMatchState(this.state, match, map)
         this.clock.setTimeout(() => {
             this.beginRound()
         }, Math.max(+match.startsAt - +new Date(), 1))
@@ -341,6 +371,19 @@ export default class GameRoom extends AuthorizedRoom<ServerGameRoomState> {
                 return;
 
             this.state.match.performPowerUp(x, y, !!max)
+        })
+
+        this.onMessage("setSelected", (client, message: any) => {
+            if (typeof message !== 'string')
+                return;
+            const match = this.state.match
+            if (!match)
+                return;
+            const clientData = this.state.clients.get(client.id)
+            if (clientData && MatchState.isAttackStageFor(match, clientData.team)) {
+                if (match.mapCells.has(message))
+                    match.selectedCellKey = message
+            }
         })
     }
 
