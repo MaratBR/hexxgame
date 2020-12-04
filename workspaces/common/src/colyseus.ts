@@ -1,8 +1,9 @@
 import {ArraySchema, MapSchema} from "@colyseus/schema"
 
 import {Schema, type} from "@colyseus/schema";
+import {Participant} from "./dto";
 
-export class ClientInfo extends Schema implements IClientInfo {
+export class ClientInfo extends Schema {
     @type('string')
     dbID: string
 
@@ -30,7 +31,7 @@ export class MatchParticipant extends Schema {
     online: boolean = true;
 }
 
-export class DominationState extends Schema implements IGameDominationState {
+export class DominationState extends Schema {
     @type('number')
     cells: number = 0;
 
@@ -64,7 +65,19 @@ export class MapCell extends Schema implements MatchMapCell {
     locked: boolean = false
 }
 
-export class MatchState extends Schema implements IMatchState {
+export class LastMatchResult extends Schema {
+    @type('string')
+    matchID: string
+
+    @type('number')
+    winner: number
+
+    @type([MatchParticipant])
+    participants: ArraySchema<MatchParticipant>
+}
+
+
+export class MatchState extends Schema {
     @type('number')
     baseRoundLength: number = 20
 
@@ -116,6 +129,9 @@ export class MatchState extends Schema implements IMatchState {
     @type('number')
     winner: number = 0
 
+    @type(LastMatchResult)
+    lastMatchResult: LastMatchResult
+
     static isPowerStage(s: MatchState) { return s.currentRoundStage == 2 }
     static isAttackStage(s: MatchState) { return s.currentRoundStage == 1 }
 
@@ -141,7 +157,7 @@ export class TeamInfo extends Schema {
     members: ArraySchema<string> = new ArraySchema<string>()
 }
 
-export class GameRoomState extends Schema implements IGameLobbyState {
+export class GameRoomState extends Schema {
     @type('string')
     id?: string;
 
@@ -161,7 +177,7 @@ export class GameRoomState extends Schema implements IGameLobbyState {
     gameStartsAt: number
 
     @type(MatchState)
-    match: MatchState | null
+    match?: MatchState
 
     static getUserDBID(s: GameRoomState, clientID: string): string | undefined {
         const clientData = s.clients.get(clientID)
@@ -186,45 +202,4 @@ export interface MatchMapCell {
     value: number
     maxValue?: number
     locked: boolean
-}
-
-export interface IMatchState {
-    id: string
-    teamsRotation: number[]
-    mapCells: MapSchema<MatchMapCell>
-    startsAt: number
-    currentRound: number
-    currentRoundStage: number
-    roundStageEndsAt: number
-    currentTeam: number
-    powerPoints: number
-    domination?: IGameDominationState
-}
-
-export interface IGameDominationState {
-    cells: number
-    teamCells: MapSchema<number>
-    teamPoints: MapSchema<number>
-    totalPoints: number
-}
-
-export interface IClientInfo {
-    dbID: string
-    team: number
-    username: string
-    ready: boolean
-}
-
-export interface ITeamInfo {
-    ready: boolean
-    members: ArraySchema<string>
-}
-
-export interface IGameLobbyState {
-    id?: string;
-    selectedMapID?: string
-    clients: MapSchema<IClientInfo>
-    spectators: ArraySchema<string>
-    teams: ArraySchema<ITeamInfo>
-    match: Partial<IMatchState>
 }

@@ -1,5 +1,4 @@
-import {Room} from "colyseus.js";
-import {GameRoomState, MapCell, MapUtils, MatchState} from "@hexx/common";
+import {GameRoomState, MapUtils, MatchState} from "@hexx/common";
 import React from "react";
 import ApiContext from "../../game/context";
 import AppAPI from "../../game/AppAPI";
@@ -7,22 +6,18 @@ import GameApplication, {SelectedCellEvent} from "./GameApplication";
 import GameOverlay from "./GameOverlay";
 import {Subscription} from "rxjs";
 
-type Props = {
-    room: Room<GameRoomState>
-}
-
 type State = {
     noMatch: boolean
     currentMatchID?: string
-    matchState: MatchState | null
+    matchState?: MatchState
 }
 
-export default class GameMap extends React.Component<Props, State> {
+export default class GameMap extends React.Component<{}, State> {
     static contextType = ApiContext
     context!: AppAPI
+
     state: State = {
-        noMatch: true,
-        matchState: null
+        noMatch: true
     }
 
     private readonly subs: Subscription[] = []
@@ -31,7 +26,7 @@ export default class GameMap extends React.Component<Props, State> {
     private readonly onRoomStateChangedListener: (state: GameRoomState) => void
     private match: MatchState | null = null
 
-    constructor(props: Props) {
+    constructor(props: {}) {
         super(props);
 
         this.gameMapUID = 'Map' + Math.floor(Math.random()*10000000000000000).toString(16)
@@ -44,7 +39,7 @@ export default class GameMap extends React.Component<Props, State> {
         const sessionId = this.context.room?.sessionId
         if (!sessionId)
             return 0
-        const dbID = this.context.room?.state.clients.get(sessionId).dbID
+        const dbID = this.context.requireRoom().state.clients.get(sessionId).dbID
         if (!dbID)
             return 0
         const team = this.state.matchState?.participants.get(dbID)?.team
@@ -56,7 +51,11 @@ export default class GameMap extends React.Component<Props, State> {
             {
                 this.state.matchState ?
                     <GameOverlay
-                        onSkip={() => this.playerTeam === this.state.matchState?.currentTeam || true ? this.props.room.send('skip') : undefined}
+                        onSkip={
+                            () => this.playerTeam === this.state.matchState?.currentTeam ?
+                                this.context.requireRoom().send('skip') :
+                                undefined
+                        }
                         domination={this.state.matchState.domination}
                         teamsRotation={this.state.matchState.teamsRotation}
                         currentTeam={this.state.matchState.currentTeam}
@@ -69,9 +68,9 @@ export default class GameMap extends React.Component<Props, State> {
     }
 
     componentDidMount() {
-        this.props.room.onStateChange(this.onRoomStateChangedListener)
+        this.context.requireRoom().onStateChange(this.onRoomStateChangedListener)
 
-        this.onRoomStateChanged(this.props.room.state)
+        this.onRoomStateChanged(this.context.requireRoom().state)
 
         document.getElementById(this.gameMapUID)!
             .appendChild(this.app.view)
@@ -82,7 +81,7 @@ export default class GameMap extends React.Component<Props, State> {
     }
 
     componentWillUnmount() {
-        this.props.room.onStateChange.remove(this.onRoomStateChangedListener)
+        this.context.requireRoom().onStateChange.remove(this.onRoomStateChangedListener)
         this.subs.forEach(s => s.unsubscribe())
     }
 
@@ -97,23 +96,23 @@ export default class GameMap extends React.Component<Props, State> {
 
         console.debug('onSelectCell: match.currentRoundStage = ' + match.currentRoundStage)
         if (match.currentRoundStage == 1) {
-                if (this.app.targetCells.some(c => cell == c.cell) && this.app.selectedCell) {
-                    this.props.room.send('attack', {
-                        fromX: this.app.selectedCell.x,
-                        fromY: this.app.selectedCell.y,
-                        toX: cell.x,
-                        toY: cell.y
-                    })
-                } else if (this.app.selectedCell == cell) {
-                    this.props.room.send('setSelected', null)
-                } else if (cell.team == this.playerTeam) {
-                    this.props.room.send('setSelected', MapUtils.getKey(cell.x, cell.y))
-                } else {
-                    this.props.room.send('setSelected', null)
-                }
+            if (this.app.targetCells.some(c => cell == c.cell) && this.app.selectedCell) {
+                this.context.requireRoom().send('attack', {
+                    fromX: this.app.selectedCell.x,
+                    fromY: this.app.selectedCell.y,
+                    toX: cell.x,
+                    toY: cell.y
+                })
+            } else if (this.app.selectedCell == cell) {
+                this.context.requireRoom().send('setSelected', null)
+            } else if (cell.team == this.playerTeam) {
+                this.context.requireRoom().send('setSelected', MapUtils.getKey(cell.x, cell.y))
+            } else {
+                this.context.requireRoom().send('setSelected', null)
+            }
         } else if (match.currentRoundStage == 2) {
             console.debug('powerUp', {x: cell.x, y: cell.y, max: false})
-            this.props.room.send("powerUp", {x: cell.x, y: cell.y, max: shift})
+            this.context.requireRoom().send("powerUp", {x: cell.x, y: cell.y, max: shift})
         }
     }
 
@@ -143,7 +142,7 @@ export default class GameMap extends React.Component<Props, State> {
         }
     }
 
-    private onMatchChanged(match: MatchState | null) {
+    private onMatchChanged(match?: MatchState) {
         if (this.state.matchState) {
             this.state.matchState.onChange = undefined
         }

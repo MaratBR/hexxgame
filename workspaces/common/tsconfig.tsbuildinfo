@@ -271,14 +271,14 @@
         "signature": "69356297ec185742dd1037f15f444c51cab534e77ea934b885a02b384e3f0882",
         "affectsGlobalScope": false
       },
-      "./src/colyseus.ts": {
-        "version": "fd093356c706a1eb8bf48a26d595474629a8976d609b272e92ef9f18f03ddbc9",
-        "signature": "0818e7c4f97eda7860bceae1e180b8ffee563317c74d3b8265847ec28c25f381",
-        "affectsGlobalScope": false
-      },
       "./src/dto.ts": {
         "version": "a2b0a760b81508fb84ff5f6f8d35505140fbde7e8cdef23c72fec40a12dfa9d5",
         "signature": "f6931dc9e9055b2ce080953086bbdfc0e6278df6eb06df243c7942b2082165c2",
+        "affectsGlobalScope": false
+      },
+      "./src/colyseus.ts": {
+        "version": "5a476f288a6d9a62f7df43c1880d223059800478c9091715b846d0afb9beb38a",
+        "signature": "6e324c802605502f1a176b84f8ed7dfb61bd9bf9748923914b5dcb4e94a88a75",
         "affectsGlobalScope": false
       },
       "./src/consts.ts": {
@@ -1668,7 +1668,8 @@
         "./node_modules/@types/node/stream.d.ts"
       ],
       "./src/colyseus.ts": [
-        "../../node_modules/@colyseus/schema/lib/index.d.ts"
+        "../../node_modules/@colyseus/schema/lib/index.d.ts",
+        "./src/dto.ts"
       ],
       "./src/consts.ts": [
         "./src/dto.ts"

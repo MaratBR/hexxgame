@@ -81,11 +81,8 @@ export class GameCoordinatorPage extends React.Component<Params, State> {
 
         this.subs.push(
             this.context.roomConnection.subscribe(this.onRoomConnectionStateChanged.bind(this)),
-            this.context.roomSubject.subscribe(this.onLobbyChanged.bind(this))
+            this.context.onRoomChanged(this.onLobbyChanged.bind(this))
         )
-
-        if (this.context.room)
-            this.onLobbyChanged(this.context.room)
     }
 
     componentWillUnmount() {
@@ -121,10 +118,10 @@ export class GameCoordinatorPage extends React.Component<Params, State> {
                         teams={this.state.match.teamsRotation}
                         domination={this.state.match.domination}
                         winner={this.state.match.winner} />
-                } else if (!this.state.showWinner) {
+                } else if (this.state.match.winner) {
                     return <RoomPage room={this.state.room} />
                 }
-                return <GameMap room={this.state.room} />
+                return <GameMap />
             }
 
             return <RoomPage room={this.state.room} />
@@ -144,6 +141,8 @@ export class GameCoordinatorPage extends React.Component<Params, State> {
     }
 
     private onRoomStateChanged(cs: GameRoomState) {
+        console.log(cs.match)
+
         if (cs.match?.id) {
             const inGame = !!cs.match.id
             if (this.state.inGame != inGame) {

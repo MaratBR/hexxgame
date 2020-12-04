@@ -1,7 +1,9 @@
 import {AxiosInstance, default as axios} from "axios"
-import {GameMapInfoDto, RoomInfoDto, GameRoomState} from "@hexx/common";
+import {GameMapInfoDto, RoomInfoDto, GameRoomState, MatchState} from "@hexx/common";
 import * as Colyseus from "colyseus.js"
 import {Observable, Subject} from "rxjs";
+import {Room} from "colyseus.js";
+import Scope from "./scope";
 
 interface IAPIOptions {
     address: string
@@ -14,12 +16,23 @@ export type IGameRoomConnectionState = {
 export default class AppAPI {
     private readonly client: AxiosInstance
     private readonly wsClient: Colyseus.Client
-    private _room?: Colyseus.Room<GameRoomState>
-    private _roomSubject = new Subject<Colyseus.Room<GameRoomState>>()
-    private _roomConnection = new Subject<IGameRoomConnectionState>()
+    private _currentRoom?: Room<GameRoomState>
+    private readonly _roomSubject = new Subject<Colyseus.Room<GameRoomState>>()
+    private readonly _matchState = new Subject<MatchState>()
+    private readonly _roomConnection = new Subject<IGameRoomConnectionState>()
+    private readonly _lastError = new Subject()
+    private readonly scope = new Scope()
 
     get roomSubject(): Observable<Colyseus.Room<GameRoomState>> {
         return this._roomSubject
+    }
+
+    get matchState(): Observable<MatchState> {
+        return this._matchState
+    }
+
+    get lastError(): Observable<any> {
+        return this._lastError
     }
 
     get roomConnection(): Observable<IGameRoomConnectionState> {
@@ -32,6 +45,39 @@ export default class AppAPI {
             withCredentials: true
         })
         this.wsClient = new Colyseus.Client('ws://' + opts.address)
+    }
+
+    private _onRoomChanged(oldRoom?: Room<GameRoomState>, room?: Room<GameRoomState>) {
+        if (oldRoom) {
+            this.scope.reset()
+        }
+
+        if (room) {
+            this.scope.add(
+                room.state.listen('match', (_, newState) => this._onMatchStateChanged(newState))
+            )
+            this._onMatchStateChanged()
+        }
+
+        this._matchState.next(room?.state.match)
+    }
+
+    private _onMatchStateChanged(newState?: MatchState) {
+        this._matchState.next(newState)
+    }
+
+    onMatchStateChanged(listener: (state?: MatchState) => void) {
+        listener(this._currentRoom?.state.match)
+        return this.matchState.subscribe(listener)
+    }
+
+    onRoomChanged(listener: (room?: Room<GameRoomState>) => void) {
+        listener(this._currentRoom)
+        return this.roomSubject.subscribe(listener)
+    }
+
+    onRoomStateChanged(listener: (state?: GameRoomState) => void) {
+        return this.onRoomChanged(room => listener(room?.state))
     }
 
     //#region REST
@@ -75,8 +121,9 @@ export default class AppAPI {
     //#region WS game API
 
     async joinRoom(id: string): Promise<Colyseus.Room<GameRoomState>> {
-        if(this.room) {
-            this.room.leave(true)
+        const oldRoom = this.room
+        if(oldRoom) {
+            oldRoom.leave(true)
         }
         const opts = {accessToken: await this.getGameToken(), id}
         let lobby: Colyseus.Room<GameRoomState>
@@ -84,6 +131,7 @@ export default class AppAPI {
         try {
             lobby = await this.wsClient.joinOrCreate('gameLobby', opts)
         } catch (e) {
+            this._lastError.next(e)
             this._roomConnection.next({connected: false})
             this.setRoom()
             throw e
@@ -92,13 +140,14 @@ export default class AppAPI {
         return await new Promise((resolve, reject) => {
             let completed = false
             const onInitialized = () => {
+                // if room initialized before timeout, just ignore it
                 if (!completed) {
                     completed = true;
-                    console.log('connected to room ' + lobby.id)
-                    this._room = lobby
-                    this._roomSubject.next(this._room)
+                    this._currentRoom = lobby
+                    this._roomSubject.next(this._currentRoom)
                     this._roomConnection.next({connected: true})
-                    resolve(this._room)
+                    this._onRoomChanged(oldRoom, this._currentRoom)
+                    resolve(this._currentRoom)
                 }
             }
             lobby.onMessage('initialized', onInitialized)
@@ -109,31 +158,32 @@ export default class AppAPI {
                     completed = true
                     lobby.leave(false)
                     this._roomSubject.next()
+                    this._lastError.next('room connection timed out')
                     reject('timed out')
                 }
-            }, 2000)
+            }, 30000)
 
         })
     }
 
     private setRoom(room?: Colyseus.Room<GameRoomState>) {
-        this._room = room
+        this._currentRoom = room
         this._roomSubject.next(room)
     }
 
     //#endregion
 
     get room() {
-        return this._room
+        return this._currentRoom
     }
 
     requireRoom() {
-        if (this._room)
-            return this._room
+        if (this._currentRoom)
+            return this._currentRoom
         throw new Error('No room found')
     }
 
     get lobbyID() {
-        return this._room?.state.id || null
+        return this._currentRoom?.state.id || null
     }
 }

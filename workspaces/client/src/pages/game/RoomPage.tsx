@@ -3,11 +3,8 @@ import ApiContext from "../../game/context";
 import AppAPI from "../../game/AppAPI";
 import {Room} from "colyseus.js";
 import styles from "./RoomPage.module.scss"
-import {getTeamColor, getTeamName, IGameLobbyState, GameMapInfoDto, GameRoomState} from "@hexx/common";
+import {getTeamColor, getTeamName, GameMapInfoDto, GameRoomState} from "@hexx/common";
 import Brand from "../../components/Brand";
-import GameMap from "./GameMap";
-import UIContext from "../UIContext";
-import Loading from "../../components/Loading";
 
 type Props = {
     room: Room<GameRoomState>
