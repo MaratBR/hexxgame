@@ -1,5 +1,5 @@
 import Application, {Context} from "koa";
-import koaLogger from "koa-logger"
+import {logger as koaLogger} from "koa2-winston"
 import koaCookie from "koa-cookie"
 import koaPassport from "koa-passport";
 import koaSession from "koa-session";
@@ -9,6 +9,7 @@ import {resolve} from "path";
 import config from "../config";
 import {Container} from "typedi";
 import koaCors from "koa-cors";
+import logger from "./logger";
 
 
 export interface IAppParams {
@@ -21,7 +22,7 @@ export default function createApp(cfg?: Partial<IAppParams>): Application {
     app.keys = [config.keys.main]
 
     if (cfg?.useLogger || true)
-        app.use(koaLogger())
+        app.use(koaLogger({logger: logger}))
 
     app.use(koaCors({
         credentials: true,

@@ -21,6 +21,11 @@ const DEFAULT_PROPS: RenderProps = {
     cellGap: 6
 }
 
+export type SelectedCellEvent = {
+    cell: MapCell,
+    shift: boolean
+}
+
 export default class GameApplication extends PIXI.Application {
     private _mapGfx: PIXI.Graphics = new PIXI.Graphics()
     private _container: PIXI.Container = new PIXI.Container()
@@ -31,13 +36,14 @@ export default class GameApplication extends PIXI.Application {
     private _canSelectCell: boolean = true
     private _selectedGameCell: GameCell | null = null
     private _targetCells: GameCell[] = []
-    private _selectedCellSub = new Subject<MapCell>()
+    private _selectedCellSub = new Subject<SelectedCellEvent>()
 
     constructor(props: Partial<RenderProps>) {
         super({
             antialias: true,
             resolution: window.devicePixelRatio || 1
         });
+
         (window as any).test = this;
         this.props = {
             ...DEFAULT_PROPS,
@@ -51,7 +57,11 @@ export default class GameApplication extends PIXI.Application {
         this.makeAll()
     }
 
-    get selectedCellSub(): Observable<MapCell> {
+    get targetCells() {
+        return this._targetCells
+    }
+
+    get selectedCellSub(): Observable<SelectedCellEvent> {
         return this._selectedCellSub
     }
 
@@ -130,9 +140,14 @@ export default class GameApplication extends PIXI.Application {
         gameCell.cell = cell
         gameCell.x = x;
         gameCell.y = y;
-        gameCell.on('click', () => {
+        gameCell.on('click', (e: PIXI.InteractionEvent) => {
+            if (!gameCell.cell)
+                return
             if (this.canSelectCell) {
-                this._selectedCellSub.next(gameCell.cell)
+                this._selectedCellSub.next({
+                    cell: gameCell.cell,
+                    shift: e.data.originalEvent.shiftKey
+                })
             }
         })
         this._container.addChild(gameCell)
@@ -150,7 +165,6 @@ export default class GameApplication extends PIXI.Application {
             .drag()
             .pinch()
             .wheel()
-            .decelerate()
 
         this._container.addChild(this._mapGfx)
         viewPort.addChild(this._container)

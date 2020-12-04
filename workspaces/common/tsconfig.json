@@ -20,7 +20,8 @@
     "rootDir": "src",
     "resolveJsonModule": true,
     "composite": true,
-    "incremental": true
+    "incremental": true,
+    "downlevelIteration": true
   },
   "exclude": [
     "node_modules"

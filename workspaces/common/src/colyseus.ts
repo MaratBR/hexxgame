@@ -113,6 +113,9 @@ export class MatchState extends Schema implements IMatchState {
     @type({map: MatchParticipant})
     participants: MapSchema<MatchParticipant> = new MapSchema<MatchParticipant>()
 
+    @type('number')
+    winner: number = 0
+
     static isPowerStage(s: MatchState) { return s.currentRoundStage == 2 }
     static isAttackStage(s: MatchState) { return s.currentRoundStage == 1 }
 

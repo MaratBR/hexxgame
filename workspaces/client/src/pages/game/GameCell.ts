@@ -18,7 +18,7 @@ enum VisualState {
     None
 }
 
-//#region const and utils
+//#region const and imports
 
 const POINTS = [
     new PIXI.Point(0, -1),

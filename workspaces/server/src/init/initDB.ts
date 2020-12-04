@@ -15,7 +15,7 @@ async function createGameMap(size: number, teams: number) {
     }
 
     for (let t = 1; t < teams + 1; t++) {
-        cells[t].initValue = 1
+        cells[t].initValue = 5 + t * 3
         cells[t].initTeam = t
     }
 

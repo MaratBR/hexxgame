@@ -99,7 +99,6 @@ export default class RoomPage extends React.Component<Props, RoomState> {
 
     onStateChanged(state: GameRoomState) {
         const mapChanged = this.state.room.selectedMapID !== state.selectedMapID
-        console.log(this.state.loaded)
         if (!this.state.loaded) {
             this.setState({loaded: true});
         }

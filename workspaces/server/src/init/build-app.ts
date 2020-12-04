@@ -6,6 +6,7 @@ import config from "../config";
 import {initAuth} from "../auth";
 import getColyseus from "../colyseus/server";
 import initDB from "./initDB";
+import logger from "./logger";
 
 interface BuiltApp {
     server: http.Server
@@ -50,6 +51,30 @@ export default class AppBuilder {
         mongoose.connect(config.db.uri, { useNewUrlParser: true, useUnifiedTopology: true })
             .catch(console.error)
             .then(() => initDB())
+
+        const db = mongoose.connection
+
+        db.on('connecting', function() {
+            logger.debug('connecting to MongoDB...')
+        });
+
+        db.on('error', function(error) {
+            logger.error('Error in MongoDb connection: ' + error);
+            mongoose.disconnect();
+        })
+        db.on('connected', function() {
+            logger.debug('MongoDB connected!');
+        });
+        db.once('open', function() {
+            logger.debug('MongoDB connection opened!');
+        });
+        db.on('reconnected', function () {
+            logger.info('MongoDB reconnected!');
+        });
+        db.on('disconnected', function() {
+            logger.warn('MongoDB disconnected! reconnecting...');
+            mongoose.connect(config.db.uri, {server:{auto_reconnect:true}});
+        });
 
         return {
             server,

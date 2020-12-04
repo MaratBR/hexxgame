@@ -1,6 +1,4 @@
-import {Schema, type} from "@colyseus/schema";
-import {GameMapCell, MapCell, MatchMapCell} from "@hexx/common";
-
+import {GameMapCell, MapCell} from "@hexx/common";
 
 export enum AttackOutcome {
     Tie,
@@ -34,31 +32,31 @@ export class ServerMapCell extends MapCell {
         let outcome: AttackOutcome
         let attackerDiff: number = 0
         let targetDiff: number = 0
+        const attackerTeam = this.team, targetTeam = other.team
 
         if (other.isNeutral) {
             other.value = this.value - 1
+            other.team = this.team
             this.value = 1
             outcome = AttackOutcome.Absorb
         } else {
             if (other.value > this.value) {
                 outcome = AttackOutcome.Suicide
-                attackerDiff = this.value - 1
+                attackerDiff = -(this.value - 1)
                 targetDiff = -(this.value - 1)
                 other.value -= this.value - 1
                 this.value = 1
-
             } else if (other.value < this.value) {
                 outcome = AttackOutcome.Capture
-                attackerDiff = -1
+                attackerDiff = -(other.value + 1)
                 targetDiff = -other.value
 
-                this.value = 1
-                other.team = this.team
                 other.value = this.value - other.value
+                other.team = this.team
                 this.value = 1
             } else {
-                attackerDiff = this.value - 1;
-                targetDiff = this.value - 1;
+                attackerDiff = -(this.value - 1);
+                targetDiff = -(this.value - 1);
                 outcome = AttackOutcome.Tie
                 this.value = 1
                 other.value = 1
@@ -68,8 +66,8 @@ export class ServerMapCell extends MapCell {
             attackerPointsDiff: attackerDiff,
             targetPointsDiff: targetDiff,
             outcome,
-            targetTeam: other.team,
-            attackerTeam: this.team
+            targetTeam,
+            attackerTeam
         }
     }
 

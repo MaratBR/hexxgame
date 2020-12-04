@@ -14,17 +14,38 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="4ab1c6cd-2206-4d65-81b2-41909449377e" name="Default Changelist" comment="some parts of game logic">
+      <change afterPath="$PROJECT_DIR$/start_docker_services.sh" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/workspaces/client/src/imports/colors.sass" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/workspaces/client/src/imports/effects.scss" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/workspaces/client/src/pages/game/MatchResults.module.scss" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/workspaces/client/src/pages/game/MatchResults.tsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/workspaces/server/all.log" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/workspaces/server/error.log" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/workspaces/server/src/init/logger.ts" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/workspaces/client/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/workspaces/client/package.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/workspaces/client/src/App.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/workspaces/client/src/App.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/workspaces/client/src/components/Brand.module.scss" beforeDir="false" afterPath="$PROJECT_DIR$/workspaces/client/src/components/Brand.module.scss" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/workspaces/client/src/pages/GamePage.module.scss" beforeDir="false" afterPath="$PROJECT_DIR$/workspaces/client/src/pages/GamePage.module.scss" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/workspaces/client/src/pages/game/GameApplication.ts" beforeDir="false" afterPath="$PROJECT_DIR$/workspaces/client/src/pages/game/GameApplication.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/workspaces/client/src/pages/game/GameCell.ts" beforeDir="false" afterPath="$PROJECT_DIR$/workspaces/client/src/pages/game/GameCell.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/workspaces/client/src/pages/game/GameCoordinatorPage.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/workspaces/client/src/pages/game/GameCoordinatorPage.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/workspaces/client/src/pages/game/GameMap.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/workspaces/client/src/pages/game/GameMap.tsx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/workspaces/client/src/pages/game/GameOverlay.module.scss" beforeDir="false" afterPath="$PROJECT_DIR$/workspaces/client/src/pages/game/GameOverlay.module.scss" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/workspaces/client/src/pages/game/GameOverlay.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/workspaces/client/src/pages/game/GameOverlay.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/workspaces/client/src/pages/game/GameTimer.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/workspaces/client/src/pages/game/GameTimer.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/workspaces/client/src/pages/game/GameTimer.tsx" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/workspaces/client/src/pages/game/RoomPage.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/workspaces/client/src/pages/game/RoomPage.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/workspaces/client/src/utils/colors.sass" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/workspaces/common/src/colyseus.ts" beforeDir="false" afterPath="$PROJECT_DIR$/workspaces/common/src/colyseus.ts" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/workspaces/common/src/consts.ts" beforeDir="false" afterPath="$PROJECT_DIR$/workspaces/common/src/consts.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/workspaces/common/src/dto.ts" beforeDir="false" afterPath="$PROJECT_DIR$/workspaces/common/src/dto.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/workspaces/common/tsconfig.json" beforeDir="false" afterPath="$PROJECT_DIR$/workspaces/common/tsconfig.json" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/workspaces/common/tsconfig.tsbuildinfo" beforeDir="false" afterPath="$PROJECT_DIR$/workspaces/common/tsconfig.tsbuildinfo" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/workspaces/server/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/workspaces/server/package.json" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/workspaces/server/src/colyseus/GameRoom.ts" beforeDir="false" afterPath="$PROJECT_DIR$/workspaces/server/src/colyseus/GameRoom.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/workspaces/server/src/models/Match.ts" beforeDir="false" afterPath="$PROJECT_DIR$/workspaces/server/src/models/Match.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/workspaces/server/src/colyseus/MapCell.ts" beforeDir="false" afterPath="$PROJECT_DIR$/workspaces/server/src/colyseus/MapCell.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/workspaces/server/src/config.ts" beforeDir="false" afterPath="$PROJECT_DIR$/workspaces/server/src/config.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/workspaces/server/src/init/app.ts" beforeDir="false" afterPath="$PROJECT_DIR$/workspaces/server/src/init/app.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/workspaces/server/src/init/build-app.ts" beforeDir="false" afterPath="$PROJECT_DIR$/workspaces/server/src/init/build-app.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/workspaces/server/src/init/initDB.ts" beforeDir="false" afterPath="$PROJECT_DIR$/workspaces/server/src/init/initDB.ts" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/yarn.lock" beforeDir="false" afterPath="$PROJECT_DIR$/yarn.lock" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -39,9 +60,9 @@
         <option value="package.json" />
         <option value="tsconfig.json" />
         <option value="Sass File" />
+        <option value="TypeScript JSX File" />
         <option value="TypeScript File" />
         <option value="SCSS File" />
-        <option value="TypeScript JSX File" />
       </list>
     </option>
   </component>
@@ -78,19 +99,6 @@
     <property name="vue.rearranger.settings.migration" value="true" />
   </component>
   <component name="RecentsManager">
-    <key name="MoveFile.RECENT_KEYS">
-      <recent name="$PROJECT_DIR$" />
-      <recent name="$PROJECT_DIR$/workspaces/server/src/colyseus" />
-      <recent name="$PROJECT_DIR$/workspaces/server/src" />
-      <recent name="$PROJECT_DIR$/workspaces/common/src" />
-      <recent name="$PROJECT_DIR$/server/socketio" />
-    </key>
-    <key name="es6.move.members.recent.items">
-      <recent name="$PROJECT_DIR$/workspaces/server/src/colyseus/DominationState.ts" />
-      <recent name="$PROJECT_DIR$/workspaces/server/src/colyseus/TeamInfo.ts" />
-      <recent name="$PROJECT_DIR$/workspaces/server/src/colyseus/ClientInfo.ts" />
-      <recent name="$PROJECT_DIR$/workspaces/server/src/colyseus/GameRoomState.ts" />
-    </key>
     <key name="CopyFile.RECENT_KEYS">
       <recent name="$PROJECT_DIR$/server/colyseus" />
       <recent name="$PROJECT_DIR$/server" />
@@ -98,8 +106,21 @@
       <recent name="$PROJECT_DIR$/client" />
       <recent name="$PROJECT_DIR$" />
     </key>
+    <key name="es6.move.members.recent.items">
+      <recent name="$PROJECT_DIR$/workspaces/server/src/colyseus/DominationState.ts" />
+      <recent name="$PROJECT_DIR$/workspaces/server/src/colyseus/TeamInfo.ts" />
+      <recent name="$PROJECT_DIR$/workspaces/server/src/colyseus/ClientInfo.ts" />
+      <recent name="$PROJECT_DIR$/workspaces/server/src/colyseus/GameRoomState.ts" />
+    </key>
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$" />
+      <recent name="$PROJECT_DIR$/workspaces/server/src/colyseus" />
+      <recent name="$PROJECT_DIR$/workspaces/server/src" />
+      <recent name="$PROJECT_DIR$/workspaces/common/src" />
+      <recent name="$PROJECT_DIR$/server/socketio" />
+    </key>
   </component>
-  <component name="RunManager" selected="npm.server/dev">
+  <component name="RunManager" selected="npm.client/start">
     <configuration name="Client tests" type="JavaScriptTestRunnerJest">
       <node-interpreter value="project" />
       <node-options value="" />
@@ -109,7 +130,7 @@
       <scope-kind value="ALL" />
       <method v="2" />
     </configuration>
-    <configuration name="client/start" type="js.build_tools.npm" singleton="false" temporary="true">
+    <configuration name="client/start" type="js.build_tools.npm" singleton="true" temporary="true">
       <package-json value="$PROJECT_DIR$/workspaces/client/package.json" />
       <command value="run" />
       <scripts>
@@ -119,7 +140,7 @@
       <envs />
       <method v="2" />
     </configuration>
-    <configuration name="common/watch" type="js.build_tools.npm" singleton="false">
+    <configuration name="common/watch" type="js.build_tools.npm" singleton="true">
       <package-json value="$PROJECT_DIR$/workspaces/common/package.json" />
       <command value="run" />
       <scripts>
@@ -129,7 +150,7 @@
       <envs />
       <method v="2" />
     </configuration>
-    <configuration name="server/dev" type="js.build_tools.npm" singleton="false" temporary="true">
+    <configuration name="server/dev" type="js.build_tools.npm" singleton="true" temporary="true">
       <package-json value="$PROJECT_DIR$/workspaces/server/package.json" />
       <command value="run" />
       <scripts>
@@ -147,8 +168,8 @@
     </list>
     <recent_temporary>
       <list>
-        <item itemvalue="npm.server/dev" />
         <item itemvalue="npm.client/start" />
+        <item itemvalue="npm.server/dev" />
       </list>
     </recent_temporary>
   </component>
@@ -194,7 +215,19 @@
       <workItem from="1606295426258" duration="20922000" />
       <workItem from="1606456969483" duration="20691000" />
       <workItem from="1606555702786" duration="28413000" />
-      <workItem from="1606574488400" duration="1915000" />
+      <workItem from="1606574488400" duration="2448000" />
+      <workItem from="1606630343942" duration="4177000" />
+      <workItem from="1606657707191" duration="4237000" />
+      <workItem from="1606748599479" duration="7000" />
+      <workItem from="1606752922581" duration="6607000" />
+      <workItem from="1606812253157" duration="8274000" />
+      <workItem from="1606829609339" duration="7831000" />
+      <workItem from="1606878935145" duration="10790000" />
+      <workItem from="1606892731015" duration="28492000" />
+      <workItem from="1607016053828" duration="2671000" />
+      <workItem from="1607045837599" duration="3981000" />
+      <workItem from="1607050517428" duration="1577000" />
+      <workItem from="1607062944030" duration="8305000" />
     </task>
     <task id="LOCAL-00001" summary="finishing basics">
       <created>1605153963739</created>
@@ -280,7 +313,14 @@
       <option name="project" value="LOCAL" />
       <updated>1606569242030</updated>
     </task>
-    <option name="localTasksCounter" value="13" />
+    <task id="LOCAL-00013" summary="Coords fix">
+      <created>1606577781857</created>
+      <option name="number" value="00013" />
+      <option name="presentableId" value="LOCAL-00013" />
+      <option name="project" value="LOCAL" />
+      <updated>1606577781857</updated>
+    </task>
+    <option name="localTasksCounter" value="14" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -312,14 +352,15 @@
     <MESSAGE value="some parts of game logic" />
     <MESSAGE value="ui changes, returnID impl (not tested)" />
     <MESSAGE value="UI improvements, match participants state on server-side" />
-    <option name="LAST_COMMIT_MESSAGE" value="UI improvements, match participants state on server-side" />
+    <MESSAGE value="Coords fix" />
+    <option name="LAST_COMMIT_MESSAGE" value="Coords fix" />
   </component>
   <component name="WindowStateProjectService">
-    <state x="420" y="189" width="1084" height="760" key="#com.intellij.execution.impl.EditConfigurationsDialog" timestamp="1606020064498">
+    <state x="420" y="189" width="1084" height="760" key="#com.intellij.execution.impl.EditConfigurationsDialog" timestamp="1606880900202">
       <screen x="0" y="32" width="1920" height="960" />
     </state>
     <state x="420" y="203" width="1079" height="862" key="#com.intellij.execution.impl.EditConfigurationsDialog/0.32.1920.1048@0.32.1920.1048" timestamp="1604983551375" />
-    <state x="420" y="189" width="1084" height="760" key="#com.intellij.execution.impl.EditConfigurationsDialog/0.32.1920.960@0.32.1920.960" timestamp="1606020064498" />
+    <state x="420" y="189" width="1084" height="760" key="#com.intellij.execution.impl.EditConfigurationsDialog/0.32.1920.960@0.32.1920.960" timestamp="1606880900202" />
     <state x="726" y="190" width="374" height="561" key="#com.intellij.ide.util.MemberChooser" timestamp="1605866968187">
       <screen x="0" y="32" width="1920" height="960" />
     </state>
@@ -330,10 +371,10 @@
     </state>
     <state x="632" y="241" key="#com.intellij.refactoring.safeDelete.UnsafeUsagesDialog/0.32.1920.1048@0.32.1920.1048" timestamp="1604823662315" />
     <state x="632" y="223" key="#com.intellij.refactoring.safeDelete.UnsafeUsagesDialog/0.32.1920.960@0.32.1920.960" timestamp="1605411172854" />
-    <state width="1309" height="547" key="DebuggerActiveHint" timestamp="1606557207903">
+    <state width="1309" height="547" key="DebuggerActiveHint" timestamp="1607049458356">
       <screen x="0" y="32" width="1920" height="960" />
     </state>
-    <state width="1309" height="547" key="DebuggerActiveHint/0.32.1920.960@0.32.1920.960" timestamp="1606557207903" />
+    <state width="1309" height="547" key="DebuggerActiveHint/0.32.1920.960@0.32.1920.960" timestamp="1607049458356" />
     <state x="-18" y="389" width="1720" height="760" key="DiffContextDialog" timestamp="1605589132641">
       <screen x="0" y="32" width="1920" height="960" />
     </state>
@@ -347,95 +388,95 @@
     </state>
     <state x="563" y="311" width="439" height="285" key="Github.ShareDialog/0.32.1920.960@0.32.1920.960" timestamp="1606569268141" />
     <state x="582" y="332" key="Github.ShareDialog/0.38.1920.1042@0.38.1920.1042" timestamp="1606284237437" />
-    <state width="1896" height="186" key="GridCell.Tab.0.bottom" timestamp="1606575336630">
+    <state width="1896" height="230" key="GridCell.Tab.0.bottom" timestamp="1607074192658">
       <screen x="0" y="32" width="1920" height="960" />
     </state>
     <state width="993" height="355" key="GridCell.Tab.0.bottom/0.32.1920.1048@0.32.1920.1048" timestamp="1606380925272" />
-    <state width="1896" height="186" key="GridCell.Tab.0.bottom/0.32.1920.960@0.32.1920.960" timestamp="1606575336630" />
-    <state width="1896" height="186" key="GridCell.Tab.0.center" timestamp="1606575336630">
+    <state width="1896" height="230" key="GridCell.Tab.0.bottom/0.32.1920.960@0.32.1920.960" timestamp="1607074192658" />
+    <state width="1896" height="230" key="GridCell.Tab.0.center" timestamp="1607074192658">
       <screen x="0" y="32" width="1920" height="960" />
     </state>
     <state width="993" height="355" key="GridCell.Tab.0.center/0.32.1920.1048@0.32.1920.1048" timestamp="1606380925268" />
-    <state width="1896" height="186" key="GridCell.Tab.0.center/0.32.1920.960@0.32.1920.960" timestamp="1606575336630" />
-    <state width="1896" height="186" key="GridCell.Tab.0.left" timestamp="1606575336630">
+    <state width="1896" height="230" key="GridCell.Tab.0.center/0.32.1920.960@0.32.1920.960" timestamp="1607074192658" />
+    <state width="1896" height="230" key="GridCell.Tab.0.left" timestamp="1607074192658">
       <screen x="0" y="32" width="1920" height="960" />
     </state>
     <state width="993" height="355" key="GridCell.Tab.0.left/0.32.1920.1048@0.32.1920.1048" timestamp="1606380925268" />
-    <state width="1896" height="186" key="GridCell.Tab.0.left/0.32.1920.960@0.32.1920.960" timestamp="1606575336630" />
-    <state width="1896" height="186" key="GridCell.Tab.0.right" timestamp="1606575336630">
+    <state width="1896" height="230" key="GridCell.Tab.0.left/0.32.1920.960@0.32.1920.960" timestamp="1607074192658" />
+    <state width="1896" height="230" key="GridCell.Tab.0.right" timestamp="1607074192658">
       <screen x="0" y="32" width="1920" height="960" />
     </state>
     <state width="993" height="355" key="GridCell.Tab.0.right/0.32.1920.1048@0.32.1920.1048" timestamp="1606380925269" />
-    <state width="1896" height="186" key="GridCell.Tab.0.right/0.32.1920.960@0.32.1920.960" timestamp="1606575336630" />
-    <state width="1896" height="204" key="GridCell.Tab.1.bottom" timestamp="1606574126943">
+    <state width="1896" height="230" key="GridCell.Tab.0.right/0.32.1920.960@0.32.1920.960" timestamp="1607074192658" />
+    <state width="1896" height="267" key="GridCell.Tab.1.bottom" timestamp="1607049819818">
       <screen x="0" y="32" width="1920" height="960" />
     </state>
     <state width="1897" height="339" key="GridCell.Tab.1.bottom/0.32.1920.1048@0.32.1920.1048" timestamp="1605095347198" />
-    <state width="1896" height="204" key="GridCell.Tab.1.bottom/0.32.1920.960@0.32.1920.960" timestamp="1606574126943" />
-    <state width="1896" height="204" key="GridCell.Tab.1.center" timestamp="1606574126943">
+    <state width="1896" height="267" key="GridCell.Tab.1.bottom/0.32.1920.960@0.32.1920.960" timestamp="1607049819818" />
+    <state width="1896" height="267" key="GridCell.Tab.1.center" timestamp="1607049819817">
       <screen x="0" y="32" width="1920" height="960" />
     </state>
     <state width="1897" height="339" key="GridCell.Tab.1.center/0.32.1920.1048@0.32.1920.1048" timestamp="1605095347198" />
-    <state width="1896" height="204" key="GridCell.Tab.1.center/0.32.1920.960@0.32.1920.960" timestamp="1606574126943" />
-    <state width="1896" height="204" key="GridCell.Tab.1.left" timestamp="1606574126942">
+    <state width="1896" height="267" key="GridCell.Tab.1.center/0.32.1920.960@0.32.1920.960" timestamp="1607049819817" />
+    <state width="1896" height="267" key="GridCell.Tab.1.left" timestamp="1607049819817">
       <screen x="0" y="32" width="1920" height="960" />
     </state>
     <state width="1897" height="339" key="GridCell.Tab.1.left/0.32.1920.1048@0.32.1920.1048" timestamp="1605095347198" />
-    <state width="1896" height="204" key="GridCell.Tab.1.left/0.32.1920.960@0.32.1920.960" timestamp="1606574126942" />
-    <state width="1896" height="204" key="GridCell.Tab.1.right" timestamp="1606574126943">
+    <state width="1896" height="267" key="GridCell.Tab.1.left/0.32.1920.960@0.32.1920.960" timestamp="1607049819817" />
+    <state width="1896" height="267" key="GridCell.Tab.1.right" timestamp="1607049819818">
       <screen x="0" y="32" width="1920" height="960" />
     </state>
     <state width="1897" height="339" key="GridCell.Tab.1.right/0.32.1920.1048@0.32.1920.1048" timestamp="1605095347198" />
-    <state width="1896" height="204" key="GridCell.Tab.1.right/0.32.1920.960@0.32.1920.960" timestamp="1606574126943" />
-    <state width="1896" height="204" key="GridCell.Tab.2.bottom" timestamp="1606574126945">
+    <state width="1896" height="267" key="GridCell.Tab.1.right/0.32.1920.960@0.32.1920.960" timestamp="1607049819818" />
+    <state width="1896" height="267" key="GridCell.Tab.2.bottom" timestamp="1607049819823">
       <screen x="0" y="32" width="1920" height="960" />
     </state>
     <state width="1897" height="339" key="GridCell.Tab.2.bottom/0.32.1920.1048@0.32.1920.1048" timestamp="1605095347199" />
-    <state width="1896" height="204" key="GridCell.Tab.2.bottom/0.32.1920.960@0.32.1920.960" timestamp="1606574126945" />
-    <state width="1896" height="204" key="GridCell.Tab.2.center" timestamp="1606574126944">
+    <state width="1896" height="267" key="GridCell.Tab.2.bottom/0.32.1920.960@0.32.1920.960" timestamp="1607049819822" />
+    <state width="1896" height="267" key="GridCell.Tab.2.center" timestamp="1607049819821">
       <screen x="0" y="32" width="1920" height="960" />
     </state>
     <state width="1897" height="339" key="GridCell.Tab.2.center/0.32.1920.1048@0.32.1920.1048" timestamp="1605095347199" />
-    <state width="1896" height="204" key="GridCell.Tab.2.center/0.32.1920.960@0.32.1920.960" timestamp="1606574126944" />
-    <state width="1896" height="204" key="GridCell.Tab.2.left" timestamp="1606574126944">
+    <state width="1896" height="267" key="GridCell.Tab.2.center/0.32.1920.960@0.32.1920.960" timestamp="1607049819821" />
+    <state width="1896" height="267" key="GridCell.Tab.2.left" timestamp="1607049819819">
       <screen x="0" y="32" width="1920" height="960" />
     </state>
     <state width="1897" height="339" key="GridCell.Tab.2.left/0.32.1920.1048@0.32.1920.1048" timestamp="1605095347199" />
-    <state width="1896" height="204" key="GridCell.Tab.2.left/0.32.1920.960@0.32.1920.960" timestamp="1606574126944" />
-    <state width="1896" height="204" key="GridCell.Tab.2.right" timestamp="1606574126945">
+    <state width="1896" height="267" key="GridCell.Tab.2.left/0.32.1920.960@0.32.1920.960" timestamp="1607049819819" />
+    <state width="1896" height="267" key="GridCell.Tab.2.right" timestamp="1607049819821">
       <screen x="0" y="32" width="1920" height="960" />
     </state>
     <state width="1897" height="339" key="GridCell.Tab.2.right/0.32.1920.1048@0.32.1920.1048" timestamp="1605095347199" />
-    <state width="1896" height="204" key="GridCell.Tab.2.right/0.32.1920.960@0.32.1920.960" timestamp="1606574126945" />
-    <state width="1896" height="204" key="GridCell.Tab.3.bottom" timestamp="1606574126946">
+    <state width="1896" height="267" key="GridCell.Tab.2.right/0.32.1920.960@0.32.1920.960" timestamp="1607049819821" />
+    <state width="1896" height="267" key="GridCell.Tab.3.bottom" timestamp="1607049819826">
       <screen x="0" y="32" width="1920" height="960" />
     </state>
     <state width="1897" height="339" key="GridCell.Tab.3.bottom/0.32.1920.1048@0.32.1920.1048" timestamp="1605095347200" />
-    <state width="1896" height="204" key="GridCell.Tab.3.bottom/0.32.1920.960@0.32.1920.960" timestamp="1606574126946" />
-    <state width="1896" height="204" key="GridCell.Tab.3.center" timestamp="1606574126945">
+    <state width="1896" height="267" key="GridCell.Tab.3.bottom/0.32.1920.960@0.32.1920.960" timestamp="1607049819826" />
+    <state width="1896" height="267" key="GridCell.Tab.3.center" timestamp="1607049819824">
       <screen x="0" y="32" width="1920" height="960" />
     </state>
     <state width="1897" height="339" key="GridCell.Tab.3.center/0.32.1920.1048@0.32.1920.1048" timestamp="1605095347200" />
-    <state width="1896" height="204" key="GridCell.Tab.3.center/0.32.1920.960@0.32.1920.960" timestamp="1606574126945" />
-    <state width="1896" height="204" key="GridCell.Tab.3.left" timestamp="1606574126945">
+    <state width="1896" height="267" key="GridCell.Tab.3.center/0.32.1920.960@0.32.1920.960" timestamp="1607049819824" />
+    <state width="1896" height="267" key="GridCell.Tab.3.left" timestamp="1607049819823">
       <screen x="0" y="32" width="1920" height="960" />
     </state>
     <state width="1897" height="339" key="GridCell.Tab.3.left/0.32.1920.1048@0.32.1920.1048" timestamp="1605095347199" />
-    <state width="1896" height="204" key="GridCell.Tab.3.left/0.32.1920.960@0.32.1920.960" timestamp="1606574126945" />
-    <state width="1896" height="204" key="GridCell.Tab.3.right" timestamp="1606574126946">
+    <state width="1896" height="267" key="GridCell.Tab.3.left/0.32.1920.960@0.32.1920.960" timestamp="1607049819823" />
+    <state width="1896" height="267" key="GridCell.Tab.3.right" timestamp="1607049819825">
       <screen x="0" y="32" width="1920" height="960" />
     </state>
     <state width="1897" height="339" key="GridCell.Tab.3.right/0.32.1920.1048@0.32.1920.1048" timestamp="1605095347200" />
-    <state width="1896" height="204" key="GridCell.Tab.3.right/0.32.1920.960@0.32.1920.960" timestamp="1606574126946" />
+    <state width="1896" height="267" key="GridCell.Tab.3.right/0.32.1920.960@0.32.1920.960" timestamp="1607049819825" />
     <state x="718" y="140" key="SettingsEditor" timestamp="1606494087632">
       <screen x="0" y="32" width="1920" height="960" />
     </state>
     <state x="456" y="191" key="SettingsEditor/0.32.1920.1048@0.32.1920.1048" timestamp="1605336174746" />
     <state x="718" y="140" key="SettingsEditor/0.32.1920.960@0.32.1920.960" timestamp="1606494087632" />
-    <state x="556" y="255" key="Vcs.Push.Dialog.v2" timestamp="1606569250401">
+    <state x="556" y="255" key="Vcs.Push.Dialog.v2" timestamp="1606577785809">
       <screen x="0" y="32" width="1920" height="960" />
     </state>
-    <state x="556" y="255" key="Vcs.Push.Dialog.v2/0.32.1920.960@0.32.1920.960" timestamp="1606569250401" />
+    <state x="556" y="255" key="Vcs.Push.Dialog.v2/0.32.1920.960@0.32.1920.960" timestamp="1606577785809" />
     <state x="556" y="280" key="Vcs.Push.Dialog.v2/0.38.1920.1042@0.38.1920.1042" timestamp="1606284085657" />
     <state x="571" y="123" key="com.intellij.openapi.editor.actions.MultiplePasteAction$ClipboardContentChooser" timestamp="1606037467142">
       <screen x="0" y="32" width="1920" height="960" />
@@ -449,22 +490,22 @@
       <screen x="0" y="32" width="1920" height="1048" />
     </state>
     <state x="100" y="132" width="1720" height="848" key="dock-window-2/0.32.1920.1048@0.32.1920.1048" timestamp="1604748662033" />
-    <state x="830" y="212" width="739" height="633" key="find.popup" timestamp="1606575489927">
+    <state x="830" y="212" width="739" height="633" key="find.popup" timestamp="1607068974666">
       <screen x="0" y="32" width="1920" height="960" />
     </state>
     <state x="590" y="211" width="739" height="690" key="find.popup/0.32.1920.1048@0.32.1920.1048" timestamp="1606293825578" />
-    <state x="830" y="212" width="739" height="633" key="find.popup/0.32.1920.960@0.32.1920.960" timestamp="1606575489927" />
+    <state x="830" y="212" width="739" height="633" key="find.popup/0.32.1920.960@0.32.1920.960" timestamp="1607068974666" />
     <state x="830" y="233" width="739" height="688" key="find.popup/0.38.1920.1042@0.38.1920.1042" timestamp="1606280317743" />
-    <state x="540" y="231" key="run.anything.popup" timestamp="1606571526548">
+    <state x="540" y="231" key="run.anything.popup" timestamp="1606909767302">
       <screen x="0" y="32" width="1920" height="960" />
     </state>
     <state x="540" y="249" key="run.anything.popup/0.32.1920.1048@0.32.1920.1048" timestamp="1604930743654" />
-    <state x="540" y="231" key="run.anything.popup/0.32.1920.960@0.32.1920.960" timestamp="1606571526548" />
-    <state x="539" y="42" width="840" height="948" key="search.everywhere.popup" timestamp="1606494128346">
+    <state x="540" y="231" key="run.anything.popup/0.32.1920.960@0.32.1920.960" timestamp="1606909767302" />
+    <state x="539" y="42" width="840" height="948" key="search.everywhere.popup" timestamp="1606658651685">
       <screen x="0" y="32" width="1920" height="960" />
     </state>
     <state x="539" y="44" width="840" height="1034" key="search.everywhere.popup/0.32.1920.1048@0.32.1920.1048" timestamp="1605349161973" />
-    <state x="539" y="42" width="840" height="948" key="search.everywhere.popup/0.32.1920.960@0.32.1920.960" timestamp="1606494128346" />
+    <state x="539" y="42" width="840" height="948" key="search.everywhere.popup/0.32.1920.960@0.32.1920.960" timestamp="1606658651685" />
     <state x="690" y="388" key="vcs.readOnlyHandler.ReadOnlyStatusDialog" timestamp="1605538109102">
       <screen x="0" y="32" width="1920" height="960" />
     </state>
@@ -477,6 +518,11 @@
           <url>file://$PROJECT_DIR$/workspaces/server/src/services/MapsService.ts</url>
           <line>29</line>
           <option name="timeStamp" value="53" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="javascript">
+          <url>file://$PROJECT_DIR$/workspaces/server/src/colyseus/GameRoom.ts</url>
+          <line>407</line>
+          <option name="timeStamp" value="55" />
         </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>

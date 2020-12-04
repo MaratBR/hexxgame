@@ -4,6 +4,7 @@ import {BrowserRouter, Route} from "react-router-dom";
 import WelcomePage from "./pages/WelcomePage";
 import GamePage from "./pages/GamePage";
 import Overlay from "./Overlay";
+import * as PIXI from "pixi.js"
 
 function App() {
 
@@ -18,5 +19,9 @@ function App() {
         </div>
     );
 }
+
+;(function() {
+    PIXI.settings.FAIL_IF_MAJOR_PERFORMANCE_CAVEAT = false
+})()
 
 export default App;

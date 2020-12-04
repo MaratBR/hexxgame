@@ -46,7 +46,7 @@ const EVEN_Y_INDEX_OFFSETS: Offsets = [
     [1, 0], // right
     [1, 1], // bottom right
     [0, 1], // bottom left
-    [-1, 0], // bottom left
+    [-1, 0], // left
 ]
 
 const ODD_Y_INDEX_OFFSETS: Offsets = [
@@ -77,6 +77,5 @@ export const MapUtils = {
     getOffset(y: number, direction: MoveDirection): [number, number] {
         return (y % 2 == 0 ? EVEN_Y_INDEX_OFFSETS : ODD_Y_INDEX_OFFSETS)[direction]
     },
-
-    getKey(x: number, y: number): string { return y + ':' + x }
+    getKey(x: number, y: number): string { return y + ':' + x },
 }

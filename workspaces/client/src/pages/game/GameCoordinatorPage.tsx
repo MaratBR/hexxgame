@@ -3,7 +3,7 @@ import ApiContext from "../../game/context";
 import AppAPI, {IGameRoomConnectionState} from "../../game/AppAPI";
 import {Subscription} from "rxjs";
 import {Room} from "colyseus.js";
-import {GameRoomState} from "@hexx/common";
+import {GameRoomState, MatchState} from "@hexx/common";
 import Loading from "../../components/Loading";
 import Brand from "../../components/Brand";
 import {Redirect} from "react-router"
@@ -11,6 +11,7 @@ import Modal from "../../components/Modal";
 import GameMap from "./GameMap";
 import RoomPage from "./RoomPage";
 import UIContext from "../UIContext";
+import MatchResults from "./MatchResults";
 
 enum RootStatus {
 
@@ -34,8 +35,10 @@ type State = {
     loggedIn: boolean
     reconnecting: boolean
     inGame: boolean
+    showWinner: boolean
     err?: any
     room?: Room<GameRoomState>
+    match?: MatchState
 }
 
 type Params = {
@@ -55,7 +58,8 @@ export class GameCoordinatorPage extends React.Component<Params, State> {
         loggedIn: true,
         loading: true,
         reconnecting: false,
-        inGame: false
+        inGame: false,
+        showWinner: false
     }
 
     constructor(props: Params) {
@@ -110,7 +114,20 @@ export class GameCoordinatorPage extends React.Component<Params, State> {
         }
 
         if (this.state.room) {
-            return this.state.inGame ? <GameMap room={this.state.room} /> : <RoomPage room={this.state.room} />
+            if (this.state.match) {
+                console.log('a', this.state.match.winner && this.state.showWinner)
+                if (this.state.match.winner && this.state.showWinner) {
+                    return <MatchResults
+                        teams={this.state.match.teamsRotation}
+                        domination={this.state.match.domination}
+                        winner={this.state.match.winner} />
+                } else if (!this.state.showWinner) {
+                    return <RoomPage room={this.state.room} />
+                }
+                return <GameMap room={this.state.room} />
+            }
+
+            return <RoomPage room={this.state.room} />
         }
     }
 
@@ -127,11 +144,29 @@ export class GameCoordinatorPage extends React.Component<Params, State> {
     }
 
     private onRoomStateChanged(cs: GameRoomState) {
-        const inGame = !!cs.match?.id
-        this.setState({
-            inGame
-        })
-        UIContext.fullscreen.next(inGame)
+        if (cs.match?.id) {
+            const inGame = !!cs.match.id
+            if (this.state.inGame != inGame) {
+                UIContext.fullscreen.next(inGame)
+                this.setState({
+                    inGame
+                })
+            }
+            const sessionID = this.context.requireRoom().sessionId
+            const dbID = cs.clients.get(sessionID).dbID
+            const showWinner = !!cs.match.winner && Array.from(cs.match.participants.keys()).includes(dbID)
+            if (this.state.showWinner !== showWinner)
+                this.setState({showWinner})
+
+            if (!this.state.match || cs.match.id !== this.state.match.id)
+                this.setState({match: cs.match})
+        } else {
+            this.setState({
+                match: undefined,
+                showWinner: false,
+                inGame: false
+            })
+        }
     }
 
     private onLobbyChanged(lobby?: Room<GameRoomState>) {

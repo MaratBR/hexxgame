@@ -3,7 +3,7 @@ import {GameRoomState, MapCell, MapUtils, MatchState} from "@hexx/common";
 import React from "react";
 import ApiContext from "../../game/context";
 import AppAPI from "../../game/AppAPI";
-import GameApplication from "./GameApplication";
+import GameApplication, {SelectedCellEvent} from "./GameApplication";
 import GameOverlay from "./GameOverlay";
 import {Subscription} from "rxjs";
 
@@ -56,8 +56,11 @@ export default class GameMap extends React.Component<Props, State> {
             {
                 this.state.matchState ?
                     <GameOverlay
+                        onSkip={() => this.playerTeam === this.state.matchState?.currentTeam || true ? this.props.room.send('skip') : undefined}
+                        domination={this.state.matchState.domination}
                         teamsRotation={this.state.matchState.teamsRotation}
                         currentTeam={this.state.matchState.currentTeam}
+                        currentRound={this.state.matchState.currentRound}
                         currentStage={this.state.matchState.currentRoundStage}
                         endsAt={this.state.matchState.roundStageEndsAt}/> :
                     undefined
@@ -83,9 +86,34 @@ export default class GameMap extends React.Component<Props, State> {
         this.subs.forEach(s => s.unsubscribe())
     }
 
-    onSelectCell(cell: MapCell) {
-        if (this.state.matchState && MatchState.isAttackStageFor(this.state.matchState, this.playerTeam)) {
-            this.props.room.send('setSelected', MapUtils.getKey(cell.x, cell.y))
+    onSelectCell({cell, shift}: SelectedCellEvent) {
+        const match = this.state.matchState
+        if (!match)
+            throw new Error('no match found, cannot select a cell')
+        console.debug('onSelectCell: match.currentTeam = ' + match.currentTeam)
+        console.debug('onSelectCell: this.playerTeam = ' + this.playerTeam)
+        if (match.currentTeam !== this.playerTeam)
+            return;
+
+        console.debug('onSelectCell: match.currentRoundStage = ' + match.currentRoundStage)
+        if (match.currentRoundStage == 1) {
+                if (this.app.targetCells.some(c => cell == c.cell) && this.app.selectedCell) {
+                    this.props.room.send('attack', {
+                        fromX: this.app.selectedCell.x,
+                        fromY: this.app.selectedCell.y,
+                        toX: cell.x,
+                        toY: cell.y
+                    })
+                } else if (this.app.selectedCell == cell) {
+                    this.props.room.send('setSelected', null)
+                } else if (cell.team == this.playerTeam) {
+                    this.props.room.send('setSelected', MapUtils.getKey(cell.x, cell.y))
+                } else {
+                    this.props.room.send('setSelected', null)
+                }
+        } else if (match.currentRoundStage == 2) {
+            console.debug('powerUp', {x: cell.x, y: cell.y, max: false})
+            this.props.room.send("powerUp", {x: cell.x, y: cell.y, max: shift})
         }
     }
 
@@ -99,9 +127,6 @@ export default class GameMap extends React.Component<Props, State> {
 
         if (match) {
             this.app.canSelectCell = match.currentTeam == this.playerTeam
-            console.log('this.playerTeam = ' + this.playerTeam)
-            console.log('canSelectTeam = ' + (match.currentTeam == this.playerTeam))
-
             if (match.selectedCellKey) {
                 const key = match.selectedCellKey
                 this.app.selectedCell = this.app.cells.get(key)

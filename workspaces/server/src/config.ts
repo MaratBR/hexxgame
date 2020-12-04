@@ -33,6 +33,10 @@ const config = {
 
     cors: {
         origin: 'http://localhost:3000'
+    },
+    logging: {
+        error: 'error.log',
+        all: 'all.log'
     }
 }
 

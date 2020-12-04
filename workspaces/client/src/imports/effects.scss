@@ -1,0 +1,10 @@
+@import "colors";
+
+@mixin glass {
+  background: scale-color($bg, $lightness: 30%);
+
+  @supports (backdrop-filter: blur(10px)) {
+    background: rgba(scale-color($bg, $lightness: 30%), 0.8);
+    backdrop-filter: blur(10px);
+  }
+}
