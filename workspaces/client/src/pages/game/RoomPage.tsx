@@ -1,14 +1,19 @@
 import React from "react";
 import ApiContext from "../../game/context";
 import AppAPI from "../../game/AppAPI";
-import {Room} from "colyseus.js";
 import styles from "./RoomPage.module.scss"
-import {getTeamColor, getTeamName, GameMapInfoDto, GameRoomState} from "@hexx/common";
+import {
+    getTeamColor,
+    getTeamName,
+    GameMapInfoDto,
+    GameRoomState,
+    TeamInfo,
+    MatchParticipant,
+    MatchState
+} from "@hexx/common";
 import Brand from "../../components/Brand";
-
-type Props = {
-    room: Room<GameRoomState>
-} | any
+import { match } from "react-router-dom"
+import Scope from "../../game/scope";
 
 
 type RoomState = {
@@ -19,44 +24,45 @@ type RoomState = {
     expandedMap?: string,
     selectedMap?: GameMapInfoDto
     loaded?: boolean
-    room: GameRoomState
+    teams: TeamInfo[]
+    spectators: string[]
+    match?: MatchState
+}
+
+type Props = {
+    match: match<{id: string}>
 }
 
 export default class RoomPage extends React.Component<Props, RoomState> {
     static contextType = ApiContext;
     context!: AppAPI
-    private lobby?: Room<GameRoomState>
-
-    constructor(props: any) {
-        super(props);
-        this.state = {
-            room: new GameRoomState()
-        }
-        this.onChangedHandler = this.onStateChanged.bind(this)
+    state: RoomState = {
+        teams: [],
+        spectators: []
     }
 
-    readonly onChangedHandler: (state: GameRoomState) => void
+    private readonly scope = new Scope()
+    private readonly roomScope = this.scope.getChild()
+
+    constructor(props: Props) {
+        super(props);
+    }
 
     get currentClient() {
-        const sid = this.lobby?.sessionId
-        return sid && this.state.room.clients ? this.state.room.clients.get(sid) : undefined
+        const sid = this.context.requireRoom().sessionId
+        return sid && this.context.requireRoom().state.clients ? this.context.requireRoom().state.clients.get(sid) : undefined
     }
 
     async componentDidMount() {
-        this.lobby = this.context.room
-        if (this.lobby) {
-            this.lobby.onStateChange(this.onChangedHandler)
-            this.setState({room: this.lobby.state})
-        } else {
+        this.scope.addSubscription(
+            this.context.onRoomStateChanged(this.onStateChanged.bind(this))
+        )
+
+        if (!this.context.room) {
             try {
                 await this.context.joinRoom(this.props.match.params.id)
-                this.lobby = this.context.room
-                if (this.lobby!.state.id) {
-                    this.onStateChanged(this.lobby!.state)
-                }
-                this.lobby!.onStateChange(this.onChangedHandler!)
             } catch (e) {
-                console.log(e)
+                console.error(e)
             }
         }
 
@@ -64,9 +70,7 @@ export default class RoomPage extends React.Component<Props, RoomState> {
     }
 
     componentWillUnmount() {
-        if (this.lobby) {
-            this.lobby.onStateChange.remove(this.onChangedHandler!)
-        }
+        this.scope.reset()
     }
 
     private async updateMaps() {
@@ -94,12 +98,46 @@ export default class RoomPage extends React.Component<Props, RoomState> {
         }
     }
 
-    onStateChanged(state: GameRoomState) {
-        const mapChanged = this.state.room.selectedMapID !== state.selectedMapID
+    private onStateChanged(state?: GameRoomState) {
+        this.roomScope.reset()
+        if (!state) {
+            // TODO
+            return
+        }
+
+
+        const updateTeams = () => {
+            const teams = [...state.teams]
+            this.setState({teams})
+        }
+
+        state.teams.onRemove = state.teams.onAdd = updateTeams
+
+        const updateSpectators = () => {
+            const spectators = [...state.spectators]
+            this.setState({spectators})
+        }
+
+        state.spectators.onAdd = state.spectators.onRemove = updateSpectators
+
+        updateSpectators()
+        updateTeams()
+
+        this.scope.add(
+            () => {
+                state.teams.onAdd = undefined
+                state.teams.onRemove = undefined
+                state.spectators.onAdd = undefined
+                state.spectators.onRemove = undefined
+            },
+            state.listen('match', match => this.setState({match}))
+        )
+        this.setState({match: state.match})
+
+        const mapChanged = this.context.requireRoom().state.selectedMapID !== state.selectedMapID
         if (!this.state.loaded) {
             this.setState({loaded: true});
         }
-        this.setState({room: state})
 
         if (mapChanged) {
             this.onMapChanged()
@@ -110,7 +148,7 @@ export default class RoomPage extends React.Component<Props, RoomState> {
         return <div className={styles.root}>
             <div className={styles.toolBar}>
                 <button
-                    onClick={() => this.lobby!.send('toggleReady')}
+                    onClick={() => this.context.requireRoom().send('toggleReady')}
                     className={this.currentClient?.ready ? styles.ready : styles.notReady}>
                     {this.currentClient?.ready ? 'Ready' : 'Not ready'}
                 </button>
@@ -119,18 +157,20 @@ export default class RoomPage extends React.Component<Props, RoomState> {
                     {this.state.selectedMap?.name}
                 </div>
             </div>
-            <div className={styles.play} onClick={() => this.lobby!.send('start')}>
+            <div className={styles.play} onClick={() => this.context.requireRoom().send('start')}>
                 <button>
                     <Brand text="Play" style={{fontSize: '1.5em'}} />
                 </button>
             </div>
 
             <div className={styles.playersList}>
-                {this.state.room.spectators ? this.renderTeam(0, this.state.room.spectators) : undefined}
-
-                {this.state.room.teams ? this.state.room.teams.map((team, index) => {
+                {this.state.match ? <div>
+                    This room has an ongoing match with a party of {this.state.match.participants.size}
+                </div> : undefined}
+                {this.renderTeam(0, this.state.spectators)}
+                {this.state.teams.map((team, index) => {
                     return this.renderTeam(index + 1, team.members, team.ready)
-                }) : undefined}
+                })}
             </div>
 
             <div className={styles.mapsWrap}>
@@ -158,7 +198,7 @@ export default class RoomPage extends React.Component<Props, RoomState> {
                 {getTeamName(id)}
                 <button
                     hidden={!this.canJoinTeam(id)}
-                    onClick={() => this.lobby!.send("setTeam", id)}>
+                    onClick={() => this.context.requireRoom().send("setTeam", id)}>
                     Join
                 </button>
             </h2>
@@ -169,7 +209,7 @@ export default class RoomPage extends React.Component<Props, RoomState> {
     }
 
     canJoinTeam(team: number) {
-        const sessionId = this.lobby?.sessionId
+        const sessionId = this.context.requireRoom().sessionId
         if (!sessionId)
             return false
         const currentTeam = this.currentClient?.team
@@ -178,7 +218,7 @@ export default class RoomPage extends React.Component<Props, RoomState> {
 
     renderPlayers(players: string[]) {
         return players.map(clientID => {
-            const data = this.state.room.clients?.get(clientID)
+            const data = this.context.requireRoom().state.clients.get(clientID)
             if (data)
                 return <div key={clientID}
                                   className={`${styles.player}${data.ready ? (' ' + styles.playerReady) : ''}`}
@@ -192,12 +232,12 @@ export default class RoomPage extends React.Component<Props, RoomState> {
     }
 
     private setMap(id: string) {
-        this.context.room!.send('setMap', id)
+        this.context.requireRoom().send('setMap', id)
     }
 
     private onMapChanged() {
         this.setState({
-            selectedMap: this.state.maps?.list?.find(m => m.id == this.state.room.selectedMapID)
+            selectedMap: this.state.maps?.list?.find(m => m.id == this.context.requireRoom().state.selectedMapID)
         })
     }
 }

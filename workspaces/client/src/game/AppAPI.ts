@@ -128,8 +128,11 @@ export default class AppAPI {
         const opts = {accessToken: await this.getGameToken(), id}
         let lobby: Colyseus.Room<GameRoomState>
 
+
         try {
+            console.log('joining room with options', opts)
             lobby = await this.wsClient.joinOrCreate('gameLobby', opts)
+            console.log('joined', lobby.id)
         } catch (e) {
             this._lastError.next(e)
             this._roomConnection.next({connected: false})

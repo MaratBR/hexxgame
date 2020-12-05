@@ -12,10 +12,7 @@ import GameMap from "./GameMap";
 import RoomPage from "./RoomPage";
 import UIContext from "../UIContext";
 import MatchResults from "./MatchResults";
-
-enum RootStatus {
-
-}
+import {Switch, Route} from "react-router-dom";
 
 /**
  * Possible states:
@@ -46,6 +43,7 @@ type Params = {
         params: {
             id: string
         }
+        path: string
     }
 }
 
@@ -93,39 +91,27 @@ export class GameCoordinatorPage extends React.Component<Params, State> {
         if (!this.state.loggedIn)
             return <Redirect to="/" />
 
-        if (this.state.err) {
-            return <div>
+        if (this.state.err)
+            return <Modal>
                 <Brand text="Oops" />
                 <pre>{this.state.err}</pre>
-            </div>
-        }
+            </Modal>
 
-        if (this.state.reconnecting) {
+        if (this.state.reconnecting)
             return <Modal>
                 <Brand text="Reconnecting..." />
             </Modal>
-        }
 
-        if (this.state.loading) {
+        if (this.state.loading)
             return <Loading />
-        }
 
-        if (this.state.room) {
-            if (this.state.match) {
-                console.log('a', this.state.match.winner && this.state.showWinner)
-                if (this.state.match.winner && this.state.showWinner) {
-                    return <MatchResults
-                        teams={this.state.match.teamsRotation}
-                        domination={this.state.match.domination}
-                        winner={this.state.match.winner} />
-                } else if (this.state.match.winner) {
-                    return <RoomPage room={this.state.room} />
-                }
-                return <GameMap />
-            }
-
-            return <RoomPage room={this.state.room} />
-        }
+        return <div>
+            <Switch>
+                <Route path={this.props.match.path} exact={true} component={RoomPage} />
+                <Route path={this.props.match.path + '/match'} exact={true} component={GameMap} />
+                <Route path={this.props.match.path + '/match/results'} exact={true} component={MatchResults} />
+            </Switch>
+        </div>
     }
 
     private onRoomConnectionStateChanged(state: IGameRoomConnectionState) {

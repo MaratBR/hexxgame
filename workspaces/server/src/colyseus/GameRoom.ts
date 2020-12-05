@@ -287,6 +287,7 @@ export default class GameRoom extends AuthorizedRoom<ServerGameRoomState> {
     }
 
     async onCreate(options: any): Promise<any> {
+        await this.setPrivate()
         const roomID = options.id
         if (typeof roomID !== 'string')
             throw new ServerError(400, 'invalid room options, no room id provided')

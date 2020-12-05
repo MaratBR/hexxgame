@@ -1,4 +1,4 @@
-import {DominationState, GameRoomState, getTeamName, MapUtils, MatchState} from "@hexx/common";
+import {DominationState, GameRoomState, getTeamName, MapCell, MapUtils, MatchState} from "@hexx/common";
 import React from "react";
 import ApiContext from "../../game/context";
 import AppAPI from "../../game/AppAPI";
@@ -23,7 +23,6 @@ export default class GameMap extends React.Component<{}, State> {
 
     private app: GameApplication
     private readonly gameMapUID: string
-    private match: MatchState | null = null
     private readonly scope = new Scope()
     private readonly matchScope = this.scope.getChild()
 
@@ -32,7 +31,6 @@ export default class GameMap extends React.Component<{}, State> {
 
         this.gameMapUID = 'Map' + Math.floor(Math.random()*10000000000000000).toString(16)
         this.app = new GameApplication({})
-        ;(window as any).www = new MatchState()
     }
 
     get playerTeam() {
@@ -121,11 +119,21 @@ export default class GameMap extends React.Component<{}, State> {
                     this.app.currentTeam = currentTeam
                     this.app.canSelectCell = this.playerTeam === currentTeam
                 }),
-                match.listen('selectedCellKey', selected => this.app.selectedCellKey = selected || null)
+                match.listen('selectedCellKey', selected => this.app.selectedCellKey = selected || null),
+                match.listen('winner', winner => this.onMatchEnded(winner))
             )
 
         } else {
             this.app.cells.clear()
+            for (let i = 0; i < 10; i++) {
+                for (let j = 0; j < 10; j++) {
+                    this.app.cells.set(MapUtils.getKey(i, j), new MapCell({x: i, y: j, team: Math.floor(Math.random()*5)}))
+                }
+            }
         }
+    }
+
+    private onMatchEnded(winner: number) {
+
     }
 }

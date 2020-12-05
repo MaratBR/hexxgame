@@ -28,6 +28,7 @@ class PlayPage extends React.Component<any, PlayPageState> {
     private async joinPrivateRoom() {
         const room = await this.context.getPersonalRoom()
         await this._joinRoom(room.id)
+        this.props.history.push(this.props.match.path + '/room/' + room.id)
     }
 
     private joinRoom() {
