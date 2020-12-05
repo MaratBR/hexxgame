@@ -1,15 +1,11 @@
 import React from "react";
 import styles from "./GameOverlay.module.scss"
-import {DominationState, getTeamColor, getTeamName} from "@hexx/common";
+import {getTeamColor, getTeamName, MatchState} from "@hexx/common";
 import pretty from "pretty-ms"
 
 type Props = {
-    teamsRotation: number[]
-    currentTeam: number
-    currentStage: number
-    currentRound: number
-    endsAt: number
-    domination: DominationState
+    matchState: MatchState
+    playerTeam: number
     onSkip?: () => void
 }
 
@@ -37,7 +33,7 @@ export default class GameOverlay extends React.Component<Props, State> {
     }
 
     tick() {
-        const left = Math.floor((this.props.endsAt - +new Date()) / 1000) * 1000
+        const left = Math.floor((this.props.matchState.roundStageEndsAt - +new Date()) / 1000) * 1000
         if (left <= 0 && this.state.timeLeft !== 0)
             this.setState({timeLeft: 0})
         else if (left > 0)
@@ -47,8 +43,8 @@ export default class GameOverlay extends React.Component<Props, State> {
     render() {
         return <div className={styles.overlay}>
             <ul className={styles.teams}>
-                {this.props.teamsRotation.map(t => {
-                    return <li className={`${styles.team}${t === this.props.currentTeam ? (' ' + styles.currentTeam) : ''}`} key={t}>
+                {this.props.matchState.teamsRotation.map(t => {
+                    return <li className={`${styles.team}${t === this.props.matchState.currentTeam ? (' ' + styles.currentTeam) : ''}`} key={t}>
                         <div style={{backgroundColor: getTeamColor(t)}} className={styles.poly} />
                         <span className={styles.text}>{getTeamName(t)}</span>
                     </li>
@@ -57,11 +53,9 @@ export default class GameOverlay extends React.Component<Props, State> {
 
             <div className={styles.top}>
                 <div className={styles.body}>
-                    {Array.from(this.props.domination.teamCells.entries()).map(v => {
-                        return <div>{v[0]} = {v[1]}</div>
-                    })}
+                    <span>You are {getTeamName(this.props.playerTeam)}</span>
                     <div className={styles.domination}>
-                        {Array.from(this.props.domination.teamPoints.entries()).map(v => {
+                        {Array.from(this.props.matchState.domination.teamPoints.entries()).map(v => {
                             return <div key={v[0]} style={{flexGrow: v[1], backgroundColor: getTeamColor(+v[0])}} />
                         })}
                     </div>
@@ -69,13 +63,13 @@ export default class GameOverlay extends React.Component<Props, State> {
                     <div className={styles.timer}>
                         {pretty(this.state.timeLeft, {colonNotation: true})}
                     </div>
-                    <small>round {this.props.currentRound}</small>
+                    <small>round {this.props.matchState.currentRound}</small>
                 </div>
 
                 <div className={styles.gameStage}
-                     style={{backgroundColor: getTeamColor(this.props.currentTeam)}}>
+                     style={{backgroundColor: getTeamColor(this.props.matchState.currentTeam)}}>
                     {
-                    this.props.currentStage == 2 ?
+                    this.props.matchState.currentRoundStage == 2 ?
                         'Power up' :
                         'Attack'
                     }

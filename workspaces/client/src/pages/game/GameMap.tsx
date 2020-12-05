@@ -1,10 +1,11 @@
-import {GameRoomState, MapUtils, MatchState} from "@hexx/common";
+import {DominationState, GameRoomState, getTeamName, MapUtils, MatchState} from "@hexx/common";
 import React from "react";
 import ApiContext from "../../game/context";
 import AppAPI from "../../game/AppAPI";
 import GameApplication, {SelectedCellEvent} from "./GameApplication";
 import GameOverlay from "./GameOverlay";
 import {Subscription} from "rxjs";
+import Scope from "../../game/scope";
 
 type State = {
     noMatch: boolean
@@ -20,17 +21,16 @@ export default class GameMap extends React.Component<{}, State> {
         noMatch: true
     }
 
-    private readonly subs: Subscription[] = []
     private app: GameApplication
     private readonly gameMapUID: string
-    private readonly onRoomStateChangedListener: (state: GameRoomState) => void
     private match: MatchState | null = null
+    private readonly scope = new Scope()
+    private readonly matchScope = this.scope.getChild()
 
     constructor(props: {}) {
         super(props);
 
         this.gameMapUID = 'Map' + Math.floor(Math.random()*10000000000000000).toString(16)
-        this.onRoomStateChangedListener = this.onRoomStateChanged.bind(this)
         this.app = new GameApplication({})
         ;(window as any).www = new MatchState()
     }
@@ -51,38 +51,30 @@ export default class GameMap extends React.Component<{}, State> {
             {
                 this.state.matchState ?
                     <GameOverlay
+                        playerTeam={this.playerTeam}
                         onSkip={
                             () => this.playerTeam === this.state.matchState?.currentTeam ?
                                 this.context.requireRoom().send('skip') :
                                 undefined
                         }
-                        domination={this.state.matchState.domination}
-                        teamsRotation={this.state.matchState.teamsRotation}
-                        currentTeam={this.state.matchState.currentTeam}
-                        currentRound={this.state.matchState.currentRound}
-                        currentStage={this.state.matchState.currentRoundStage}
-                        endsAt={this.state.matchState.roundStageEndsAt}/> :
+                        matchState={this.state.matchState} /> :
                     undefined
             }
         </div>
     }
 
     componentDidMount() {
-        this.context.requireRoom().onStateChange(this.onRoomStateChangedListener)
-
-        this.onRoomStateChanged(this.context.requireRoom().state)
-
         document.getElementById(this.gameMapUID)!
             .appendChild(this.app.view)
 
-        this.subs.push(
-            this.app.selectedCellSub.subscribe(this.onSelectCell.bind(this))
+        this.scope.addSubscription(
+            this.app.selectedCellSub.subscribe(this.onSelectCell.bind(this)),
+            this.context.onMatchStateChanged(this.onMatchChanged.bind(this))
         )
     }
 
     componentWillUnmount() {
-        this.context.requireRoom().onStateChange.remove(this.onRoomStateChangedListener)
-        this.subs.forEach(s => s.unsubscribe())
+        this.scope.reset()
     }
 
     onSelectCell({cell, shift}: SelectedCellEvent) {
@@ -116,46 +108,24 @@ export default class GameMap extends React.Component<{}, State> {
         }
     }
 
-    private onRoomStateChanged(state: GameRoomState) {
-        const match = state.match
-        const matchChanged = match?.id !== this.state.matchState?.id;
-        (window as any).state = state
-        this.setState({
-            matchState: match
-        })
-
-        if (match) {
-            this.app.canSelectCell = match.currentTeam == this.playerTeam
-            if (match.selectedCellKey) {
-                const key = match.selectedCellKey
-                this.app.selectedCell = this.app.cells.get(key)
-            } else {
-                this.app.selectedGameCell = null
-            }
-        }
-
-        if (matchChanged) {
-            this.setState({
-                currentMatchID: match?.id
-            })
-            this.onMatchChanged(match)
-        }
-    }
-
     private onMatchChanged(match?: MatchState) {
-        if (this.state.matchState) {
-            this.state.matchState.onChange = undefined
-        }
+        this.matchScope.reset()
         this.setState({matchState: match})
 
         if (match) {
             this.app.cells = match.mapCells
-            match.onChange = this.onMatchStateChanged.bind(this)
-            this.onMatchStateChanged()
-        }
-    }
+            this.app.currentTeam = match.currentTeam
+            this.app.canSelectCell = this.playerTeam === match.currentTeam
+            this.matchScope.add(
+                match.listen('currentTeam', (currentTeam) => {
+                    this.app.currentTeam = currentTeam
+                    this.app.canSelectCell = this.playerTeam === currentTeam
+                }),
+                match.listen('selectedCellKey', selected => this.app.selectedCellKey = selected || null)
+            )
 
-    private onMatchStateChanged() {
-        this.app.currentTeam = this.match?.currentTeam || 0
+        } else {
+            this.app.cells.clear()
+        }
     }
 }

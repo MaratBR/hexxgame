@@ -92,13 +92,13 @@ export default class GameCell extends PIXI.Container {
     private _value: number = 0
     private _team: number = 0
     private _disabled: boolean = false
+    private _attackSubjectFromTeam?: number
     private _cellState: GameCellState = GameCellState.None
     private _cell?: MapCell
 
     get cell() {
         return this._cell
     }
-
     set cell(v) {
         if (this._cell)
             this._cell.onChange = undefined
@@ -119,6 +119,12 @@ export default class GameCell extends PIXI.Container {
     get cellState() { return this._cellState }
     set cellState(v) {
         this._cellState = v
+        this.redrawGfx()
+    }
+
+    get attackSubjectFromTeam() { return this._attackSubjectFromTeam }
+    set attackSubjectFromTeam(v) {
+        this._attackSubjectFromTeam = v
         this.redrawGfx()
     }
 
@@ -175,7 +181,9 @@ export default class GameCell extends PIXI.Container {
             case GameCellState.None:
                 break
             case GameCellState.Targeted:
-                drawHexBorder(this.poly, this.points, 2, 0xff6f00)
+                if (this._attackSubjectFromTeam !== this.team) {
+                    drawHexBorder(this.poly, this.points, 2, 0xff6f00)
+                }
                 break
             case GameCellState.Selected:
                 drawHexBorder(this.poly, this.points, 3, 0xffffff)

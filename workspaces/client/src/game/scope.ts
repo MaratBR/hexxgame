@@ -1,3 +1,5 @@
+import {Subscription} from "rxjs";
+
 export default class Scope {
     private readonly teardownFunctions: (() => Promise<void> | void)[]
 
@@ -7,6 +9,10 @@ export default class Scope {
 
     add(...callable: (() => Promise<void> | void)[]) {
         this.teardownFunctions.push(...callable)
+    }
+
+    addSubscription(...subscriptions: Subscription[]) {
+        this.add(...subscriptions.map(sub => () => sub.unsubscribe()))
     }
 
     reset() {
@@ -20,5 +26,11 @@ export default class Scope {
             }
         })
         this.teardownFunctions.splice(0, this.teardownFunctions.length)
+    }
+
+    getChild() {
+        const scope = new Scope()
+        this.add(scope.reset.bind(scope))
+        return scope
     }
 }

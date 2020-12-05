@@ -96,9 +96,11 @@ export default class GameApplication extends PIXI.Application {
         if (v === this._currentTeam)
             return
         this._currentTeam = v
-        Object.values(this._cellsObjects).forEach(c => {
+        /**
+         * Object.values(this._cellsObjects).forEach(c => {
             c.disabled = c.team !== v && c.team !== 0
         })
+         */
 
         if (this.selectedGameCell?.team !== v)
             this.selectedGameCell = null
@@ -121,15 +123,33 @@ export default class GameApplication extends PIXI.Application {
 
     set selectedGameCell(v) {
         if (this._selectedGameCell) {
-            this._targetCells.forEach(c => c.cellState = GameCellState.None)
+            this._targetCells.forEach(c => {
+                c.cellState = GameCellState.None
+                c.attackSubjectFromTeam = undefined
+            })
             this._selectedGameCell.selected = false
         }
         this._selectedGameCell = v
         if (v) {
-            this._targetCells = this.getCellNeighbours(v).filter(a => a.team !== v.team)
-            this._targetCells.forEach(c => c.cellState = GameCellState.Targeted)
+            this._targetCells = this.getCellNeighbours(v)
+            this._targetCells.forEach(c => {
+                c.cellState = GameCellState.Targeted
+                c.attackSubjectFromTeam = this.currentTeam
+            })
+            console.log(this._targetCells)
             v.selected = true
         }
+    }
+
+    get selectedCellKey(): string | null {
+        return this._selectedGameCell ? MapUtils.getKey(this._selectedGameCell.x, this._selectedGameCell.y) : null
+    }
+
+    set selectedCellKey(v) {
+        if (!v)
+            this.selectedGameCell = null
+        else
+            this.selectedGameCell = this._cellsObjects[v] || null
     }
 
     private onCellAdded(cell: MapCell, key: string) {
