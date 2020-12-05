@@ -26,8 +26,6 @@ export default class RoomService {
     async createRoom(opts: NewRoomOptions): Promise<Room> {
         return await RoomModel.create({
             players: [],
-            name: opts.name,
-            isPublic: opts.isPublic,
             ownerId: opts.ownerId,
             _id: opts.code || await this.generateRoomId()
         })

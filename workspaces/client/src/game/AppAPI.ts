@@ -1,9 +1,10 @@
 import {AxiosInstance, default as axios} from "axios"
-import {GameMapInfoDto, RoomInfoDto, GameRoomState, MatchState} from "@hexx/common";
+import {GameMapInfoDto, RoomInfoDto, GameRoomState, MatchState, UserInfoDto} from "@hexx/common";
 import * as Colyseus from "colyseus.js"
 import {Observable, Subject} from "rxjs";
 import {Room} from "colyseus.js";
 import Scope from "./scope";
+import {MatchMakeError} from "colyseus.js/lib/Client";
 
 interface IAPIOptions {
     address: string
@@ -22,6 +23,7 @@ export default class AppAPI {
     private readonly _roomConnection = new Subject<IGameRoomConnectionState>()
     private readonly _lastError = new Subject()
     private readonly scope = new Scope()
+    private userInfo?: UserInfoDto
 
     get roomSubject(): Observable<Colyseus.Room<GameRoomState>> {
         return this._roomSubject
@@ -45,6 +47,7 @@ export default class AppAPI {
             withCredentials: true
         })
         this.wsClient = new Colyseus.Client('ws://' + opts.address)
+        ;(window as any).ws = this.wsClient
     }
 
     private _onRoomChanged(oldRoom?: Room<GameRoomState>, room?: Room<GameRoomState>) {
@@ -116,11 +119,16 @@ export default class AppAPI {
         }
     }
 
+    getUserInfo(): Promise<UserInfoDto> {
+        return this.client.get('api/auth/currentUser').then(r => r.data)
+    }
+
     //#endregion
 
     //#region WS game API
 
     async joinRoom(id: string): Promise<Colyseus.Room<GameRoomState>> {
+        console.log('joining room ' + id)
         const oldRoom = this.room
         if(oldRoom) {
             oldRoom.leave(true)
@@ -130,14 +138,17 @@ export default class AppAPI {
 
 
         try {
-            console.log('joining room with options', opts)
-            lobby = await this.wsClient.joinOrCreate('gameLobby', opts)
-            console.log('joined', lobby.id)
+            lobby = await this.wsClient.joinById(id, opts)
         } catch (e) {
-            this._lastError.next(e)
-            this._roomConnection.next({connected: false})
-            this.setRoom()
-            throw e
+            if (!(e instanceof MatchMakeError)) {
+                this._lastError.next(e)
+                this._roomConnection.next({connected: false})
+                this.setRoom()
+                throw e
+            } else {
+                console.log('failed to join room, creating new room')
+                lobby = await this.wsClient.create('gameLobby', opts)
+            }
         }
 
         return await new Promise((resolve, reject) => {
@@ -184,9 +195,5 @@ export default class AppAPI {
         if (this._currentRoom)
             return this._currentRoom
         throw new Error('No room found')
-    }
-
-    get lobbyID() {
-        return this._currentRoom?.state.id || null
     }
 }

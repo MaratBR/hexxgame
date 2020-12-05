@@ -1,12 +1,8 @@
 import {ArraySchema, MapSchema} from "@colyseus/schema"
 
 import {Schema, type} from "@colyseus/schema";
-import {Participant} from "./dto";
 
 export class ClientInfo extends Schema {
-    @type('string')
-    dbID: string
-
     @type('number')
     team: number = 0
 
@@ -14,12 +10,12 @@ export class ClientInfo extends Schema {
     username: string
 
     @type('boolean')
-    ready: boolean = false;
+    ready: boolean = false
 }
 
 export class MatchParticipant extends Schema {
     @type('string')
-    dbID: string
+    id: string
 
     @type('number')
     team: number
@@ -76,7 +72,6 @@ export class LastMatchResult extends Schema {
     participants: ArraySchema<MatchParticipant>
 }
 
-
 export class MatchState extends Schema {
     @type('number')
     baseRoundLength: number = 20
@@ -100,16 +95,16 @@ export class MatchState extends Schema {
     id: string;
 
     @type({map: MapCell})
-    mapCells: MapSchema<MapCell>;
+    mapCells: MapSchema<MapCell> = new MapSchema<MapCell>()
 
     @type('number')
-    roundStageEndsAt: number;
+    roundStageEndsAt: number = 0
 
     @type('number')
-    startsAt: number;
+    startsAt: number = 0
 
     @type(['number'])
-    teamsRotation: number[];
+    teamsRotation: number[] = []
 
     @type('number')
     currentTeam: number = 0
@@ -118,10 +113,10 @@ export class MatchState extends Schema {
     powerPoints: number = 0;
 
     @type(DominationState)
-    domination: DominationState
+    domination: DominationState = new DominationState()
 
     @type('string')
-    selectedCellKey?: string;
+    selectedCellKey: '' | string = ''
 
     @type({map: MatchParticipant})
     participants: MapSchema<MatchParticipant> = new MapSchema<MatchParticipant>()
@@ -159,9 +154,6 @@ export class TeamInfo extends Schema {
 
 export class GameRoomState extends Schema {
     @type('string')
-    id?: string;
-
-    @type('string')
     selectedMapID?: string
 
     @type({map: ClientInfo})
@@ -177,22 +169,7 @@ export class GameRoomState extends Schema {
     gameStartsAt: number
 
     @type(MatchState)
-    match?: MatchState
-
-    static getUserDBID(s: GameRoomState, clientID: string): string | undefined {
-        const clientData = s.clients.get(clientID)
-        return clientData ? clientData.dbID : undefined
-    }
-
-    static getParticipantTeamFromClientID(s: GameRoomState, clientID: string) {
-        const match = s.match
-        if (!match)
-            return 0
-        const dbID = this.getUserDBID(s, clientID)
-        if (!dbID)
-            return 0
-        return MatchState.getParticipantTeam(match, dbID)
-    }
+    match: MatchState = new MatchState()
 }
 
 export interface MatchMapCell {

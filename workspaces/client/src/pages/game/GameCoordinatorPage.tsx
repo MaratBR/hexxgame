@@ -74,7 +74,7 @@ export class GameCoordinatorPage extends React.Component<Params, State> {
             return
         }
 
-        if (this.props.match.params.id !== this.context.room?.state.id)
+        if (this.props.match.params.id !== this.context.room?.id)
             await this.context.joinRoom(this.props.match.params.id)
 
         this.subs.push(
@@ -126,7 +126,7 @@ export class GameCoordinatorPage extends React.Component<Params, State> {
         }
     }
 
-    private onRoomStateChanged(cs: GameRoomState) {
+    private async onRoomStateChanged(cs: GameRoomState) {
         console.log(cs.match)
 
         if (cs.match?.id) {
@@ -137,9 +137,8 @@ export class GameCoordinatorPage extends React.Component<Params, State> {
                     inGame
                 })
             }
-            const sessionID = this.context.requireRoom().sessionId
-            const dbID = cs.clients.get(sessionID).dbID
-            const showWinner = !!cs.match.winner && Array.from(cs.match.participants.keys()).includes(dbID)
+            const {id} = await this.context.getUserInfo()
+            const showWinner = !!cs.match.winner && Array.from(cs.match.participants.keys()).includes(id)
             if (this.state.showWinner !== showWinner)
                 this.setState({showWinner})
 

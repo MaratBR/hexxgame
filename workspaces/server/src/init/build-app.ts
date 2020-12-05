@@ -4,7 +4,7 @@ import createApp, {IAppParams} from "./app";
 import {mongoose} from "@typegoose/typegoose";
 import config from "../config";
 import {initAuth} from "../auth";
-import getColyseus from "../colyseus/server";
+import getColyseus from "../gameServer/server";
 import initDB from "./initDB";
 import logger from "./logger";
 

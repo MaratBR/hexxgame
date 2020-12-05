@@ -17,12 +17,6 @@ export class Room extends Base {
     @prop()
     ownerId?: string
 
-    @prop({default: false})
-    isPublic?: boolean
-
-    @prop({required: true, minlength: 1, maxlength: 50})
-    name?: string
-
     @prop({default: () => new Date()})
     createdAt?: Date
 
@@ -91,8 +85,8 @@ export const RoomModel = getModelForClass(Room)
 export function roomInfo(room: Room): RoomInfoDto {
     return {
         id: room._id,
-        name: room.name,
-        isPublic: room.isPublic,
+        name: room._id,
+        isPublic: false,
         selectedMatchId: room.selectedMapId,
         ongoingMatchId: room.ongoingMatchId
     }

@@ -26,7 +26,7 @@ type RoomState = {
     loaded?: boolean
     teams: TeamInfo[]
     spectators: string[]
-    match?: MatchState
+    match: MatchState
 }
 
 type Props = {
@@ -38,7 +38,8 @@ export default class RoomPage extends React.Component<Props, RoomState> {
     context!: AppAPI
     state: RoomState = {
         teams: [],
-        spectators: []
+        spectators: [],
+        match: new MatchState()
     }
 
     private readonly scope = new Scope()
@@ -111,6 +112,8 @@ export default class RoomPage extends React.Component<Props, RoomState> {
             this.setState({teams})
         }
 
+        console.log('new room state', state)
+
         state.teams.onRemove = state.teams.onAdd = updateTeams
 
         const updateSpectators = () => {
@@ -157,6 +160,7 @@ export default class RoomPage extends React.Component<Props, RoomState> {
                     {this.state.selectedMap?.name}
                 </div>
             </div>
+
             <div className={styles.play} onClick={() => this.context.requireRoom().send('start')}>
                 <button>
                     <Brand text="Play" style={{fontSize: '1.5em'}} />
@@ -164,8 +168,9 @@ export default class RoomPage extends React.Component<Props, RoomState> {
             </div>
 
             <div className={styles.playersList}>
-                {this.state.match ? <div>
-                    This room has an ongoing match with a party of {this.state.match.participants.size}
+                <pre>{JSON.stringify(this.state.match?.id)}</pre>
+                {this.state.match.id ? <div>
+                    This room has an ongoing match with a party of {2}
                 </div> : undefined}
                 {this.renderTeam(0, this.state.spectators)}
                 {this.state.teams.map((team, index) => {
@@ -197,7 +202,6 @@ export default class RoomPage extends React.Component<Props, RoomState> {
             <h2>
                 {getTeamName(id)}
                 <button
-                    hidden={!this.canJoinTeam(id)}
                     onClick={() => this.context.requireRoom().send("setTeam", id)}>
                     Join
                 </button>
@@ -210,6 +214,7 @@ export default class RoomPage extends React.Component<Props, RoomState> {
 
     canJoinTeam(team: number) {
         const sessionId = this.context.requireRoom().sessionId
+        this.context.requireRoom()
         if (!sessionId)
             return false
         const currentTeam = this.currentClient?.team
@@ -217,14 +222,12 @@ export default class RoomPage extends React.Component<Props, RoomState> {
     }
 
     renderPlayers(players: string[]) {
-        return players.map(clientID => {
-            const data = this.context.requireRoom().state.clients.get(clientID)
+        return players.map(id => {
+            const data = this.context.requireRoom().state.clients.get(id)
             if (data)
-                return <div key={clientID}
-                                  className={`${styles.player}${data.ready ? (' ' + styles.playerReady) : ''}`}
-                                  data-id={clientID}
-                                  data-db-id={data.dbID}>
-                    <div title={data.dbID}>
+                return <div key={id}
+                            className={`${styles.player}${data.ready ? (' ' + styles.playerReady) : ''}`}>
+                    <div title={id}>
                         {data.username.startsWith('Anonymous') ? ('Anon' + data.username.substr(9)) : data.username}
                     </div>
                 </div>

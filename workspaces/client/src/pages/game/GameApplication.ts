@@ -152,6 +152,11 @@ export default class GameApplication extends PIXI.Application {
             this.selectedGameCell = this._cellsObjects[v] || null
     }
 
+    resetPositioning() {
+        this._container.x = this.view.width / 4
+        this._container.y = this.view.height / 4
+    }
+
     private onCellAdded(cell: MapCell, key: string) {
         const [x, y] = this.getCellOrigin(cell)
         const gameCell = new GameCell({radius: this.props.innerRadius, gap: this.props.cellGap})

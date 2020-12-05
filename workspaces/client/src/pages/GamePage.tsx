@@ -63,7 +63,7 @@ export default class GamePage extends React.Component<any, GamePageState> {
 
     private onRoomChanged(room?: Room<GameRoomState>) {
         this.setState({
-            roomID: room?.state.id
+            roomID: room?.id
         })
     }
 }

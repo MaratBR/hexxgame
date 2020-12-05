@@ -9,7 +9,7 @@ import {
     Req,
 } from "routing-controllers";
 import UsersService from "../services/UsersService";
-import {User} from "../models/User";
+import {User, userInfo} from "../models/User";
 import {message} from "./api";
 import Tokens from "../auth/tokens";
 
@@ -47,6 +47,13 @@ export class AuthController {
         await ctx.login(user)
         return this.responseForNewUser(user)
     }
+
+    @Authorized()
+    @Get('/currentUser')
+    getCurrentUser(@CurrentUser() user: User) {
+        return userInfo(user)
+    }
+
 
     responseForNewUser(user: User) {
         return {

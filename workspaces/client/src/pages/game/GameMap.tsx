@@ -1,16 +1,22 @@
-import {DominationState, GameRoomState, getTeamName, MapCell, MapUtils, MatchState} from "@hexx/common";
+import {DominationState, GameRoomState, getTeamName, MapCell, MapUtils, MatchState, sleep} from "@hexx/common";
 import React from "react";
 import ApiContext from "../../game/context";
 import AppAPI from "../../game/AppAPI";
 import GameApplication, {SelectedCellEvent} from "./GameApplication";
 import GameOverlay from "./GameOverlay";
-import {Subscription} from "rxjs";
 import Scope from "../../game/scope";
+import Loading from "../../components/Loading";
+import MatchResults from "./MatchResults";
+import Modal from "../../components/Modal";
+import {Redirect} from "react-router-dom";
 
 type State = {
     noMatch: boolean
     currentMatchID?: string
     matchState?: MatchState
+    playerID: string
+    initialized?: boolean
+    redirectToArchive?: boolean
 }
 
 export default class GameMap extends React.Component<{}, State> {
@@ -18,7 +24,8 @@ export default class GameMap extends React.Component<{}, State> {
     context!: AppAPI
 
     state: State = {
-        noMatch: true
+        noMatch: true,
+        playerID: ''
     }
 
     private app: GameApplication
@@ -33,46 +40,84 @@ export default class GameMap extends React.Component<{}, State> {
         this.app = new GameApplication({})
     }
 
-    get playerTeam() {
-        const sessionId = this.context.room?.sessionId
-        if (!sessionId)
-            return 0
-        const dbID = this.context.requireRoom().state.clients.get(sessionId).dbID
-        if (!dbID)
-            return 0
-        const team = this.state.matchState?.participants.get(dbID)?.team
-        return team || 0
+    private get playerTeam() {
+        return this.state.matchState?.participants.get(this.state.playerID)?.team || 0
     }
 
     render() {
+        if (this.state.redirectToArchive)
+            return <Redirect to="/" />
+
         return <div id={this.gameMapUID}>
+            {!this.state.initialized ? <Loading fixed={true} /> : undefined}
+
             {
                 this.state.matchState ?
-                    <GameOverlay
-                        playerTeam={this.playerTeam}
-                        onSkip={
-                            () => this.playerTeam === this.state.matchState?.currentTeam ?
-                                this.context.requireRoom().send('skip') :
-                                undefined
-                        }
-                        matchState={this.state.matchState} /> :
+                    this.renderOverlay() :
+                    undefined
+            }
+            {
+                this.state.matchState?.winner ?
+                    this.renderWinner() :
                     undefined
             }
         </div>
     }
 
-    componentDidMount() {
-        document.getElementById(this.gameMapUID)!
-            .appendChild(this.app.view)
+    private renderWinner() {
+        if (!this.state.matchState)
+            return <Modal>
+                Oops, no match results found
+            </Modal>
+        return <Modal>
+            <MatchResults winner={this.state.matchState.winner}
+                          domination={this.state.matchState.domination}
+                          teams={this.state.matchState.teamsRotation} />
+        </Modal>
+    }
 
-        this.scope.addSubscription(
-            this.app.selectedCellSub.subscribe(this.onSelectCell.bind(this)),
-            this.context.onMatchStateChanged(this.onMatchChanged.bind(this))
-        )
+    private renderOverlay() {
+        if (!this.state.matchState)
+            throw new Error('failed to render overlay when match state is nowhere to be found')
+        const playerTeam = this.playerTeam
+        return <GameOverlay
+            playerTeam={playerTeam}
+            onSkip={
+                () => playerTeam === this.state.matchState?.currentTeam ?
+                    this.context.requireRoom().send('skip') :
+                    undefined
+            }
+            matchState={this.state.matchState} />
+    }
+
+    componentDidMount() {
+        // initialization
+        this.init()
+            .then(() => {
+                document.getElementById(this.gameMapUID)!
+                    .appendChild(this.app.view)
+
+                this.app.resetPositioning()
+
+                this.scope.addSubscription(
+                    this.app.selectedCellSub.subscribe(this.onSelectCell.bind(this)),
+                    this.context.onMatchStateChanged(this.onMatchChanged.bind(this))
+                )
+            })
     }
 
     componentWillUnmount() {
         this.scope.reset()
+    }
+
+    private async init() {
+        const data = await this.context.getUserInfo()
+        await sleep(1000)
+
+        this.setState({
+            playerID: data.id,
+            initialized: true
+        })
     }
 
     onSelectCell({cell, shift}: SelectedCellEvent) {
@@ -110,6 +155,13 @@ export default class GameMap extends React.Component<{}, State> {
         this.matchScope.reset()
         this.setState({matchState: match})
 
+        if (!match?.id) {
+            this.setState({
+                redirectToArchive: true
+            })
+            return
+        }
+
         if (match) {
             this.app.cells = match.mapCells
             this.app.currentTeam = match.currentTeam
@@ -122,7 +174,8 @@ export default class GameMap extends React.Component<{}, State> {
                 match.listen('selectedCellKey', selected => this.app.selectedCellKey = selected || null),
                 match.listen('winner', winner => this.onMatchEnded(winner))
             )
-
+            if (match.winner)
+                this.onMatchEnded(match.winner)
         } else {
             this.app.cells.clear()
             for (let i = 0; i < 10; i++) {
@@ -134,6 +187,7 @@ export default class GameMap extends React.Component<{}, State> {
     }
 
     private onMatchEnded(winner: number) {
-
+        if (winner)
+            this.app.stop()
     }
 }
