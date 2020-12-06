@@ -59,46 +59,7 @@ export class Match extends IDBase {
     cells: GameMapCell[]
 
     @prop()
-    jobId?: string | number
-
-    @prop()
     roomId: string
-
-    getSocketIORoomName() {
-        return 'Match' + this._id
-    }
-
-    getTeam(userID: string) {
-        const p = this.participants.find(p => p.id == userID)
-        return p ? p.team : 0
-    }
-
-    private getNeighbourCellsIndexes(x: number, y: number): [number, number][] {
-        return (x % 2 == 0 ? Match.EVEN_X_INDEX_OFFSETS : Match.ODD_X_INDEX_OFFSETS).map((v, index) => {
-            return [
-                v[0] + x,
-                v[1] + y
-            ]
-        })
-    }
-
-    private static EVEN_X_INDEX_OFFSETS = [
-        [0, -1], // top
-        [0, 1], // bottom
-        [1, 0], // top right
-        [-1, 0], // top left
-        [1, 1], // bottom right
-        [-1, 1], // bottom left
-    ]
-
-    private static ODD_X_INDEX_OFFSETS = [
-        [0, -1], // top
-        [0, 1], // bottom
-        [1, -1], // top right
-        [-1, -1], // top left
-        [1, 0], // bottom right
-        [-1, 0], // bottom left
-    ]
 
     public static async createMatch(roomId: string, mapId: string, teams: string[][]): Promise<Match> {
         if (teams.length < 2)

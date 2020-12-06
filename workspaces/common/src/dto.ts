@@ -1,3 +1,4 @@
+import exp from "constants";
 
 export interface Participant {
     id: string
@@ -25,6 +26,37 @@ export interface GameMapCell {
 export type GameMapData = {
     info: GameMapInfoDto,
     cells: GameMapCell[]
+}
+
+export enum MatchAction {
+    Attack,
+    PowerUp
+}
+
+export type AttackChange = {
+    fromX: number
+    fromY: number,
+    direction: MoveDirection
+}
+
+export type PowerChange = {
+    x: number
+    y: number
+    points: number
+}
+
+export type RoundHistory = {
+    team: number
+    stage: 1 | 2
+    duration: number
+    attacks: AttackChange[]
+    powerUps: PowerChange[]
+}
+
+export type GameMatchHistoryDto = {
+    match: GameMatchInfoDto
+    mapCells: GameMapCell[]
+    rounds: RoundHistory[]
 }
 
 export type GameMatchInfoDto = {

@@ -277,8 +277,8 @@
         "affectsGlobalScope": false
       },
       "./src/dto.ts": {
-        "version": "a2b0a760b81508fb84ff5f6f8d35505140fbde7e8cdef23c72fec40a12dfa9d5",
-        "signature": "f6931dc9e9055b2ce080953086bbdfc0e6278df6eb06df243c7942b2082165c2",
+        "version": "e10aaf788cfcf1218a0ecd460dc116448b1d35786216b46e6ad6a7280e2fb6e1",
+        "signature": "e0aa767aa810eaeccd1048f0edb6c8353f2c3b5afa6160db16a6ae930547660b",
         "affectsGlobalScope": false
       },
       "./src/consts.ts": {
@@ -1099,6 +1099,7 @@
       "composite": true,
       "incremental": true,
       "downlevelIteration": true,
+      "watch": true,
       "configFilePath": "./tsconfig.json"
     },
     "referencedMap": {
@@ -1672,6 +1673,9 @@
       ],
       "./src/consts.ts": [
         "./src/dto.ts"
+      ],
+      "./src/dto.ts": [
+        "./node_modules/@types/node/constants.d.ts"
       ],
       "./src/index.ts": [
         "./src/colyseus.ts",
