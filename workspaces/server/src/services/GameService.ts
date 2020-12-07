@@ -1,14 +1,9 @@
 import {Service} from "typedi";
-import {
-    Match,
-    MatchModel, MAX_VALUE
-} from "../models/Match";
-import {GameMapModel} from "../models/GameMap";
-import {HttpError, NotFoundError} from "routing-controllers";
-import {UserModel} from "../models/User";
-import moment from "moment";
-import {GameMapCell, Participant} from "@hexx/common";
+import {Match} from "../models/Match";
+import {NotFoundError} from "routing-controllers";
 import {generateRoomId, Room, RoomModel} from "../models/Room";
+import {MatchHistoryModel} from "../models/MatchHistory";
+import {RoundHistory} from "@hexx/common";
 
 @Service()
 export default class GameService {
@@ -31,6 +26,23 @@ export default class GameService {
 
     async createMatch(roomId: string, mapId: string, teams: string[][]): Promise<Match> {
         return await Match.createMatch(roomId, mapId, teams)
+    }
+
+    async createMatchHistory(match: string | Match) {
+        if (match instanceof Match)
+            match = match._id
+        return await MatchHistoryModel.create({
+            matchID: match,
+            rounds: []
+        })
+    }
+
+    async addRoundData(matchID: string, round: RoundHistory) {
+        MatchHistoryModel.update({matchID}, {
+            $push: {
+                rounds: round
+            }
+        })
     }
 
 }

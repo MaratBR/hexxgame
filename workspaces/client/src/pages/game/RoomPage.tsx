@@ -9,24 +9,24 @@ import {
     GameRoomState,
     TeamInfo,
     MatchParticipant,
-    MatchState
+    MatchState, UserInfoDto
 } from "@hexx/common";
 import Brand from "../../components/Brand";
 import { match } from "react-router-dom"
 import Scope from "../../game/scope";
+import Loading from "../../components/Loading";
 
 
 type RoomState = {
-    maps?: {
-        loading?: boolean,
+    maps: {
+        loading: boolean,
         list?:  GameMapInfoDto[]
     }
     expandedMap?: string,
     selectedMap?: GameMapInfoDto
     loaded?: boolean
-    teams: TeamInfo[]
-    spectators: string[]
-    match: MatchState
+    room?: GameRoomState
+    userInfo?: UserInfoDto
 }
 
 type Props = {
@@ -37,9 +37,9 @@ export default class RoomPage extends React.Component<Props, RoomState> {
     static contextType = ApiContext;
     context!: AppAPI
     state: RoomState = {
-        teams: [],
-        spectators: [],
-        match: new MatchState()
+        maps: {
+            loading: false
+        }
     }
 
     private readonly scope = new Scope()
@@ -68,6 +68,9 @@ export default class RoomPage extends React.Component<Props, RoomState> {
         }
 
         await this.updateMaps()
+        this.setState({
+            userInfo: await this.context.getUserInfo()
+        })
     }
 
     componentWillUnmount() {
@@ -89,7 +92,6 @@ export default class RoomPage extends React.Component<Props, RoomState> {
                     loading: false
                 }
             })
-            this.onMapChanged()
         } catch (e) {
             this.setState({
                 maps: {
@@ -106,58 +108,32 @@ export default class RoomPage extends React.Component<Props, RoomState> {
             return
         }
 
+        this.setState({room: state})
 
-        const updateTeams = () => {
-            const teams = [...state.teams]
-            this.setState({teams})
-        }
-
-        console.log('new room state', state)
-
-        state.teams.onRemove = state.teams.onAdd = updateTeams
-
-        const updateSpectators = () => {
-            const spectators = [...state.spectators]
-            this.setState({spectators})
-        }
-
-        state.spectators.onAdd = state.spectators.onRemove = updateSpectators
-
-        updateSpectators()
-        updateTeams()
-
-        this.scope.add(
-            () => {
-                state.teams.onAdd = undefined
-                state.teams.onRemove = undefined
-                state.spectators.onAdd = undefined
-                state.spectators.onRemove = undefined
-            },
-            state.listen('match', match => this.setState({match}))
-        )
-        this.setState({match: state.match})
-
-        const mapChanged = this.context.requireRoom().state.selectedMapID !== state.selectedMapID
         if (!this.state.loaded) {
             this.setState({loaded: true});
-        }
-
-        if (mapChanged) {
-            this.onMapChanged()
         }
     }
 
     render() {
+        if (!this.state.room)
+            return <Loading />
         return <div className={styles.root}>
             <div className={styles.toolBar}>
                 <button
                     onClick={() => this.context.requireRoom().send('toggleReady')}
-                    className={this.currentClient?.ready ? styles.ready : styles.notReady}>
-                    {this.currentClient?.ready ? 'Ready' : 'Not ready'}
+                    className={
+                        this.state.userInfo && this.state.room.clients.get(this.state.userInfo.id).ready ?
+                            styles.ready :
+                            styles.notReady}>
+                    {this.state.userInfo ? (
+                        this.state.room.clients.get(this.state.userInfo.id).ready ?
+                            'Ready' :
+                            'Not ready') : undefined}
                 </button>
                 <div className={styles.toolBarSection}>
                     <h3>Selected map</h3>
-                    {this.state.selectedMap?.name}
+                    {this.state.selectedMap?.name || this.state.room.selectedMapID}
                 </div>
             </div>
 
@@ -168,12 +144,12 @@ export default class RoomPage extends React.Component<Props, RoomState> {
             </div>
 
             <div className={styles.playersList}>
-                <pre>{JSON.stringify(this.state.match?.id)}</pre>
-                {this.state.match.id ? <div>
-                    This room has an ongoing match with a party of {2}
+                <pre>{JSON.stringify(this.state.room.match.id)}</pre>
+                {this.state.room.match.id ? <div>
+                    This room has an ongoing match with a party of {this.state.room.match.participants.size}
                 </div> : undefined}
-                {this.renderTeam(0, this.state.spectators)}
-                {this.state.teams.map((team, index) => {
+                {this.renderTeam(0, this.state.room.spectators)}
+                {this.state.room.teams.map((team, index) => {
                     return this.renderTeam(index + 1, team.members, team.ready)
                 })}
             </div>
@@ -236,11 +212,8 @@ export default class RoomPage extends React.Component<Props, RoomState> {
 
     private setMap(id: string) {
         this.context.requireRoom().send('setMap', id)
-    }
-
-    private onMapChanged() {
         this.setState({
-            selectedMap: this.state.maps?.list?.find(m => m.id == this.context.requireRoom().state.selectedMapID)
+            selectedMap: (this.state.maps.list || []).find(m => m.id == id)
         })
     }
 }

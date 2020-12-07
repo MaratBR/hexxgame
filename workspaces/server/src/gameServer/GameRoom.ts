@@ -4,7 +4,7 @@ import AuthorizedRoom from "./AuthorizedRoom";
 import {User} from "../models/User";
 import {Match, MatchModel} from "../models/Match";
 import {GameMapModel} from "../models/GameMap";
-import {ClientInfo, GameRoomState, MatchState, TeamInfo} from "@hexx/common";
+import {ClientInfo, GameRoomState, MatchState, RoundHistory, TeamInfo} from "@hexx/common";
 import {ServerMatchState} from "./ServerMatchState";
 import {ServerGameRoomState} from "./ServerGameRoomState";
 import GameService from "../services/GameService";
@@ -20,13 +20,24 @@ class GameRoomOptions {
 
 type InnerState = {
     userConnections: Dict<Client>
+    currentMatch: {
+        roundHistoryRecord: RoundHistory
+        roundStartedAt: number
+    }
 }
+
+const roundRecord = (stage: number, team: number) => <RoundHistory>{attacks: [], powerUps: [], team, stage}
 
 export default class GameRoom extends AuthorizedRoom<ServerGameRoomState> {
     private readonly service: GameService = Container.get(GameService)
     private matchTimeout?: Delayed
+    private winnerTimeout?: Delayed
     private readonly innerState: InnerState = {
-        userConnections: {}
+        userConnections: {},
+        currentMatch: {
+            roundStartedAt: 0,
+            roundHistoryRecord: roundRecord(0, 0)
+        }
     }
 
     async onCreate(_opts: any): Promise<any> {
@@ -105,9 +116,18 @@ export default class GameRoom extends AuthorizedRoom<ServerGameRoomState> {
 
         if (this.state.match.id) {
             // if user is found in match participants' list, set online to true
+
+
             const participants = this.state.match.participants
+            const pData = participants.get(auth._id)
             if (participants.has(auth._id)) {
-                participants.get(auth._id).online = true
+                const onlineParticipants = Array.from(this.state.match.participants.values()).filter(p => p.online)
+                const onlineTeams = new Set(onlineParticipants.map(p => p.team))
+                if (onlineTeams.size === 1 && pData.team !== onlineTeams[0]) {
+                    this.winnerTimeout?.clear()
+                    this.winnerTimeout = undefined
+                }
+                pData.online = true
             } else {
                 // this user is a spectator
                 // TODO do something here
@@ -134,15 +154,28 @@ export default class GameRoom extends AuthorizedRoom<ServerGameRoomState> {
         }
 
         // remove user from match if user was participating
-        if (this.state.match && this.state.match.participants.has(client.auth._id)) {
+        if (this.state.match.id && this.state.match.participants.has(client.auth._id)) {
             // player left
             const pdata = this.state.match.participants.get(client.auth._id)
             pdata.online = false
+
+
+            // if there's only one team left, make them winners
+            const onlineParticipants = Array.from(this.state.match.participants.values()).filter(p => p.online)
+            const onlineTeams = new Set(onlineParticipants.map(p => p.team))
+            if (onlineTeams.size === 1) {
+                // one team left, make them winner in 10 seconds
+                this.winnerTimeout = this.clock.setTimeout(async () => {
+                    this.state.match.setWinner(onlineTeams[0])
+                    await this.onMatchEnd()
+                }, 10000)
+            }
         }
 
         // remove user connection
         if (this.innerState.userConnections[client.auth._id] === client)
             delete this.innerState.userConnections[client.auth._id]
+
 
         return super.onLeave(client, consented);
     }
@@ -219,6 +252,7 @@ export default class GameRoom extends AuthorizedRoom<ServerGameRoomState> {
 
         const teams = this.state.teams.map(t => [...t.members])
         const match = await this.service.createMatch(this.roomId, this.state.selectedMapID, teams)
+        await this.service.createMatchHistory(match)
         const map = await GameMapModel.findById(match.mapId)
         this.state.match = new ServerMatchState(this.state, match, map)
         this.clock.setTimeout(() => {
@@ -308,20 +342,31 @@ export default class GameRoom extends AuthorizedRoom<ServerGameRoomState> {
     private async onNextRoundBegins() {
         const match = this.state.match
 
+        if (match.currentRoundStage === 0) {
+        } else {
+            await this.submitRoundRecord()
+        }
         logger.debug('Round began')
 
         if (match.currentRoundStage == 0) {
             logger.debug('Round began 0')
             match.beginAttack()
             match.nextRound()
-        } else if (match.currentRoundStage == 1) {
-            logger.debug('Round began 1')
-            match.beginPowerUp()
-        } else if (match.currentRoundStage == 2) {
-            logger.debug('Round began 2')
-            match.distributePowerPoints()
-            match.nextRound()
-            match.beginAttack()
+            this.innerState.currentMatch.roundHistoryRecord = roundRecord(1, match.currentTeam)
+        } else {
+            // if current stage was not 0, it means it was not the first round and we need to
+            // collect round history
+            await this.submitRoundRecord()
+
+            if (match.currentRoundStage == 1) {
+                logger.debug('Round began 1')
+                match.beginPowerUp()
+            } else if (match.currentRoundStage == 2) {
+                logger.debug('Round began 2')
+                match.distributePowerPoints()
+                match.nextRound()
+                match.beginAttack()
+            }
         }
 
         logger.debug('Round began 1')
@@ -337,6 +382,23 @@ export default class GameRoom extends AuthorizedRoom<ServerGameRoomState> {
         this.matchTimeout = this.clock.setTimeout(() => {
             this.onNextRoundBegins()
         }, Math.max(0, time))
+    }
+
+    private async submitRoundRecord() {
+        if (this.innerState.currentMatch.roundHistoryRecord) {
+            try {
+                await this.service.addRoundData(this.state.match.id, this.innerState.currentMatch.roundHistoryRecord)
+            } catch (e) {
+                // we'll just log it and do nothing, this error is not THAT bad
+                logger.error(e)
+            }
+            this.resetRoundRecord()
+        }
+    }
+
+    private resetRoundRecord() {
+        this.innerState.currentMatch.roundHistoryRecord =
+            roundRecord(this.state.match.currentRoundStage, this.state.match.currentTeam)
     }
 
     private async onMatchEnd() {

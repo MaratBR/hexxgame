@@ -1,0 +1,60 @@
+@import "../../imports/colors";
+
+.root {
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+}
+
+.back {
+  display: flex;
+  padding-top: 10px;
+}
+
+.results {
+  display: flex;
+  align-items: center;
+  overflow-x: auto;
+  box-sizing: border-box;
+  padding-top: 3em;
+}
+
+.team {
+  padding: 20px;
+  height: 50vh;
+  min-width: 200px;
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  background: #2a2a2a;
+  border-radius: 20px;
+  margin: 0 5px;
+  border: 3px solid rgba(white, 0.1);
+
+  &.winner {
+    position: relative;
+    border-color: white;
+
+    .topText {
+      animation: winner-bg 2s infinite;
+      display: block;
+      color: white;
+      position: absolute;
+      bottom: 95%;
+      font-size: .5em;
+      font-family: "Righteous", cursive;
+      border-radius: 10px;
+      filter: drop-shadow(0 0 12px black);
+    }
+  }
+
+  .name {
+    margin-top: 10px;
+    font-size: 1.5em;
+    font-family: 'Righteous', cursive;
+  }
+
+  .icon {
+
+  }
+}

@@ -1,5 +1,6 @@
 import {getModelForClass, prop} from "@typegoose/typegoose";
 import {AttackChange, MoveDirection, PowerChange, RoundHistory} from "@hexx/common";
+import {IDBase} from "./Base";
 
 
 class AttackChangeImpl implements AttackChange {
@@ -34,9 +35,9 @@ class RoundHistoryImpl implements RoundHistory {
     team: number;
 }
 
-export class MatchHistory {
-    @prop({required: true})
-    _id: string
+export class MatchHistory extends IDBase {
+    @prop({index: true})
+    matchID: string
 
     @prop({type: () => [RoundHistoryImpl]})
     rounds: RoundHistory[]

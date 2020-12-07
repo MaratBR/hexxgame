@@ -11,31 +11,33 @@ export class ServerMatchState extends MatchState {
     mapCells: MapSchema<ServerMapCell>
     domination: ServerDominationState
 
-    constructor(roomState: GameRoomState, match: Match, map: GameMap) {
+    constructor(roomState?: GameRoomState, match?: Match, map?: GameMap) {
         super();
-        this.id = match._id
-        this.teamsRotation = Array.from(match.teamsRotation)
-        this.startsAt = +match.startsAt
-        const cells: Dict<ServerMapCell> = {}
-        for (let cell of map.cells) {
-            const mapCell = new ServerMapCell(cell)
-            if (cell.initTeam && !match.teamsRotation.includes(cell.initTeam)) {
-                mapCell.team = 0
+        if (roomState && match && map) {
+            this.id = match._id
+            this.teamsRotation = Array.from(match.teamsRotation)
+            this.startsAt = +match.startsAt
+            const cells: Dict<ServerMapCell> = {}
+            for (let cell of map.cells) {
+                const mapCell = new ServerMapCell(cell)
+                if (cell.initTeam && !match.teamsRotation.includes(cell.initTeam)) {
+                    mapCell.team = 0
+                }
+                cells[MapUtils.getKey(cell.x, cell.y)] = mapCell
             }
-            cells[MapUtils.getKey(cell.x, cell.y)] = mapCell
-        }
-        this.domination = new ServerDominationState()
-        this.mapCells = new MapSchema<ServerMapCell>(cells)
-        this.domination.updateFromCells(this.mapCells)
-        for (let [playerID, player] of roomState.clients.entries()) {
-            if (player.team === 0)
-                return;
-            this.participants.set(playerID, new MatchParticipant({
-                dbID: playerID,
-                username: player.username,
-                online: true,
-                team: player.team
-            }))
+            this.domination = new ServerDominationState()
+            this.mapCells = new MapSchema<ServerMapCell>(cells)
+            this.domination.updateFromCells(this.mapCells)
+            for (let [playerID, player] of roomState.clients.entries()) {
+                if (player.team === 0)
+                    return;
+                this.participants.set(playerID, new MatchParticipant({
+                    dbID: playerID,
+                    username: player.username,
+                    online: true,
+                    team: player.team
+                }))
+            }
         }
     }
 
@@ -140,9 +142,13 @@ export class ServerMatchState extends MatchState {
             return true
         const winner = this.getWinner()
         if (winner !== null) {
-            this.winner = winner
+            this.setWinner(winner)
             return true
         }
         return false
+    }
+
+    setWinner(winner: number) {
+        this.winner = winner
     }
 }

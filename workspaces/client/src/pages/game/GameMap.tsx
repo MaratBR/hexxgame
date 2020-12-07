@@ -6,7 +6,7 @@ import GameApplication, {SelectedCellEvent} from "./GameApplication";
 import GameOverlay from "./GameOverlay";
 import Scope from "../../game/scope";
 import Loading from "../../components/Loading";
-import MatchResults from "./MatchResults";
+import MatchResults from "../results/MatchResults";
 import Modal from "../../components/Modal";
 import {Redirect} from "react-router-dom";
 
@@ -70,9 +70,11 @@ export default class GameMap extends React.Component<{}, State> {
                 Oops, no match results found
             </Modal>
         return <Modal>
-            <MatchResults winner={this.state.matchState.winner}
-                          domination={this.state.matchState.domination}
-                          teams={this.state.matchState.teamsRotation} />
+            <MatchResults
+                roomID={this.context.requireRoom().id}
+                winner={this.state.matchState.winner}
+                domination={this.state.matchState.domination}
+                teams={this.state.matchState.teamsRotation}/>
         </Modal>
     }
 

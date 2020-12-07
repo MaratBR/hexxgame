@@ -11,7 +11,7 @@ import Modal from "../../components/Modal";
 import GameMap from "./GameMap";
 import RoomPage from "./RoomPage";
 import UIContext from "../UIContext";
-import MatchResults from "./MatchResults";
+import MatchResults from "../results/MatchResults";
 import {Switch, Route} from "react-router-dom";
 
 /**
@@ -127,8 +127,6 @@ export class GameCoordinatorPage extends React.Component<Params, State> {
     }
 
     private async onRoomStateChanged(cs: GameRoomState) {
-        console.log(cs.match)
-
         if (cs.match?.id) {
             const inGame = !!cs.match.id
             if (this.state.inGame != inGame) {
