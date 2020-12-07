@@ -84,15 +84,18 @@ export class ServerMatchState extends MatchState {
         return false
     }
 
-    performPowerUp(x: number, y: number, maxOut: boolean) {
+    performPowerUp(x: number, y: number, maxOut: boolean): number {
         const cell = this.get(x, y)
         if (!cell || cell.team == 0)
-            return
+            return 0
         let diff = maxOut ? (cell.maxValue || MAX_VALUE) - cell.value : 1
-        diff = Math.min(diff, this.powerPoints)
+        diff = Math.min(Math.min(diff, this.powerPoints), (cell.maxValue || MAX_VALUE) - cell.value)
+        if (diff === 0)
+            return 0
         this.powerPoints -= diff
         cell.value += diff
         this.domination.updateFromPowerUp(cell.team, diff)
+        return diff
     }
 
     beginPowerUp() {
@@ -109,9 +112,9 @@ export class ServerMatchState extends MatchState {
     beginAttack() {
         this.currentRoundStage = 1
         const cells = Object.values(this.mapCells)
-            .filter(c => c.team == this.currentTeam).length
+            .filter(c => c.team == this.currentTeam)
+            .length
         const duration = cells * this.roundLengthPerCell + this.baseRoundLength
-        this.powerPoints = cells
         this.roundStageEndsAt = moment().add(duration, 'seconds').unix() * 1000
     }
 
@@ -131,9 +134,8 @@ export class ServerMatchState extends MatchState {
         const sorting = (a: MapCell, b: MapCell): number => a.value < b.value ? -1 : 0
 
         do {
-            this.powerPoints--
             cells.sort(sorting)
-            this.performPowerUp(cells[0].x, cells[0].y, false)
+            this.powerPoints -= this.performPowerUp(cells[0].x, cells[0].y, false)
         } while (this.powerPoints > 0)
     }
 

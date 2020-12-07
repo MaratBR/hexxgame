@@ -77,10 +77,10 @@ export class MatchState extends Schema {
     baseRoundLength: number = 20
 
     @type('number')
-    roundLengthPerCell: number = 5
+    roundLengthPerCell: number = 3
 
     @type('number')
-    roundLengthPerPoint: number = 1.5
+    roundLengthPerPoint: number = 3.5
 
     @type('number')
     currentRound: number = 0;

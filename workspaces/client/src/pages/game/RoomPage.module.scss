@@ -1,6 +1,16 @@
+@import "src/imports/colors";
+@import "src/imports/consts";
+
 .root {
   display: grid;
   grid-template-columns: 1fr 1fr;
+  grid-template-rows: 1fr 80vh;
+  grid-row-gap: 30px;
+}
+
+.teams {
+  height: 100%;
+  overflow-y: auto;
 }
 
 .players {
@@ -53,7 +63,28 @@
   border-color: #00ee00;
 }
 
+.backButton {
+  height: 45px;
+  min-width: 45px;
+  box-sizing: border-box;
+  display: block;
+  align-self: center;
+  color: #ccc;
+  margin-right: 10px;
+  padding-right: 15px;
+
+  &:hover {
+    color: #fff;
+  }
+
+  svg {
+    width: 40px;
+    height: 40px;
+  }
+}
+
 .toolBar {
+  background: linear-gradient(0deg, black, #002);
   padding: 15px;
   display: flex;
   min-height: 100px;
@@ -73,10 +104,18 @@
   }
 
   .toolBarSection {
-    background: rgba(white, 0.1);
+    background: rgba(white, 0.15);
     border-radius: 20px;
-    padding: 20px;
+    padding: 10px;
+    margin-right: 10px;
     box-sizing: border-box;
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+
+    h1, h2, h3, h4 {
+      margin: .1em;
+    }
   }
 }
 
@@ -92,7 +131,7 @@
     height: 100px;
     background: red;
     position: absolute;
-    background: linear-gradient(transparent, #333);
+    background: linear-gradient(transparent, $bg);
     pointer-events: none;
   }
 }
@@ -101,32 +140,20 @@
   display: flex;
   flex-direction: column;
   align-items: stretch;
-  padding: 10px;
-  overflow: auto;
-  height: 70vh;
-
-  &::-webkit-scrollbar {
-    background: transparent;
-    width: 9px;
-  }
-
-  &::-webkit-scrollbar-thumb {
-    background: rgba(white,0.5);
-    border-radius: 4px;
-  }
+  overflow-y: auto;
+  height: 100%;
 }
 
 .map {
   display: grid;
   grid-template: auto auto / 1fr auto;
   padding: 0 0 10px 10px;
-  background: rgba(white, 0.05);
+  background: rgba(white, 0.1);
+  border-radius: 10px;
   box-sizing: border-box;
   margin: 5px 0;
   &:hover {
-    background: white;
-    box-shadow: 0 0 4px white;
-    color: black;
+    background: rgba(white, 0.14);
   }
 
   span {
@@ -143,18 +170,19 @@
   font-size: 19px;
   border: none;
   font-family: 'Righteous', cursive;
-  background: #0e0;
   color: white;
   cursor: pointer;
+  border-radius: 0 10px 0 10px;
 
-  &:active, &:focus {
-    outline: solid 5px rgba(#0f0, .1);
+  &:hover {
+    background: #0e0;
   }
 }
 
 .play {
+  background: linear-gradient(0deg, black, #002);
   display: flex;
-  align-items: end;
+  align-items: center;
   justify-content: flex-end;
   padding-right: 50px;
 

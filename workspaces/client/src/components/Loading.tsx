@@ -13,7 +13,10 @@ type LoadingState = {
 }
 
 export default class Loading extends React.Component<LoadingProps, LoadingState> {
-    state: LoadingState = {}
+    constructor(props: LoadingProps) {
+        super(props);
+        this.state = {}
+    }
 
     componentDidMount() {
         setTimeout(() => this.setState({appeared: true}), 500)

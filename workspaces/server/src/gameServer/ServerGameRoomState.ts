@@ -8,7 +8,7 @@ export class ServerGameRoomState extends GameRoomState {
     match: ServerMatchState = new ServerMatchState()
 
     get inGame() {
-        return !!this.match.id
+        return !!this.match.id && !this.match.winner
     }
 
     recalculateTeamReadyValue(team: number) {

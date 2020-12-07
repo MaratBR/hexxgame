@@ -127,6 +127,14 @@ export default class AppAPI {
 
     //#region WS game API
 
+    leaveRoom() {
+        if (this.room) {
+            this.room.leave(true)
+            this._currentRoom = undefined
+            this._roomSubject.next()
+        }
+    }
+
     async joinRoom(id: string): Promise<Colyseus.Room<GameRoomState>> {
         console.log('joining room ' + id)
         const oldRoom = this.room

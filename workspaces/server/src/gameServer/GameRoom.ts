@@ -4,7 +4,7 @@ import AuthorizedRoom from "./AuthorizedRoom";
 import {User} from "../models/User";
 import {Match, MatchModel} from "../models/Match";
 import {GameMapModel} from "../models/GameMap";
-import {ClientInfo, GameRoomState, MatchState, RoundHistory, TeamInfo} from "@hexx/common";
+import {ClientInfo, GameRoomState, MapUtils, MatchState, RoundHistory, TeamInfo} from "@hexx/common";
 import {ServerMatchState} from "./ServerMatchState";
 import {ServerGameRoomState} from "./ServerGameRoomState";
 import GameService from "../services/GameService";
@@ -69,7 +69,7 @@ export default class GameRoom extends AuthorizedRoom<ServerGameRoomState> {
         this.onMessage<number>("setTeam", this.onSetTeam.bind(this))
         this.onMessage('toggleReady', this.onToggleReady.bind(this))
         this.onMessage<string>('setMap', this.onSetMap.bind(this))
-        this.onMessage("start", this.onStartGame.bind(this))
+        this.onMessage("start", this.onMatchStart.bind(this))
         this.initGameControls()
     }
 
@@ -114,13 +114,19 @@ export default class GameRoom extends AuthorizedRoom<ServerGameRoomState> {
         // if match is ongoing, set online to true
         // otherwise, add user to the lobby
 
-        if (this.state.match.id) {
+        const clientInfo = new ClientInfo({
+            ready: false,
+            username: auth.username,
+            team: 0
+        })
+
+        if (this.state.inGame) {
             // if user is found in match participants' list, set online to true
-
-
             const participants = this.state.match.participants
-            const pData = participants.get(auth._id)
             if (participants.has(auth._id)) {
+                const pData = participants.get(auth._id)
+                clientInfo.ready = true
+                clientInfo.team = pData.team
                 const onlineParticipants = Array.from(this.state.match.participants.values()).filter(p => p.online)
                 const onlineTeams = new Set(onlineParticipants.map(p => p.team))
                 if (onlineTeams.size === 1 && pData.team !== onlineTeams[0]) {
@@ -131,30 +137,32 @@ export default class GameRoom extends AuthorizedRoom<ServerGameRoomState> {
             } else {
                 // this user is a spectator
                 // TODO do something here
+
             }
         } else {
-            // just add use to the lobby
-            this.state.clients.set(auth._id, new ClientInfo({
-                ready: false,
-                username: auth.username,
-                team: 0
-            }))
+            // just add user to the spectators list
             this.state.spectators.push(auth._id)
         }
+
+        this.state.clients.set(auth._id, clientInfo)
     }
 
     onLeave(client: Client, consented?: boolean): void | Promise<any> {
         // remove user from spectators list or from lobby
         const data = this.state.clients[client.auth._id]
         if (data.team == 0) {
-            this.state.spectators.splice(this.state.spectators.indexOf(client.auth._id))
+            const index = this.state.spectators.indexOf(client.auth._id)
+            if (index !== -1)
+                this.state.spectators.splice(index, 1)
         } else {
             const members = this.state.teams[data.team - 1].members
-            members.splice(members.indexOf(client.auth._id))
+            const index = members.indexOf(client.auth._id)
+            if (index !== -1)
+                    members.splice(index, 1)
         }
 
         // remove user from match if user was participating
-        if (this.state.match.id && this.state.match.participants.has(client.auth._id)) {
+        if (this.state.inGame && this.state.match.participants.has(client.auth._id)) {
             // player left
             const pdata = this.state.match.participants.get(client.auth._id)
             pdata.online = false
@@ -166,7 +174,7 @@ export default class GameRoom extends AuthorizedRoom<ServerGameRoomState> {
             if (onlineTeams.size === 1) {
                 // one team left, make them winner in 10 seconds
                 this.winnerTimeout = this.clock.setTimeout(async () => {
-                    this.state.match.setWinner(onlineTeams[0])
+                    this.state.match.setWinner(onlineTeams.values().next().value)
                     await this.onMatchEnd()
                 }, 10000)
             }
@@ -176,6 +184,7 @@ export default class GameRoom extends AuthorizedRoom<ServerGameRoomState> {
         if (this.innerState.userConnections[client.auth._id] === client)
             delete this.innerState.userConnections[client.auth._id]
 
+        this.state.clients.delete(client.auth._id)
 
         return super.onLeave(client, consented);
     }
@@ -188,16 +197,15 @@ export default class GameRoom extends AuthorizedRoom<ServerGameRoomState> {
         if (typeof team !== 'number' || team < 0 || team > this.state.teams.length)
             return;
 
-
         const clientData = this.state.clients.get(client.auth._id)
         const oldTeam = clientData.team
         clientData.team = team
 
         if (oldTeam === 0) {
-            this.state.spectators.splice(this.state.spectators.indexOf(client.auth._id))
+            this.state.spectators.splice(this.state.spectators.indexOf(client.auth._id), 1)
         } else {
             const members = this.state.teams[oldTeam - 1].members
-            members.splice(members.indexOf(client.auth._id))
+            members.splice(members.indexOf(client.auth._id), 1)
             this.state.recalculateTeamReadyValue(oldTeam)
         }
         if (team === 0) {
@@ -243,7 +251,7 @@ export default class GameRoom extends AuthorizedRoom<ServerGameRoomState> {
         }
     }
 
-    private async onStartGame(client: Client) {
+    private async onMatchStart() {
         if (this.state.inGame)
             return;
         if (!this.canStartGame())
@@ -255,6 +263,12 @@ export default class GameRoom extends AuthorizedRoom<ServerGameRoomState> {
         await this.service.createMatchHistory(match)
         const map = await GameMapModel.findById(match.mapId)
         this.state.match = new ServerMatchState(this.state, match, map)
+        this.state.teams.forEach(team => {
+            team.members.forEach(memberID => {
+                this.state.clients.get(memberID).ready = false
+            })
+        })
+        this.broadcast('gameStarts')
         this.clock.setTimeout(() => {
             this.onNextRoundBegins()
         }, Math.max(+match.startsAt - +new Date(), 1))
@@ -300,10 +314,14 @@ export default class GameRoom extends AuthorizedRoom<ServerGameRoomState> {
 
         if (this.state.match.currentRoundStage !== 2 || this.state.match.powerPoints === 0)
             return;
-        const clientData = this.state.match.participants.get(client.auth._id)
+
+        const match = this.state.requireMatch()
+        const clientData = match.participants.get(client.auth._id)
         if (!clientData || clientData.team === 0 || this.state.match.currentTeam !== clientData.team)
             return;
 
+        if (match.mapCells.get(MapUtils.getKey(x, y)).team !== clientData.team)
+            return;
         this.state.match.performPowerUp(x, y, !!max)
     }
 
@@ -405,6 +423,7 @@ export default class GameRoom extends AuthorizedRoom<ServerGameRoomState> {
         const winner = this.state.match.winner
         this.matchTimeout?.clear()
         this.state.gameStartsAt = 0
+        this.state.teams.forEach((_, index) => this.state.recalculateTeamReadyValue(index + 1))
         await MatchModel.update({_id: this.state.match.id}, {winner})
         this.broadcast("gameOver", {winner})
     }
