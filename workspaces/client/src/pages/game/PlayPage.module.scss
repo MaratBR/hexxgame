@@ -1,0 +1,19 @@
+.root {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  height: 100vh;
+  position: relative;
+}
+
+.changeAppearenceButton {
+    position: absolute;
+    top: 0;
+    right: 0;
+    padding: 0;
+    border: none;
+    font-size: small;
+    font-family: sans-serif;
+    opacity: 0.3;
+}

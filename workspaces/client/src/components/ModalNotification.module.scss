@@ -1,0 +1,35 @@
+.modal {
+    background: #444;
+    border-radius: 15px;
+    padding: 10px 0;
+    width: min(90vw, 400px);
+    box-shadow: 0 0 10px #333;
+}
+
+.title {
+    user-select: none;
+    font-family: 'Righteous', cursive;
+    font-size: 2em;
+    border-bottom: 1px solid rgba(white, 0.1);
+    padding: 0 15px 6px 15px;
+    display: flex;
+    align-items: center;
+
+    button {
+        padding: 0;
+        border: none;
+        height: 30px;
+        width: 30px;
+        margin-left: auto;
+
+        svg {
+            fill: white;
+            height: 30px;
+            width: 30px;
+        }
+    }
+}
+
+.body {
+    padding: 10px 15px 0 15px;
+}

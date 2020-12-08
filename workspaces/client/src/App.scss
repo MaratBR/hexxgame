@@ -43,6 +43,12 @@ button, .button {
     outline: none;
     box-shadow: 0 0 0 6px rgba(white, 0.1);
   }
+
+  &:disabled {
+    border-color: grey;
+    color: grey;
+    cursor: not-allowed;
+  }
 }
 
 .input {
@@ -68,8 +74,8 @@ button, .button {
 .buttons {
   display: flex;
 
-  .button {
-    margin: 4px;
+  .button, button {
+    margin: 5px;
   }
 }
 
