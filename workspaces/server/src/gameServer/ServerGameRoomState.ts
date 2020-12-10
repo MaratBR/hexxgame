@@ -11,6 +11,10 @@ export class ServerGameRoomState extends GameRoomState {
         return !!this.match.id && !this.match.winner
     }
 
+    /**
+     * Пересчитывает значения ready для всех команд
+     * @param team
+     */
     recalculateTeamReadyValue(team: number) {
         this.teams[team - 1].ready = this.teams[team - 1].members.length && this.teams[team - 1].members.every(clientID => {
             return this.clients[clientID].ready

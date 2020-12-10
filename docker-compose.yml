@@ -1,0 +1,17 @@
+version:  "3.4"
+services:
+  react:
+    build:
+      context: .
+      target: client
+    ports:
+      - "80:80"
+  server: 
+    build:
+      context: .
+      target: server
+  db:
+    image: mongo
+  redis:
+    image: redis
+  

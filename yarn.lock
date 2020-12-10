@@ -1638,6 +1638,10 @@ __metadata:
 "@hexx/hexxgame@workspace:.":
   version: 0.0.0-use.local
   resolution: "@hexx/hexxgame@workspace:."
+  dependencies:
+    "@types/async": ^3
+    async: ^3.2.0
+    shutil: ^0.0.1
   languageName: unknown
   linkType: soft
 
@@ -2983,6 +2987,13 @@ __metadata:
   version: 4.2.0
   resolution: "@types/aria-query@npm:4.2.0"
   checksum: 196c811653507cc0601bb1260ddeb58d80797306cf71638605d64d26ae324345b4b95514617942aadf5b899602623cf848ba6780e921526ef5cf0b0cae80825f
+  languageName: node
+  linkType: hard
+
+"@types/async@npm:^3":
+  version: 3.2.5
+  resolution: "@types/async@npm:3.2.5"
+  checksum: 37cb5722b9892e286a22da58f407218d9195cc612b50628aabe10375e9d30ade4cdf2a26d8000de3ef6fe13802579dc50b51193a6f9a05a74d9d384135968da4
   languageName: node
   linkType: hard
 
@@ -4513,7 +4524,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"async@npm:^3.1.0":
+"async@npm:^3.1.0, async@npm:^3.2.0":
   version: 3.2.0
   resolution: "async@npm:3.2.0"
   checksum: 5c7913c08496877a9896dc6670d3a6c64f02d350e74b9e9191194959c473414a0732539ebdfec0fd2f34c20f439714773a30c20e0e68eb27bd8ee5ec9d8ff5ba
@@ -16610,6 +16621,13 @@ fsevents@~2.1.2:
   version: 0.1.1
   resolution: "shellwords@npm:0.1.1"
   checksum: 3559ff550917ece921d252edf42eb54827540e9676e537137ace236df8f9b78e48c542ae0b3f8876fea0faf5826c97629d5b8cb9ac7dee287260e9804fb8132c
+  languageName: node
+  linkType: hard
+
+"shutil@npm:^0.0.1":
+  version: 0.0.1
+  resolution: "shutil@npm:0.0.1"
+  checksum: e53dc250e2bff6b5f09515187d31feb00eb261505789ab2882399ebdac3b116b4b0ef3bbabb15f673a96913902a424d361ca04225b6990e0b564d8f2b7ceb18b
   languageName: node
   linkType: hard
 

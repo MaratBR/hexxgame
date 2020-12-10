@@ -35,8 +35,9 @@ export enum MatchAction {
 
 export type AttackChange = {
     fromX: number
-    fromY: number,
-    direction: MoveDirection
+    fromY: number
+    toX: number
+    toY: number
 }
 
 export type PowerChange = {

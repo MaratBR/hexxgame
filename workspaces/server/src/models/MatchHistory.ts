@@ -4,8 +4,10 @@ import {IDBase} from "./Base";
 
 
 class AttackChangeImpl implements AttackChange {
-    @prop({type: Number})
-    direction: MoveDirection;
+    @prop()
+    toX: number;
+    @prop()
+    toY: number;
     @prop()
     fromX: number;
     @prop()

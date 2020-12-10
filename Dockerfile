@@ -2,6 +2,7 @@ FROM mhart/alpine-node:14.15 AS builder
 
 WORKDIR /usr/src/app
 
+COPY nginx.conf ./
 COPY package.json ./
 COPY tsconfig.json ./
 COPY workspaces workspaces
@@ -26,7 +27,7 @@ ENTRYPOINT ["node", "workspaces/server/dist/server.js"]
 FROM nginx:1.15 AS client
 WORKDIR /var/www/hexx
 COPY --from=builder /usr/src/app/workspaces/client/build ./build
-COPY --from=builder /usr/src/app/workspaces/client/nginx.conf /etc/nginx/conf.d/default.conf
+COPY --from=builder /usr/src/app/nginx.conf /etc/nginx/conf.d/default.conf
 RUN pwd
 RUN ls
 RUN ls ./build

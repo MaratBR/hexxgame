@@ -272,13 +272,13 @@
         "affectsGlobalScope": false
       },
       "./src/colyseus.ts": {
-        "version": "46cd17d86961c77e9d51fc34e8de69cafa9dce9cc3231f7cb08b0ce3b515c9cc",
+        "version": "e508fa85471b823f525db2045ac7703ebb288d04c7c6df7ad5a6e39d09684265",
         "signature": "ecaba5a6264610b6506df66fb36f52d665ee9eb3b7b5cef776ecab940a6ad717",
         "affectsGlobalScope": false
       },
       "./src/dto.ts": {
-        "version": "e10aaf788cfcf1218a0ecd460dc116448b1d35786216b46e6ad6a7280e2fb6e1",
-        "signature": "e0aa767aa810eaeccd1048f0edb6c8353f2c3b5afa6160db16a6ae930547660b",
+        "version": "0b5fd233e1495c72cdd769a33dffb88bc4d51e48ed12b0802d78ea853cc2e7df",
+        "signature": "8e3d82abe8e0909dee6a7e3054091a94b02a14a8f7f2b8c9792e3362322808a6",
         "affectsGlobalScope": false
       },
       "./src/consts.ts": {
@@ -554,6 +554,11 @@
       "../../node_modules/@types/aria-query/index.d.ts": {
         "version": "17ce4c8c90dd63282e4ff0d6a90fb4c86244293d77a1eaa23947dbe4e8b66eb5",
         "signature": "17ce4c8c90dd63282e4ff0d6a90fb4c86244293d77a1eaa23947dbe4e8b66eb5",
+        "affectsGlobalScope": false
+      },
+      "../../node_modules/@types/async/index.d.ts": {
+        "version": "7a2705abe20ffc02e3d967eb9e75e1a428e477491a91f80c3fe2c34a412033d3",
+        "signature": "7a2705abe20ffc02e3d967eb9e75e1a428e477491a91f80c3fe2c34a412033d3",
         "affectsGlobalScope": false
       },
       "../../node_modules/@babel/types/lib/index.d.ts": {
@@ -1099,7 +1104,6 @@
       "composite": true,
       "incremental": true,
       "downlevelIteration": true,
-      "watch": true,
       "configFilePath": "./tsconfig.json"
     },
     "referencedMap": {
@@ -2289,6 +2293,7 @@
       "../../node_modules/@types/accepts/index.d.ts",
       "../../node_modules/@types/anymatch/index.d.ts",
       "../../node_modules/@types/aria-query/index.d.ts",
+      "../../node_modules/@types/async/index.d.ts",
       "../../node_modules/@types/babel__core/index.d.ts",
       "../../node_modules/@types/babel__generator/index.d.ts",
       "../../node_modules/@types/babel__template/index.d.ts",

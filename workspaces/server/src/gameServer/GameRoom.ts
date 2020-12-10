@@ -4,7 +4,7 @@ import AuthorizedRoom from "./AuthorizedRoom";
 import {User} from "../models/User";
 import {Match, MatchModel} from "../models/Match";
 import {GameMapModel} from "../models/GameMap";
-import {ClientInfo, GameRoomState, MapUtils, MatchState, RoundHistory, TeamInfo} from "@hexx/common";
+import {ClientInfo, MapUtils, MatchState, RoundHistory, TeamInfo} from "@hexx/common";
 import {ServerMatchState} from "./ServerMatchState";
 import {ServerGameRoomState} from "./ServerGameRoomState";
 import GameService from "../services/GameService";
@@ -295,6 +295,10 @@ export default class GameRoom extends AuthorizedRoom<ServerGameRoomState> {
         if (!this.state.match.performAttack(fromX, fromY, toX, toY)) {
             client.send('invalid_move', d.returnID || null)
             return
+        } else {
+            this.innerState.currentMatch.roundHistoryRecord.attacks.push({
+                fromX, fromY, toX, toY
+            })
         }
 
         if (this.state.match.endMatchIfHasWinner()) {
@@ -322,7 +326,10 @@ export default class GameRoom extends AuthorizedRoom<ServerGameRoomState> {
 
         if (match.mapCells.get(MapUtils.getKey(x, y)).team !== clientData.team)
             return;
-        this.state.match.performPowerUp(x, y, !!max)
+        const points = this.state.match.performPowerUp(x, y, !!max)
+        this.innerState.currentMatch.roundHistoryRecord.powerUps.push({
+            x, y, points
+        })
     }
 
     private async onSkipRound(client: Client) {
@@ -360,8 +367,7 @@ export default class GameRoom extends AuthorizedRoom<ServerGameRoomState> {
     private async onNextRoundBegins() {
         const match = this.state.match
 
-        if (match.currentRoundStage === 0) {
-        } else {
+        if (match.currentRoundStage !== 0) {
             await this.submitRoundRecord()
         }
         logger.debug('Round began')
@@ -403,7 +409,10 @@ export default class GameRoom extends AuthorizedRoom<ServerGameRoomState> {
     }
 
     private async submitRoundRecord() {
-        if (this.innerState.currentMatch.roundHistoryRecord) {
+        if (this.innerState.currentMatch.roundHistoryRecord && (
+            this.innerState.currentMatch.roundHistoryRecord.powerUps.length ||
+            this.innerState.currentMatch.roundHistoryRecord.attacks.length
+        )) {
             try {
                 await this.service.addRoundData(this.state.match.id, this.innerState.currentMatch.roundHistoryRecord)
             } catch (e) {
@@ -420,6 +429,7 @@ export default class GameRoom extends AuthorizedRoom<ServerGameRoomState> {
     }
 
     private async onMatchEnd() {
+        await this.submitRoundRecord()
         const winner = this.state.match.winner
         this.matchTimeout?.clear()
         this.state.gameStartsAt = 0

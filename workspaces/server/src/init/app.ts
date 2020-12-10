@@ -39,7 +39,8 @@ export default function createApp(cfg?: Partial<IAppParams>): Application {
 
     useKoaServer(app, {
         controllers: [
-            resolve(__dirname, '../controllers/*.ts')
+            resolve(__dirname, '../controllers/*.ts'),
+            resolve(__dirname, '../controllers/*.js')
         ],
         authorizationChecker: (action: Action) => {
             const ctx: Context = action.context

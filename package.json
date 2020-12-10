@@ -15,6 +15,13 @@
   },
   "scripts": {
     "server-dev": "yarn workspace @hexx/server watch-server",
-    "client-dev": "yarn workspace @hexx/client start"
+    "client-dev": "yarn workspace @hexx/client start",
+    "clean": "[ rm -f ./*.docker.uid ./*.log || true ] && yarn workspaces foreach run clean",
+    "build": "node scripts/build.js"
+  },
+  "devDependencies": {
+    "@types/async": "^3",
+    "async": "^3.2.0",
+    "shutil": "^0.0.1"
   }
 }

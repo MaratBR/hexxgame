@@ -3,10 +3,10 @@
   "version": "1.0.0",
   "private": true,
   "scripts": {
-    "clean": "rm -rf ./dist",
+    "clean": "rm -rf ./dist && rm -f ./*.log",
     "build-ts": "yarn tsc",
     "lint": "tsc --noEmit",
-    "serve": "node dist/server.js",
+    "serve": "cd dist && node server.js",
     "build": "yarn run lint && yarn run build-ts",
     "start": "yarn run serve",
     "watch-server": "yarn run nodemon --watch . -e ts,tsx --exec ts-node --prefer-ts-exts server.ts",
