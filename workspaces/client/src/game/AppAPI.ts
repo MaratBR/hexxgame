@@ -8,6 +8,7 @@ import {MatchMakeError} from "colyseus.js/lib/Client";
 
 interface IAPIOptions {
     address: string
+    https: boolean
 }
 
 export type IGameRoomConnectionState = {
@@ -23,7 +24,9 @@ export default class AppAPI {
     private readonly _roomConnection = new Subject<IGameRoomConnectionState>()
     private readonly _lastError = new Subject()
     private readonly scope = new Scope()
+    private readonly _opts: IAPIOptions
     private userInfo?: UserInfoDto
+    private googleLoginInProgress: boolean = false
 
     get roomSubject(): Observable<Colyseus.Room<GameRoomState>> {
         return this._roomSubject
@@ -42,10 +45,12 @@ export default class AppAPI {
     }
 
     constructor(opts: IAPIOptions) {
+        this._opts = opts
         this.client = axios.create({
-            baseURL: 'http://' + opts.address,
+            baseURL: (opts.https ? 'https' : 'http') + '://' + opts.address,
             withCredentials: true
         })
+        console.log(opts.address)
         this.wsClient = new Colyseus.Client('ws://' + opts.address)
         ;(window as any).ws = this.wsClient
     }
@@ -203,5 +208,26 @@ export default class AppAPI {
         if (this._currentRoom)
             return this._currentRoom
         throw new Error('No room found')
+    }
+
+    async logout() {
+        await this.client.post('api/auth/logout')
+    }
+
+    googleLogin() {
+        if (this.googleLoginInProgress)
+            return
+        this.googleLoginInProgress = true
+        const modal = window.open((this._opts.https ? 'https' : 'http') + '://' + this._opts.address + '/api/auth/google', 'oauth_window', 'width=640,height=720')
+        if (!modal)
+            return false
+        const interval = setInterval(() => {
+            if (modal.closed) {
+                window.location.reload()
+                clearInterval(interval)
+                this.googleLoginInProgress = false
+            }
+        }, 100)
+        return false
     }
 }

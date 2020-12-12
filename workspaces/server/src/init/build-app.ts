@@ -26,12 +26,12 @@ interface IAppBuilderConfig {
 export default class AppBuilder {
     private _cfg: IAppBuilderConfig = {
         port: 8000,
-        host: '0.0.0.0'
+        host: 'localhost'
     }
     private _appCfg?: IAppParams
 
-    port(v: number): this {
-        this._cfg.port = v
+    withConfig(cfg: IAppBuilderConfig): this {
+        this._cfg = cfg
         return this
     }
 

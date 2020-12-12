@@ -3,6 +3,7 @@ import ApiContext from "../../game/context";
 import AppAPI from "../../game/AppAPI";
 import styles from "./PlayPage.module.scss"
 import ModalNotification from "../../components/ModalNotification";
+import GoogleAuthButton from "../../components/GoogleAuthButton";
 
 type PlayPageState = {
     roomID?: string
@@ -10,6 +11,8 @@ type PlayPageState = {
     error?: string
     personalRoom?: string
     bgIndex: number
+    isAnon?: boolean
+    username?: string
 }
 
 const BGS = [
@@ -27,10 +30,20 @@ class PlayPage extends React.Component<any, PlayPageState> {
         bgIndex: 0
     }
 
-    componentDidMount() {
+    async componentDidMount() {
+        try {
+            const {username} = await this.context.getUserInfo()
+            this.setState({username})
+        } catch (e) {
+            this.props.history.push('/')
+        }
+
         const bgIndex = localStorage.getItem('bgIndex') || '0'
         this.setState({
             bgIndex: Math.min(Math.max(+bgIndex || 0, 0), BGS.length - 1)
+        })
+        this.context.getUserInfo().then(({isAnon}) => {
+            this.setState({isAnon})
         })
     }
 
@@ -45,6 +58,7 @@ class PlayPage extends React.Component<any, PlayPageState> {
     render() {
         return <div className={styles.root} style={{background: BGS[this.state.bgIndex]}}>
             <button className={styles.changeAppearenceButton} onClick={() => this.nextBgIndex()}>change that</button>
+            {this.state.isAnon === true ? undefined : <small>Hi, {this.state.username}!</small>}
             <h3>Join room</h3>
             <div className="spacing">
                 <input className="input display" type="text" onChange={(e) => this.setState({code: e.target.value})} />
@@ -59,10 +73,28 @@ class PlayPage extends React.Component<any, PlayPageState> {
                 </button>
             </div>
 
+            <div className={styles.bottomNote}>
+                {this.state.isAnon ? <span>You have an anonymous account,<br/> your progress won't be saved</span> : undefined}
+
+                <div className="buttons">
+                    <button onClick={() => this.logout()}>logout</button>
+                    {this.state.isAnon ? <GoogleAuthButton /> : undefined}
+                </div>
+            </div>
+
             {this.state.error ? <ModalNotification title="Error" onClose={() => this.setState({error: undefined})}>
                 <div>{this.state.error}</div>
             </ModalNotification> : undefined}
         </div>
+    }
+
+    private async logout() {
+        await this.context.logout()
+        window.location.reload()
+    }
+
+    private googleLogin() {
+        this.context.googleLogin()
     }
 
     private async joinPrivateRoom() {

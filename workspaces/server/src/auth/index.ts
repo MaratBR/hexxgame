@@ -1,6 +1,12 @@
 import {BaseContext, Next} from "koa";
 import Koa from "koa"
 import {Strategy as LocalStrategy, VerifyFunction as LocalVerifyFunction} from "passport-local"
+import {
+    Profile,
+    Strategy as GoogleStrategy,
+    VerifyCallback,
+    VerifyCallback as GoogleVerifyFunction
+} from "passport-google-oauth20"
 import koaPassport from "koa-passport";
 import {Container} from "typedi";
 
@@ -42,12 +48,30 @@ const localStrategy = new LocalStrategy({
     passReqToCallback: false
 }, localVerifyFunction)
 
+const googleVerifyFunction = async (accessToken: string, refreshToken: string, profile: Profile, done: VerifyCallback) => {
+    const service = Container.get(UsersService)
+    const user = await service.getGoogleUserOrCreate(profile)
+
+    if (user) {
+        done(null, user)
+    } else {
+        done(new Error('user not found'))
+    }
+}
+
+const googleStrategy = new GoogleStrategy({
+    clientID: config.google.clientID,
+    clientSecret: config.google.clientSecret,
+    callbackURL: '/api/auth/google/redirect'
+}, googleVerifyFunction)
+
 let koaPasswordReady = false
 
 export function initPassport() {
     if (!koaPasswordReady) {
         koaPasswordReady = true
         koaPassport.use('local', localStrategy)
+        koaPassport.use('google', googleStrategy)
         koaPassport.serializeUser<User, string>((user, done) => done(null, user._id))
         koaPassport.deserializeUser<User, string>(async (userId, done) => {
             const user = await UserModel.findById(userId)

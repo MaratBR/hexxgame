@@ -5,6 +5,7 @@ import WelcomePage from "./pages/WelcomePage";
 import GamePage from "./pages/GamePage";
 import Overlay from "./Overlay";
 import * as PIXI from "pixi.js"
+import OAuthDonePage from "./pages/OAuthDonePage";
 
 function App() {
 
@@ -13,6 +14,7 @@ function App() {
             <BrowserRouter>
                 <Route exact path='/' component={WelcomePage} />
                 <Route path='/game' component={GamePage} />
+                <Route path='/oauth' component={OAuthDonePage} />
             </BrowserRouter>
 
             <Overlay />

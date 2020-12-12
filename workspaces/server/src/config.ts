@@ -1,22 +1,38 @@
+import dotenv from "dotenv";
+
+dotenv.config()
+
 const ENV = process.env.NODE_ENV || 'development'
 const DEBUG = !!(process.env.DEBUG || ENV != 'production')
 
 const config = {
     debug: DEBUG,
     env: ENV,
+    host: 'localhost',
+    port: 8000,
+
+    google: {
+        clientID: process.env.GOOGLE_OATH_CLIENT_ID,
+        clientSecret: process.env.GOOGLE_OATH_CLIENT_SECRET
+    },
+
+    oauth: {
+        doneRedirect: process.env.OAUTH_REDIRECT_URL
+    },
+
     keys: {
-        main: 'secretsecret',
-        jwtSecret: 'sfdgfhedhrghfgefghasdgfjrijfkljkfeijkrhfjknwshfjrlnjhfkldmfesrdfthgjksrdftghjdrfg'
+        main: process.env.SECRET_KEY_MAIN,
+        jwtSecret: process.env.SECRET_KEY_JWT
     },
 
     jwt: {
-        issuer: 'hexx',
-        audience: 'hexx-ui'
+        issuer: process.env.JWT_ISSUER || 'hexx',
+        audience: process.env.JWT_AUDIENCE || 'hexx-ui'
     },
 
     redis: {
-        host: process.env.NODE_REDIS_IP || '127.0.0.1',
-        port: +(process.env.NODE_REDIS_PORT || 6379)
+        host: process.env.REDIS_IP || '127.0.0.1',
+        port: +(process.env.REDIS_PORT || 6379)
     },
 
     session: {
@@ -28,15 +44,15 @@ const config = {
     },
 
     db: {
-        uri: 'mongodb://localhost:27017/hexx-koa'
+        uri: process.env.MONGODB_URI
     },
 
     cors: {
-        origin: 'http://localhost:3000'
+        origin: process.env.CORS
     },
     logging: {
-        error: 'error.log',
-        all: 'all.log'
+        error: process.env.ERROR_LOG,
+        all: process.env.ALL_LOG
     }
 }
 

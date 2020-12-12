@@ -36,6 +36,9 @@ export class User extends Base {
     @prop()
     gameSession?: GameSession;
 
+    @prop({default: null})
+    googleId?: string | null = null
+
     setRoom(room: Room) {
         return this._setRoom(room._id)
     }
@@ -83,14 +86,6 @@ export class User extends Base {
         if (room)
             return room
         throw new Error('room not found')
-    }
-
-    toPlayerInfo(): PlayerInfoDto {
-        return {
-            id: this._id,
-            username: this.username,
-            isAnon: this.isAnon
-        }
     }
 }
 

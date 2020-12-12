@@ -1,0 +1,21 @@
+.google {
+  font-size: 14px;
+  align-items: center;
+  display: flex;
+  background: white;
+  color: black;
+  height: 40px;
+  padding: 11px 8px;
+  box-shadow: 0 3px 5px -2px #444;
+  font-family: Roboto, sans-serif;
+
+  & > img {
+    margin-right: 24px;
+    height: 18px;
+    width: 18px;
+  }
+
+  &:hover {
+    background: #eee;
+  }
+}

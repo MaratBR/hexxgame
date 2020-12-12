@@ -1,17 +1,19 @@
-import {BaseContext, BaseRequest, Context, Response} from "koa";
+import {BaseContext, BaseRequest, Context, Request, Response} from "koa";
 import {
     Authorized,
     Ctx,
     CurrentUser,
     Get,
     JsonController,
-    Post,
-    Req,
+    Post, Redirect,
+    Req, UseBefore,
 } from "routing-controllers";
+import passport  from "koa-passport";
 import UsersService from "../services/UsersService";
 import {User, userInfo} from "../models/User";
 import {message} from "./api";
 import Tokens from "../auth/tokens";
+import config from "../config";
 
 @JsonController('/api/auth')
 export class AuthController {
@@ -48,10 +50,30 @@ export class AuthController {
         return this.responseForNewUser(user)
     }
 
+    @Get('/google')
+    @UseBefore(passport.authenticate("google", {scope: ["profile"]}))
+    googleLogin(@CurrentUser() user: User) {
+        return {user}
+    }
+
+    loginGoogleRedirect = passport.authenticate('google')
+
+    @Get('/google/redirect')
+    @UseBefore(passport.authenticate('google'))
+    @Redirect(config.oauth.doneRedirect)
+    redirect(@CurrentUser() user: User) {}
+
     @Authorized()
     @Get('/currentUser')
     getCurrentUser(@CurrentUser() user: User) {
         return userInfo(user)
+    }
+
+    @Post('/logout')
+    async logout(@Ctx() ctx: Context) {
+        await ctx.logout()
+        ctx.session = null
+        return null
     }
 
 
