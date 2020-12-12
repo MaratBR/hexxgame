@@ -93,7 +93,6 @@ export default class AppBuilder {
             host: this._cfg.host,
             run() {
                 server.listen(this.port, this.host || 'localhost')
-                const address = server.address()
                 console.log(`👉 Server listening on ${this.host}:${this.port}`)
             },
             stop() {

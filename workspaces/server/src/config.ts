@@ -8,7 +8,7 @@ const DEBUG = !!(process.env.DEBUG || ENV != 'production')
 const config = {
     debug: DEBUG,
     env: ENV,
-    host: 'localhost',
+    host: process.env.HOST,
     port: 8000,
 
     google: {
@@ -40,7 +40,8 @@ const config = {
         maxAge: 60 * 60 * 24 * 120,
         secure: !DEBUG,
         renew: false,
-        prefix: 'session'
+        prefix: 'session',
+        domain: process.env.COOKIES_DOMAIN || undefined
     },
 
     db: {

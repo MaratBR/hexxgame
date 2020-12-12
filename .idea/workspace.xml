@@ -14,32 +14,19 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="4ab1c6cd-2206-4d65-81b2-41909449377e" name="Default Changelist" comment="some parts of game logic">
-      <change afterPath="$PROJECT_DIR$/workspaces/client/src/assets/Google__G__Logo.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/workspaces/client/src/assets/btn_google_light_normal.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/workspaces/client/src/components/GoogleAuthButton.tsx" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/workspaces/client/src/pages/OAuthDonePage.tsx" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/workspaces/server/.env.sample" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/kube/db-deployment.yaml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/kube/react-deployment.yaml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/kube/react-service.yaml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/kube/redis-deployment.yaml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/kube/server-deployment.yaml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/workspaces/client/.env" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/workspaces/client/public/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/workspaces/client/public/index.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/workspaces/client/src/App.module.sass" beforeDir="false" afterPath="$PROJECT_DIR$/workspaces/client/src/components/GoogleAuthButton.module.scss" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/workspaces/client/src/App.scss" beforeDir="false" afterPath="$PROJECT_DIR$/workspaces/client/src/App.scss" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/workspaces/client/src/App.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/workspaces/client/src/App.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/workspaces/client/src/game/AppAPI.ts" beforeDir="false" afterPath="$PROJECT_DIR$/workspaces/client/src/game/AppAPI.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Dockerfile" beforeDir="false" afterPath="$PROJECT_DIR$/Dockerfile" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/nginx.conf" beforeDir="false" afterPath="$PROJECT_DIR$/nginx.conf" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/workspaces/client/src/game/context.ts" beforeDir="false" afterPath="$PROJECT_DIR$/workspaces/client/src/game/context.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/workspaces/client/src/pages/WelcomePage.module.scss" beforeDir="false" afterPath="$PROJECT_DIR$/workspaces/client/src/pages/WelcomePage.module.scss" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/workspaces/client/src/pages/WelcomePage.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/workspaces/client/src/pages/WelcomePage.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/workspaces/client/src/pages/game/PlayPage.module.scss" beforeDir="false" afterPath="$PROJECT_DIR$/workspaces/client/src/pages/game/PlayPage.module.scss" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/workspaces/client/src/pages/game/PlayPage.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/workspaces/client/src/pages/game/PlayPage.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/workspaces/server/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/workspaces/server/package.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/workspaces/server/server.ts" beforeDir="false" afterPath="$PROJECT_DIR$/workspaces/server/server.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/workspaces/server/src/auth/index.ts" beforeDir="false" afterPath="$PROJECT_DIR$/workspaces/server/src/auth/index.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/workspaces/server/.env.sample" beforeDir="false" afterPath="$PROJECT_DIR$/workspaces/server/.env.sample" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/workspaces/server/src/config.ts" beforeDir="false" afterPath="$PROJECT_DIR$/workspaces/server/src/config.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/workspaces/server/src/controllers/AuthController.ts" beforeDir="false" afterPath="$PROJECT_DIR$/workspaces/server/src/controllers/AuthController.ts" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/workspaces/server/src/init/build-app.ts" beforeDir="false" afterPath="$PROJECT_DIR$/workspaces/server/src/init/build-app.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/workspaces/server/src/models/User.ts" beforeDir="false" afterPath="$PROJECT_DIR$/workspaces/server/src/models/User.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/workspaces/server/src/services/UsersService.ts" beforeDir="false" afterPath="$PROJECT_DIR$/workspaces/server/src/services/UsersService.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/yarn.lock" beforeDir="false" afterPath="$PROJECT_DIR$/yarn.lock" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -231,7 +218,8 @@
       <workItem from="1607398414292" duration="12000" />
       <workItem from="1607590965299" duration="7136000" />
       <workItem from="1607608577219" duration="7075000" />
-      <workItem from="1607683055767" duration="16700000" />
+      <workItem from="1607683055767" duration="16762000" />
+      <workItem from="1607781301325" duration="9280000" />
     </task>
     <task id="LOCAL-00001" summary="finishing basics">
       <created>1605153963739</created>
@@ -387,7 +375,14 @@
       <option name="project" value="LOCAL" />
       <updated>1607622316703</updated>
     </task>
-    <option name="localTasksCounter" value="23" />
+    <task id="LOCAL-00023" summary="google oauth">
+      <created>1607766561440</created>
+      <option name="number" value="00023" />
+      <option name="presentableId" value="LOCAL-00023" />
+      <option name="project" value="LOCAL" />
+      <updated>1607766561440</updated>
+    </task>
+    <option name="localTasksCounter" value="24" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -429,7 +424,8 @@
     <MESSAGE value="gameplay done" />
     <MESSAGE value="sorta working product" />
     <MESSAGE value="building procedure, docker bugs" />
-    <option name="LAST_COMMIT_MESSAGE" value="building procedure, docker bugs" />
+    <MESSAGE value="google oauth" />
+    <option name="LAST_COMMIT_MESSAGE" value="google oauth" />
   </component>
   <component name="WindowStateProjectService">
     <state x="420" y="189" width="1084" height="760" key="#com.intellij.execution.impl.EditConfigurationsDialog" timestamp="1606880900202">
@@ -468,26 +464,26 @@
     </state>
     <state x="563" y="311" width="439" height="285" key="Github.ShareDialog/0.32.1920.960@0.32.1920.960" timestamp="1606569268141" />
     <state x="582" y="332" key="Github.ShareDialog/0.38.1920.1042@0.38.1920.1042" timestamp="1606284237437" />
-    <state width="1896" height="300" key="GridCell.Tab.0.bottom" timestamp="1607766484092">
+    <state width="1896" height="300" key="GridCell.Tab.0.bottom" timestamp="1607787570394">
       <screen x="0" y="32" width="1920" height="960" />
     </state>
     <state width="993" height="355" key="GridCell.Tab.0.bottom/0.32.1920.1048@0.32.1920.1048" timestamp="1606380925272" />
-    <state width="1896" height="300" key="GridCell.Tab.0.bottom/0.32.1920.960@0.32.1920.960" timestamp="1607766484092" />
-    <state width="1896" height="300" key="GridCell.Tab.0.center" timestamp="1607766484092">
+    <state width="1896" height="300" key="GridCell.Tab.0.bottom/0.32.1920.960@0.32.1920.960" timestamp="1607787570394" />
+    <state width="1896" height="300" key="GridCell.Tab.0.center" timestamp="1607787570394">
       <screen x="0" y="32" width="1920" height="960" />
     </state>
     <state width="993" height="355" key="GridCell.Tab.0.center/0.32.1920.1048@0.32.1920.1048" timestamp="1606380925268" />
-    <state width="1896" height="300" key="GridCell.Tab.0.center/0.32.1920.960@0.32.1920.960" timestamp="1607766484092" />
-    <state width="1896" height="300" key="GridCell.Tab.0.left" timestamp="1607766484091">
+    <state width="1896" height="300" key="GridCell.Tab.0.center/0.32.1920.960@0.32.1920.960" timestamp="1607787570394" />
+    <state width="1896" height="300" key="GridCell.Tab.0.left" timestamp="1607787570393">
       <screen x="0" y="32" width="1920" height="960" />
     </state>
     <state width="993" height="355" key="GridCell.Tab.0.left/0.32.1920.1048@0.32.1920.1048" timestamp="1606380925268" />
-    <state width="1896" height="300" key="GridCell.Tab.0.left/0.32.1920.960@0.32.1920.960" timestamp="1607766484091" />
-    <state width="1896" height="300" key="GridCell.Tab.0.right" timestamp="1607766484092">
+    <state width="1896" height="300" key="GridCell.Tab.0.left/0.32.1920.960@0.32.1920.960" timestamp="1607787570393" />
+    <state width="1896" height="300" key="GridCell.Tab.0.right" timestamp="1607787570394">
       <screen x="0" y="32" width="1920" height="960" />
     </state>
     <state width="993" height="355" key="GridCell.Tab.0.right/0.32.1920.1048@0.32.1920.1048" timestamp="1606380925269" />
-    <state width="1896" height="300" key="GridCell.Tab.0.right/0.32.1920.960@0.32.1920.960" timestamp="1607766484092" />
+    <state width="1896" height="300" key="GridCell.Tab.0.right/0.32.1920.960@0.32.1920.960" timestamp="1607787570394" />
     <state width="1896" height="224" key="GridCell.Tab.1.bottom" timestamp="1607762644279">
       <screen x="0" y="32" width="1920" height="960" />
     </state>
@@ -570,11 +566,11 @@
       <screen x="0" y="32" width="1920" height="1048" />
     </state>
     <state x="100" y="132" width="1720" height="848" key="dock-window-2/0.32.1920.1048@0.32.1920.1048" timestamp="1604748662033" />
-    <state x="830" y="212" width="739" height="633" key="find.popup" timestamp="1607763985134">
+    <state x="830" y="212" width="739" height="633" key="find.popup" timestamp="1607786140270">
       <screen x="0" y="32" width="1920" height="960" />
     </state>
     <state x="590" y="211" width="739" height="690" key="find.popup/0.32.1920.1048@0.32.1920.1048" timestamp="1606293825578" />
-    <state x="830" y="212" width="739" height="633" key="find.popup/0.32.1920.960@0.32.1920.960" timestamp="1607763985134" />
+    <state x="830" y="212" width="739" height="633" key="find.popup/0.32.1920.960@0.32.1920.960" timestamp="1607786140270" />
     <state x="830" y="233" width="739" height="688" key="find.popup/0.38.1920.1042@0.38.1920.1042" timestamp="1606280317743" />
     <state x="540" y="231" key="run.anything.popup" timestamp="1606909767302">
       <screen x="0" y="32" width="1920" height="960" />
