@@ -3,7 +3,8 @@ import {Match} from "../models/Match";
 import {NotFoundError} from "routing-controllers";
 import {generateRoomId, Room, RoomModel} from "../models/Room";
 import {MatchHistoryModel} from "../models/MatchHistory";
-import {RoundHistory} from "@hexx/common";
+import {MatchState, MovesStats, RoundHistory} from "@hexx/common";
+import {UserModel} from "../models/User";
 
 @Service()
 export default class GameService {
@@ -45,4 +46,27 @@ export default class GameService {
         })
     }
 
+    async submitMatchPlayersStats(id: string, matchState: MatchState, playersMoves: NodeJS.Dict<MovesStats>) {
+        const bulk = UserModel.collection.initializeUnorderedBulkOp()
+
+        for (let [id, p] of matchState.participants.entries()) {
+            const upd: any = {
+                'stats.matchesParticipated': 1
+            }
+            if (p.team === matchState.winner)
+                upd['stats.matchesWon'] = 1
+
+            const moves = playersMoves[id]
+            if (moves) {
+                upd['stats.moves.total'] = moves.total
+                upd['stats.moves.suicide'] = moves.suicide
+                upd['stats.moves.tie'] = moves.tie
+                upd['stats.moves.capture'] = moves.capture
+                upd['stats.moves.absorb'] = moves.absorb
+            }
+
+            bulk.find({_id: id}).update({$inc: upd})
+        }
+        await bulk.execute()
+    }
 }

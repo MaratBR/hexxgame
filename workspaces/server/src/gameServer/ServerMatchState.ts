@@ -1,6 +1,6 @@
 import {GameRoomState, MapCell, MapUtils, MatchParticipant, MatchState, MoveDirection} from "@hexx/common";
 import {MapSchema} from "@colyseus/schema";
-import {AttackOutcome, ServerMapCell} from "./MapCell";
+import {AttackOutcome, AttackResult, ServerMapCell} from "./MapCell";
 import {Match, MAX_VALUE} from "../models/Match";
 import {GameMap} from "../models/GameMap";
 import moment from "moment";
@@ -61,16 +61,16 @@ export class ServerMatchState extends MatchState {
         return null
     }
 
-    performAttack(fromX: number, fromY: number, toX: number, toY: number): boolean {
+    performAttack(fromX: number, fromY: number, toX: number, toY: number): undefined | AttackResult {
         const cell = this.get(fromX, fromY)
         if (!cell)
-            return false
+            return
         const index = MapUtils.getNeighbours(fromX, fromY).findIndex(([x, y]) => x === toX && y === toY)
         if (index < 0 || index > 5)
-            return false
+            return
         const target = this.get(fromX, fromY, index)
         if (!target)
-            return false;
+            return;
         const result = cell.attack(target)
         if (result) {
             if ((result.outcome == AttackOutcome.Capture || result.outcome == AttackOutcome.Absorb) && target.value > 1) {
@@ -79,9 +79,8 @@ export class ServerMatchState extends MatchState {
                 this.selectedCellKey = undefined
             }
             this.domination.updateFromAttackResult(result)
-            return true
+            return result
         }
-        return false
     }
 
     performPowerUp(x: number, y: number, maxOut: boolean): number {

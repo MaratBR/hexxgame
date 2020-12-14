@@ -45,8 +45,8 @@ button, .button {
   }
 
   &:disabled {
-    border-color: grey;
-    color: grey;
+    border-color: #bbb;
+    background: rgba(white, 0.1);
     cursor: not-allowed;
   }
 }

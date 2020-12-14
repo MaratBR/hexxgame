@@ -38,3 +38,33 @@
   }
 }
 
+
+$cardHeight: 3em;
+
+.card {
+  height: $cardHeight;
+  display: flex;
+  align-items: center;
+  border-radius: $cardHeight / 2;
+  overflow: hidden;
+  padding: 0 $cardHeight / 2 0 0;
+  background: rgba(white, 0.7);
+  box-shadow: 0 4px 5px -2px rgba(black, 0.3);
+  color: black;
+  font-family: 'Righteous', sans-serif;
+  cursor: default;
+
+  &:hover {
+    background: white;
+  }
+}
+
+.username {
+  margin-left: $cardHeight / 5;
+}
+
+.avatar {
+  height: $cardHeight;
+  width: $cardHeight;
+  border-radius: 0 50% 50% 0;
+}

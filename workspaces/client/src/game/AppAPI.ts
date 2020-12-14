@@ -55,6 +55,10 @@ export default class AppAPI {
         ;(window as any).ws = this.wsClient
     }
 
+    updateUsername(name: string) {
+        return this.client.post('api/users/updateUsername', {username: name})
+    }
+
     private _onRoomChanged(oldRoom?: Room<GameRoomState>, room?: Room<GameRoomState>) {
         if (oldRoom) {
             this.scope.reset()
@@ -126,6 +130,10 @@ export default class AppAPI {
 
     getUserInfo(): Promise<UserInfoDto> {
         return this.client.get('api/auth/currentUser').then(r => r.data)
+    }
+
+    getUserInfoById(id: string): Promise<UserInfoDto> {
+        return this.client.get('api/users/' + id).then(r => r.data)
     }
 
     //#endregion

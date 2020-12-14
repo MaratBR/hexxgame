@@ -28,26 +28,6 @@ async function prodAuthMiddleware(ctx: BaseContext, next: Next) {
     }
 }
 
-const localVerifyFunction: LocalVerifyFunction = async (login: string, password: string, done) => {
-    const service = Container.get(UsersService)
-    const user = await service.findUserByLogin(login)
-
-    if (user) {
-        if (await Hasher.verify(password, user.passwordHash)) {
-            done(null, user)
-            return
-        }
-    }
-    done(new Error('user not found'))
-}
-
-const localStrategy = new LocalStrategy({
-    usernameField: 'username',
-    passwordField: 'passwordHash',
-    session: false,
-    passReqToCallback: false
-}, localVerifyFunction)
-
 const googleVerifyFunction = async (accessToken: string, refreshToken: string, profile: Profile, done: VerifyCallback) => {
     const service = Container.get(UsersService)
     const user = await service.getGoogleUserOrCreate(profile)
@@ -70,7 +50,6 @@ let koaPasswordReady = false
 export function initPassport() {
     if (!koaPasswordReady) {
         koaPasswordReady = true
-        koaPassport.use('local', localStrategy)
         koaPassport.use('google', googleStrategy)
         koaPassport.serializeUser<User, string>((user, done) => done(null, user._id))
         koaPassport.deserializeUser<User, string>(async (userId, done) => {

@@ -272,13 +272,13 @@
         "affectsGlobalScope": false
       },
       "./src/colyseus.ts": {
-        "version": "e508fa85471b823f525db2045ac7703ebb288d04c7c6df7ad5a6e39d09684265",
-        "signature": "ecaba5a6264610b6506df66fb36f52d665ee9eb3b7b5cef776ecab940a6ad717",
+        "version": "e929177310359d5ecb996b2bf2c4704051800cfdcffcce6728450cb154279a59",
+        "signature": "fb63908dba06f98352f2281f0fa1fcb125f8375b87fa4700cd8980f9e22b7607",
         "affectsGlobalScope": false
       },
       "./src/dto.ts": {
-        "version": "0b5fd233e1495c72cdd769a33dffb88bc4d51e48ed12b0802d78ea853cc2e7df",
-        "signature": "8e3d82abe8e0909dee6a7e3054091a94b02a14a8f7f2b8c9792e3362322808a6",
+        "version": "774ce86a048181610d84b64b94ee98d1669672156e56e326614c9c7be8b80706",
+        "signature": "67a9e640d926164ff119ab0a4bdd5eab61ea94bdb01c2357e2722500382800e3",
         "affectsGlobalScope": false
       },
       "./src/consts.ts": {
@@ -881,9 +881,24 @@
         "signature": "c9ad058b2cc9ce6dc2ed92960d6d009e8c04bef46d3f5312283debca6869f613",
         "affectsGlobalScope": false
       },
+      "../../node_modules/@types/oauth/index.d.ts": {
+        "version": "ee4b33bde3c17180fc5ef9f8d3f153659fd9827ae82eef9ca4e8956ca343fadd",
+        "signature": "ee4b33bde3c17180fc5ef9f8d3f153659fd9827ae82eef9ca4e8956ca343fadd",
+        "affectsGlobalScope": false
+      },
       "../../node_modules/@types/parse-json/index.d.ts": {
         "version": "2b8264b2fefd7367e0f20e2c04eed5d3038831fe00f5efbc110ff0131aab899b",
         "signature": "2b8264b2fefd7367e0f20e2c04eed5d3038831fe00f5efbc110ff0131aab899b",
+        "affectsGlobalScope": false
+      },
+      "../../node_modules/@types/passport-oauth2/index.d.ts": {
+        "version": "b6cd040f53b67a2fab908ec9a0db2d095a9e087a96e9436940335ec3afc13e93",
+        "signature": "b6cd040f53b67a2fab908ec9a0db2d095a9e087a96e9436940335ec3afc13e93",
+        "affectsGlobalScope": false
+      },
+      "../../node_modules/@types/passport-google-oauth20/index.d.ts": {
+        "version": "4ff449d8b7faf0a736980569fc215b088fa77bf16430a05310e7d6830f4115eb",
+        "signature": "4ff449d8b7faf0a736980569fc215b088fa77bf16430a05310e7d6830f4115eb",
         "affectsGlobalScope": false
       },
       "../../node_modules/@types/passport-strategy/index.d.ts": {
@@ -1337,10 +1352,26 @@
         "./node_modules/@types/node/index.d.ts",
         "./node_modules/@types/node/stream.d.ts"
       ],
+      "../../node_modules/@types/oauth/index.d.ts": [
+        "./node_modules/@types/node/http.d.ts",
+        "./node_modules/@types/node/index.d.ts",
+        "./node_modules/@types/node/url.d.ts"
+      ],
+      "../../node_modules/@types/passport-google-oauth20/index.d.ts": [
+        "../../node_modules/@types/express/index.d.ts",
+        "../../node_modules/@types/passport-oauth2/index.d.ts",
+        "../../node_modules/@types/passport/index.d.ts"
+      ],
       "../../node_modules/@types/passport-local/index.d.ts": [
         "../../node_modules/@types/express/index.d.ts",
         "../../node_modules/@types/passport-strategy/index.d.ts",
         "../../node_modules/@types/passport/index.d.ts"
+      ],
+      "../../node_modules/@types/passport-oauth2/index.d.ts": [
+        "../../node_modules/@types/express/index.d.ts",
+        "../../node_modules/@types/oauth/index.d.ts",
+        "../../node_modules/@types/passport/index.d.ts",
+        "./node_modules/@types/node/http.d.ts"
       ],
       "../../node_modules/@types/passport-strategy/index.d.ts": [
         "../../node_modules/@types/express/index.d.ts",
@@ -1678,9 +1709,6 @@
       "./src/consts.ts": [
         "./src/dto.ts"
       ],
-      "./src/dto.ts": [
-        "./node_modules/@types/node/constants.d.ts"
-      ],
       "./src/index.ts": [
         "./src/colyseus.ts",
         "./src/consts.ts",
@@ -1922,10 +1950,26 @@
         "./node_modules/@types/node/index.d.ts",
         "./node_modules/@types/node/stream.d.ts"
       ],
+      "../../node_modules/@types/oauth/index.d.ts": [
+        "./node_modules/@types/node/http.d.ts",
+        "./node_modules/@types/node/index.d.ts",
+        "./node_modules/@types/node/url.d.ts"
+      ],
+      "../../node_modules/@types/passport-google-oauth20/index.d.ts": [
+        "../../node_modules/@types/express/index.d.ts",
+        "../../node_modules/@types/passport-oauth2/index.d.ts",
+        "../../node_modules/@types/passport/index.d.ts"
+      ],
       "../../node_modules/@types/passport-local/index.d.ts": [
         "../../node_modules/@types/express/index.d.ts",
         "../../node_modules/@types/passport-strategy/index.d.ts",
         "../../node_modules/@types/passport/index.d.ts"
+      ],
+      "../../node_modules/@types/passport-oauth2/index.d.ts": [
+        "../../node_modules/@types/express/index.d.ts",
+        "../../node_modules/@types/oauth/index.d.ts",
+        "../../node_modules/@types/passport/index.d.ts",
+        "./node_modules/@types/node/http.d.ts"
       ],
       "../../node_modules/@types/passport-strategy/index.d.ts": [
         "../../node_modules/@types/express/index.d.ts",
@@ -2345,8 +2389,11 @@
       "../../node_modules/@types/mongodb/index.d.ts",
       "../../node_modules/@types/mongoose/index.d.ts",
       "../../node_modules/@types/normalize-package-data/index.d.ts",
+      "../../node_modules/@types/oauth/index.d.ts",
       "../../node_modules/@types/parse-json/index.d.ts",
+      "../../node_modules/@types/passport-google-oauth20/index.d.ts",
       "../../node_modules/@types/passport-local/index.d.ts",
+      "../../node_modules/@types/passport-oauth2/index.d.ts",
       "../../node_modules/@types/passport-strategy/index.d.ts",
       "../../node_modules/@types/passport/index.d.ts",
       "../../node_modules/@types/prettier/index.d.ts",

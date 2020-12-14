@@ -1,12 +1,16 @@
 import {Service} from "typedi";
-import {GameSession, generateUserIdAsync, User, UserModel} from "../models/User";
+import {GameSession, User, UserModel} from "../models/User";
 import {BaseRequest} from "koa";
 import {Profile} from "passport-google-oauth20";
+import {NotFoundError} from "routing-controllers";
 
 @Service()
 export default class UsersService {
-    getUser(id: string): Promise<User | null> {
-        return UserModel.findById(id).exec()
+    async getUser(id: string): Promise<User> {
+        const user = await UserModel.findById(id)
+        if (!user)
+            throw new NotFoundError('user not found')
+        return user
     }
 
     getGameSession(id: string): Promise<GameSession | null> {
@@ -18,11 +22,7 @@ export default class UsersService {
     }
 
     async loginAsAnon(req: BaseRequest): Promise<User | null> {
-        return await UserModel.create({
-            _id: await generateUserIdAsync(true),
-            username: UsersService.generateRandomAnonymousName(),
-            isAnon: true
-        })
+        return await UserModel.create(User.anon())
     }
 
     findUserByLogin(login: string): Promise<User | null> {
@@ -41,30 +41,6 @@ export default class UsersService {
     }
 
     async createGoogleUser(profile: Profile): Promise<User> {
-        console.log(profile)
-        return await UserModel.create({
-            _id: await generateUserIdAsync(),
-            googleId: profile.id,
-            username: profile.displayName,
-            isAnon: false
-        })
-    }
-
-    private static NAMES = [
-        'Eagle', 'Sheep', 'Rabbit', 'Dolphin', 'Lion', 'Mule', 'Rooster', 'Dingo', 'Chamois', 'Deer', 'Turtle',
-        'Parrot', 'Cow', 'Hamster', 'Bear', 'Ox', 'Chinchilla', 'Raccoon', 'Snake', 'Buffalo', 'Pony', 'Zebra',
-        'Opossum'
-    ]
-
-    private static ADJECTIVES = [
-        'Dangerous', 'Suspicious', 'Recurring', 'Kind', 'Evil', 'Crazy', 'Lovely', 'Sentimental', 'Friendly', 'Silent',
-        'Opaque', 'Exiled', 'Happy', 'Sad', 'Graceful', 'Wealthy', 'Romantic', 'Humble', 'Forgetful', 'Cute', 'Energetic',
-        'Nervous', 'Lazy', 'Worried', 'Jealous', 'Thoughtless', 'Unbearable', 'Ultimate', 'Fancy', 'Lively', 'Wicked'
-    ]
-
-    private static generateRandomAnonymousName(): string {
-        return UsersService.ADJECTIVES[Math.floor(Math.random() * UsersService.ADJECTIVES.length)] + ' ' +
-            UsersService.NAMES[Math.floor(Math.random() * UsersService.NAMES.length)]
-
+        return UserModel.create(User.googleUser(profile))
     }
 }

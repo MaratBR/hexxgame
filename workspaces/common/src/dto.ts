@@ -1,4 +1,3 @@
-import exp from "constants";
 
 export interface Participant {
     id: string
@@ -38,6 +37,8 @@ export type AttackChange = {
     fromY: number
     toX: number
     toY: number
+    attackerPoints: number
+    targetPoints: number
 }
 
 export type PowerChange = {
@@ -74,10 +75,26 @@ export type RoomInfoDto = {
     ongoingMatchId?: string
 }
 
+export interface MovesStats {
+    total: number
+    capture: number
+    tie: number
+    absorb: number
+    suicide: number
+}
+
+export interface UserStats {
+    matchesParticipated: number
+    matchesWon: number
+    moves: MovesStats
+}
+
 export type UserInfoDto = {
     username: string,
     isAnon?: boolean,
     id: string
+    picUrl?: string
+    stats: UserStats
 }
 
 export type PlayerInfoDto = {

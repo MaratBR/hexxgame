@@ -14,9 +14,6 @@ export class ClientInfo extends Schema {
 }
 
 export class MatchParticipant extends Schema {
-    @type('string')
-    id: string
-
     @type('number')
     team: number
 

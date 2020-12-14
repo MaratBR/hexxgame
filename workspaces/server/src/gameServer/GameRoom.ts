@@ -1,10 +1,10 @@
 import http from "http"
 import {Client, Delayed, ServerError} from "colyseus";
 import AuthorizedRoom from "./AuthorizedRoom";
-import {User} from "../models/User";
+import {emptyMovesStats, User} from "../models/User";
 import {Match, MatchModel} from "../models/Match";
 import {GameMapModel} from "../models/GameMap";
-import {ClientInfo, MapUtils, MatchState, RoundHistory, TeamInfo} from "@hexx/common";
+import {ClientInfo, MapUtils, MatchState, MovesStats, RoundHistory, TeamInfo} from "@hexx/common";
 import {ServerMatchState} from "./ServerMatchState";
 import {ServerGameRoomState} from "./ServerGameRoomState";
 import GameService from "../services/GameService";
@@ -13,6 +13,7 @@ import {plainToClass} from "class-transformer";
 import {NotFoundError} from "routing-controllers";
 import Dict = NodeJS.Dict;
 import logger from "../init/logger";
+import {AttackOutcome} from "./MapCell";
 
 class GameRoomOptions {
     id?: string
@@ -23,6 +24,7 @@ type InnerState = {
     currentMatch: {
         roundHistoryRecord: RoundHistory
         roundStartedAt: number
+        playersMoves: Dict<MovesStats>
     }
 }
 
@@ -36,8 +38,9 @@ export default class GameRoom extends AuthorizedRoom<ServerGameRoomState> {
         userConnections: {},
         currentMatch: {
             roundStartedAt: 0,
-            roundHistoryRecord: roundRecord(0, 0)
-        }
+            roundHistoryRecord: roundRecord(0, 0),
+            playersMoves: {}
+        },
     }
 
     async onCreate(_opts: any): Promise<any> {
@@ -258,16 +261,30 @@ export default class GameRoom extends AuthorizedRoom<ServerGameRoomState> {
             return;
 
 
+        // create match object and init inner state
         const teams = this.state.teams.map(t => [...t.members])
+
+        // create new match and match history
         const match = await this.service.createMatch(this.roomId, this.state.selectedMapID, teams)
         await this.service.createMatchHistory(match)
+
+        // find map with given id
         const map = await GameMapModel.findById(match.mapId)
+
+        // reset inner state
+        this.resetMatchInnerData()
+        for (let players of teams)
+            for (let playerID of players)
+                this.innerState.currentMatch.playersMoves[playerID] = emptyMovesStats()
+
+        // prepare initial state
         this.state.match = new ServerMatchState(this.state, match, map)
         this.state.teams.forEach(team => {
             team.members.forEach(memberID => {
                 this.state.clients.get(memberID).ready = false
             })
         })
+
         this.broadcast('gameStarts')
         this.clock.setTimeout(() => {
             this.onNextRoundBegins()
@@ -292,13 +309,32 @@ export default class GameRoom extends AuthorizedRoom<ServerGameRoomState> {
         if (!clientData || clientData.team === 0 || this.state.match.currentTeam !== clientData.team)
             return;
 
-        if (!this.state.match.performAttack(fromX, fromY, toX, toY)) {
+        const attackResult = this.state.match.performAttack(fromX, fromY, toX, toY)
+        if (!attackResult) {
             client.send('invalid_move', d.returnID || null)
             return
         } else {
             this.innerState.currentMatch.roundHistoryRecord.attacks.push({
-                fromX, fromY, toX, toY
+                fromX, fromY, toX, toY,
+                attackerPoints: this.state.match.get(fromX, fromY).value,
+                targetPoints: this.state.match.get(toX, toY).value,
             })
+            const stats = this.innerState.currentMatch.playersMoves[client.auth._id]
+            stats.total++
+            switch (attackResult.outcome) {
+                case AttackOutcome.Tie:
+                    stats.tie++
+                    break
+                case AttackOutcome.Capture:
+                    stats.capture++
+                    break
+                case AttackOutcome.Absorb:
+                    stats.absorb++
+                    break
+                case AttackOutcome.Suicide:
+                    stats.suicide++
+                    break
+            }
         }
 
         if (this.state.match.endMatchIfHasWinner()) {
@@ -409,10 +445,7 @@ export default class GameRoom extends AuthorizedRoom<ServerGameRoomState> {
     }
 
     private async submitRoundRecord() {
-        if (this.innerState.currentMatch.roundHistoryRecord && (
-            this.innerState.currentMatch.roundHistoryRecord.powerUps.length ||
-            this.innerState.currentMatch.roundHistoryRecord.attacks.length
-        )) {
+        if (this.innerState.currentMatch.roundHistoryRecord) {
             try {
                 await this.service.addRoundData(this.state.match.id, this.innerState.currentMatch.roundHistoryRecord)
             } catch (e) {
@@ -423,13 +456,29 @@ export default class GameRoom extends AuthorizedRoom<ServerGameRoomState> {
         }
     }
 
+    private async submitPlayersStats() {
+        await this.service.submitMatchPlayersStats(
+            this.state.requireMatch().id,
+            this.state.requireMatch(),
+            this.innerState.currentMatch.playersMoves)
+    }
+
     private resetRoundRecord() {
         this.innerState.currentMatch.roundHistoryRecord =
             roundRecord(this.state.match.currentRoundStage, this.state.match.currentTeam)
     }
 
+    private resetMatchInnerData() {
+        this.innerState.currentMatch = {
+            roundHistoryRecord: roundRecord(0, 0),
+            roundStartedAt: 0,
+            playersMoves: {}
+        }
+    }
+
     private async onMatchEnd() {
         await this.submitRoundRecord()
+        await this.submitPlayersStats()
         const winner = this.state.match.winner
         this.matchTimeout?.clear()
         this.state.gameStartsAt = 0

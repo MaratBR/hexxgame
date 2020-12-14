@@ -1,6 +1,5 @@
 import {Authorized, Controller, CurrentUser, Get} from "routing-controllers";
 import {User} from "../models/User";
-import Tokens from "../auth/tokens";
 
 @Controller('/api/game')
 @Authorized()

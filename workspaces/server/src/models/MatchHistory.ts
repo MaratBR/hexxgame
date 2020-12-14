@@ -12,6 +12,10 @@ class AttackChangeImpl implements AttackChange {
     fromX: number;
     @prop()
     fromY: number;
+    @prop()
+    attackerPoints: number
+    @prop()
+    targetPoints: number
 }
 
 class PowerChangeImpl implements PowerChange {

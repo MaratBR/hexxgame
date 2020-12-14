@@ -4,6 +4,8 @@ import AppAPI from "../../game/AppAPI";
 import styles from "./PlayPage.module.scss"
 import ModalNotification from "../../components/ModalNotification";
 import GoogleAuthButton from "../../components/GoogleAuthButton";
+import {NavLink} from "react-router-dom";
+import {makeRoute, PROFILE_ROUTE} from "../../routes";
 
 type PlayPageState = {
     roomID?: string
@@ -13,6 +15,8 @@ type PlayPageState = {
     bgIndex: number
     isAnon?: boolean
     username?: string
+    userPic?: string
+    userId?: string
 }
 
 const BGS = [
@@ -32,8 +36,8 @@ class PlayPage extends React.Component<any, PlayPageState> {
 
     async componentDidMount() {
         try {
-            const {username} = await this.context.getUserInfo()
-            this.setState({username})
+            const {username, picUrl, id} = await this.context.getUserInfo()
+            this.setState({username, userPic: picUrl, userId: id})
         } catch (e) {
             this.props.history.push('/')
         }
@@ -58,7 +62,12 @@ class PlayPage extends React.Component<any, PlayPageState> {
     render() {
         return <div className={styles.root} style={{background: BGS[this.state.bgIndex]}}>
             <button className={styles.changeAppearenceButton} onClick={() => this.nextBgIndex()}>change that</button>
-            {this.state.isAnon === true ? undefined : <small>Hi, {this.state.username}!</small>}
+            <NavLink to={makeRoute(PROFILE_ROUTE, {id: this.state.userId})}>
+                <div className={styles.card} title={this.state.username}>
+                    <img src={this.state.userPic || `https://eu.ui-avatars.com/api/?name=${this.state.username}`} alt="Profile picture" className={styles.avatar} />
+                    <span className={styles.username}>{this.state.username}</span>
+                </div>
+            </NavLink>
             <h3>Join room</h3>
             <div className="spacing">
                 <input className="input display" type="text" onChange={(e) => this.setState({code: e.target.value})} />
