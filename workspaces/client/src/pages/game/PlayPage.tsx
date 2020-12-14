@@ -108,8 +108,8 @@ class PlayPage extends React.Component<any, PlayPageState> {
 
     private async joinPrivateRoom() {
         const room = await this.context.getPersonalRoom()
-        await this._joinRoom(room.id)
-        this.props.history.push(this.props.match.path + '/room/' + room.id)
+        await this._joinRoom(room)
+        this.props.history.push(this.props.match.path + '/room/' + room)
     }
 
     private async joinRoom() {
@@ -127,7 +127,7 @@ class PlayPage extends React.Component<any, PlayPageState> {
         if (this.state.personalRoom)
             return
         this.setState({
-            personalRoom: (await this.context.getPersonalRoom()).id
+            personalRoom: await this.context.getPersonalRoom()
         })
     }
 

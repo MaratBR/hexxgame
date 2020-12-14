@@ -1,29 +1,15 @@
 import {Service} from "typedi";
 import {Match} from "../models/Match";
 import {NotFoundError} from "routing-controllers";
-import {generateRoomId, Room, RoomModel} from "../models/Room";
 import {MatchHistoryModel} from "../models/MatchHistory";
 import {MatchState, MovesStats, RoundHistory} from "@hexx/common";
 import {UserModel} from "../models/User";
+import {matchMaker} from "colyseus";
+import {customAlphabet} from "nanoid";
 
 @Service()
 export default class GameService {
     constructor() {}
-
-    async createRoom(id?: string, ownerId?: string): Promise<Room> {
-        return await RoomModel.create({
-            ownerId,
-            _id: id || generateRoomId(),
-            players: []
-        })
-    }
-
-    async getRoomByID(id: string): Promise<Room> {
-        const room = await RoomModel.findById(id)
-        if (!room)
-            throw new NotFoundError('Room cannot be found')
-        return room
-    }
 
     async createMatch(roomId: string, mapId: string, teams: string[][]): Promise<Match> {
         return await Match.createMatch(roomId, mapId, teams)
@@ -68,5 +54,19 @@ export default class GameService {
             bulk.find({_id: id}).update({$inc: upd})
         }
         await bulk.execute()
+    }
+
+    async roomExists(id: string): Promise<boolean> {
+        return (await matchMaker.query({roomId: id})).length != 0
+    }
+
+    private static generateRoomId = customAlphabet('ABCDEFGHIJKLMOPQRSTUVWXYZ0123456789', 4)
+
+    async generateRoomId(): Promise<string> {
+        let roomId;
+        do {
+            roomId = GameService.generateRoomId()
+        } while (await this.roomExists(roomId));
+        return roomId;
     }
 }

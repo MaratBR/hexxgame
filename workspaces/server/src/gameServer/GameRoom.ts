@@ -48,21 +48,11 @@ export default class GameRoom extends AuthorizedRoom<ServerGameRoomState> {
         const options = plainToClass(GameRoomOptions, _opts)
 
         if (options.id) {
-            try {
-                const room = await this.service.getRoomByID(options.id)
-                this.roomId = room._id
-            } catch (exc) {
-                if (exc instanceof NotFoundError)
-                    throw new ServerError(404, 'room not found')
-                throw new ServerError(500, 'unexpected error: ' + exc.toString())
-            }
+            if (await this.service.roomExists(options.id))
+                throw new ServerError(409, 'this room already exists')
+            this.roomId = options.id
         } else {
-            try {
-                const room = await this.service.createRoom()
-                this.roomId = room._id
-            } catch (exc) {
-                throw new ServerError(500, 'unexpected error: ' + exc.toString())
-            }
+            this.roomId = await this.service.generateRoomId()
         }
 
         this.setState(new ServerGameRoomState({

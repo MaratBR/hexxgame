@@ -107,8 +107,8 @@ export default class AppAPI {
         return this.client.post('api/auth/login/anon')
     }
 
-    getPersonalRoom(): Promise<RoomInfoDto> {
-        return this.client.get('api/rooms/personalRoom').then(r => r.data)
+    getPersonalRoom(): Promise<string> {
+        return this.client.get('api/rooms/personalRoom').then(r => r.data.room)
     }
 
     getGameToken(): Promise<string> {

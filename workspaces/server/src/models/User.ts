@@ -1,7 +1,6 @@
 import {getModelForClass, prop} from "@typegoose/typegoose";
 import {Base} from "./Base";
 import {UserInfoDto, UserStats} from "@hexx/common";
-import {Room, RoomModel} from "./Room";
 import {Match} from "./Match";
 import {nanoid} from "nanoid";
 import {Profile} from "passport-google-oauth20";
@@ -87,55 +86,6 @@ export class User extends Base {
 
     @prop({default: emptyStats})
     stats: UserStats = emptyStats()
-
-    setRoom(room: Room) {
-        return this._setRoom(room._id)
-    }
-
-    removeRoom() {
-        return this._setRoom()
-    }
-
-    private _setRoom(roomId?: string) {
-        this.gameSession = this.gameSession || {}
-        this.gameSession.roomId = roomId
-        return UserModel.update({_id: this._id}, roomId ? {'gameSession.roomId': roomId} : {$unset: {'gameSession.roomId': 1}}).exec()
-    }
-
-    setMatch(match: Match) {
-        return this._setMatch(match._id)
-    }
-
-    removeMatch() {
-        return this._setMatch()
-    }
-
-    private _setMatch(matchID?: string) {
-        this.gameSession = this.gameSession || {}
-        this.gameSession.matchId = matchID
-        return UserModel.update({_id: this._id}, matchID ? {'gameSession.matchId': matchID} : {$unset: {'gameSession.matchId': 1}}).exec()
-    }
-
-    inRoom(): boolean {
-        return !!(this.gameSession && this.gameSession.roomId)
-    }
-
-    getMatchID(): string | undefined {
-        return this.gameSession?.matchId
-    }
-
-    getRoomID(): string | undefined {
-        return this.gameSession?.roomId
-    }
-
-    async getRoom(): Promise<Room | null> {
-        if (!this.getRoomID())
-            return null
-        const room = RoomModel.findById(this.getRoomID())
-        if (room)
-            return room
-        throw new Error('room not found')
-    }
 }
 
 export function generateUserId(isAnon: boolean = false) {

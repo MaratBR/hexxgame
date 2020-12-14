@@ -28,8 +28,11 @@ export class AuthController {
     @Authorized()
     @Get('/getGameToken')
     async generateGameToken(@Ctx() ctx: Context) {
-        if (!ctx.session.gameToken || (+new Date() >= ctx.session.gameTokenExp)) {
+        if (!ctx.session.gameToken ||
+            (+new Date() >= ctx.session.gameTokenExp) ||
+            ctx.session.gameTokenUser !== ctx.state.user?._id) {
             const token = await Tokens.generateSocketToken(ctx.state.user)
+            ctx.session.gameTokenUser = ctx.state.user?._id
             ctx.session.gameToken = token.str
             ctx.session.gameTokenExp = token.exp
             ctx.session.save()
