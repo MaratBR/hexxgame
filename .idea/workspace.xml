@@ -14,7 +14,6 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="4ab1c6cd-2206-4d65-81b2-41909449377e" name="Default Changelist" comment=".yarn">
-      <change afterPath="$PROJECT_DIR$/.yarn/build-state.yml" afterDir="false" />
       <change afterPath="$PROJECT_DIR$/.yarn/cache/@babel-code-frame-npm-7.10.4-ab1ee3c93e-05245d3b22.zip" afterDir="false" />
       <change afterPath="$PROJECT_DIR$/.yarn/cache/@babel-compat-data-npm-7.12.5-23cd6c3bcf-9b3a0096f0.zip" afterDir="false" />
       <change afterPath="$PROJECT_DIR$/.yarn/cache/@babel-core-npm-7.12.3-209b619ca0-110eb092da.zip" afterDir="false" />
@@ -1945,16 +1944,8 @@
       <change afterPath="$PROJECT_DIR$/.yarn/cache/yeast-npm-0.1.2-19a347595d-ce326a71c7.zip" afterDir="false" />
       <change afterPath="$PROJECT_DIR$/.yarn/cache/ylru-npm-1.2.1-4471986a45-ce002a8bb5.zip" afterDir="false" />
       <change afterPath="$PROJECT_DIR$/.yarn/cache/yn-npm-3.1.1-8ad4259784-bff63b8056.zip" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.yarn/install-state.gz" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.yarn/plugins/@yarnpkg/plugin-typescript.cjs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.yarn/plugins/@yarnpkg/plugin-workspace-tools.cjs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.yarn/releases/yarn-berry.cjs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/hexxgame.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/hexxgame.iml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.yarnrc.yml" beforeDir="false" afterPath="$PROJECT_DIR$/.yarnrc.yml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/workspaces/server/src/auth/index.ts" beforeDir="false" afterPath="$PROJECT_DIR$/workspaces/server/src/auth/index.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/yarn.lock" beforeDir="false" afterPath="$PROJECT_DIR$/yarn.lock" afterDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/.tmp/" />
     <ignored path="$PROJECT_DIR$/.yarn/" />
@@ -1981,20 +1972,16 @@
           </provider>
         </entry>
       </file>
+      <file pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/.gitignore">
+          <provider selected="true" editor-type-id="text-editor" />
+        </entry>
+      </file>
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/workspaces/server/src/models/User.ts">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="34">
               <caret line="2" column="43" selection-start-line="2" selection-start-column="43" selection-end-line="2" selection-end-column="43" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/.gitignore">
-          <provider selected="true" editor-type-id="text-editor">
-            <state>
-              <caret column="12" selection-start-column="12" selection-end-column="12" />
             </state>
           </provider>
         </entry>
@@ -2049,6 +2036,23 @@
             <path>
               <item name="hexxgame" type="b2602c69:ProjectViewProjectNode" />
               <item name="hexxgame" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="hexxgame" type="b2602c69:ProjectViewProjectNode" />
+              <item name="hexxgame" type="462c0819:PsiDirectoryNode" />
+              <item name=".yarn" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="hexxgame" type="b2602c69:ProjectViewProjectNode" />
+              <item name="hexxgame" type="462c0819:PsiDirectoryNode" />
+              <item name=".yarn" type="462c0819:PsiDirectoryNode" />
+              <item name="plugins" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="hexxgame" type="b2602c69:ProjectViewProjectNode" />
+              <item name="hexxgame" type="462c0819:PsiDirectoryNode" />
+              <item name=".yarn" type="462c0819:PsiDirectoryNode" />
+              <item name="releases" type="462c0819:PsiDirectoryNode" />
             </path>
           </expand>
           <select />
@@ -2241,7 +2245,7 @@
       <workItem from="1607921475226" duration="4853000" />
       <workItem from="1607930969560" duration="12169000" />
       <workItem from="1607967932572" duration="883000" />
-      <workItem from="1612858310496" duration="2329000" />
+      <workItem from="1612858310496" duration="2447000" />
     </task>
     <task id="LOCAL-00001" summary="finishing basics">
       <created>1605153963739</created>
@@ -2411,11 +2415,18 @@
       <option name="project" value="LOCAL" />
       <updated>1607791394409</updated>
     </task>
-    <option name="localTasksCounter" value="25" />
+    <task id="LOCAL-00025" summary=".yarn">
+      <created>1612860738143</created>
+      <option name="number" value="00025" />
+      <option name="presentableId" value="LOCAL-00025" />
+      <option name="project" value="LOCAL" />
+      <updated>1612860738143</updated>
+    </task>
+    <option name="localTasksCounter" value="26" />
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="2329000" />
+    <option name="totallyTimeSpent" value="2447000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="-8" y="-8" width="1936" height="1176" extended-state="6" />
@@ -2503,7 +2514,8 @@
     <MESSAGE value="building procedure, docker bugs" />
     <MESSAGE value="google oauth" />
     <MESSAGE value="docker" />
-    <option name="LAST_COMMIT_MESSAGE" value="docker" />
+    <MESSAGE value=".yarn" />
+    <option name="LAST_COMMIT_MESSAGE" value=".yarn" />
   </component>
   <component name="WindowStateProjectService">
     <state x="420" y="189" width="1084" height="760" key="#com.intellij.execution.impl.EditConfigurationsDialog" timestamp="1606880900202">
@@ -2717,6 +2729,16 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/.yarn/cache/.gitignore">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/workspaces/server/src/models/User.ts">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="34">
+          <caret line="2" column="43" selection-start-line="2" selection-start-column="43" selection-end-line="2" selection-end-column="43" />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/workspaces/server/src/auth/index.ts">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="141">
@@ -2727,19 +2749,8 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/workspaces/server/src/models/User.ts">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="34">
-          <caret line="2" column="43" selection-start-line="2" selection-start-column="43" selection-end-line="2" selection-end-column="43" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/.gitignore">
-      <provider selected="true" editor-type-id="text-editor">
-        <state>
-          <caret column="12" selection-start-column="12" selection-end-column="12" />
-        </state>
-      </provider>
+      <provider selected="true" editor-type-id="text-editor" />
     </entry>
   </component>
 </project>
