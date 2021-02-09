@@ -51,7 +51,7 @@ export function initPassport() {
     if (!koaPasswordReady) {
         koaPasswordReady = true
         koaPassport.use('google', googleStrategy)
-        koaPassport.serializeUser<User, string>((user, done) => done(null, user._id))
+        koaPassport.serializeUser<User, string>((user: User, done) => done(null, user._id))
         koaPassport.deserializeUser<User, string>(async (userId, done) => {
             const user = await UserModel.findById(userId)
             if (user)
